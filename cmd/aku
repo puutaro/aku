@@ -2,7 +2,6 @@
 
 set -eu
 
-
 LANG=C
 AKU_SUB_CMD="${1:-}"
 readonly AKU_LIBS_DIR_PATH="$(cd $(dirname $0) ; pwd)"
