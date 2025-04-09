@@ -1,6 +1,7 @@
-#!bin/bash
+#!/bin/bash
 
 set -eu
+
 
 LANG=C
 AKU_SUB_CMD="${1:-}"
