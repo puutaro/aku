@@ -14,10 +14,9 @@ rm -rf "${AKU_INSTALL_DIR_PATH}"
 mkdir -p "${AKU_INSTALL_DIR_PATH}"
 git clone "https://github.com/puutaro/aku.git"  "${AKU_INSTALL_DIR_PATH}"
 
-readonly AKU_CMD_ROOT_PATH="${AKU_INSTALL_DIR_PATH}/cmd/aku"
-readonly AKU_CMD_LIMK_PATH="/usr/local/bin/aku"
+readonly AKU_CMD_DIR_PATH="${AKU_INSTALL_DIR_PATH}/cmd"
+readonly USR_LOCAL_BIN="/usr/local/bin"
 
-sudo rm "${AKU_CMD_LIMK_PATH}"
-sudo ln -s \
-	"${AKU_CMD_ROOT_PATH}" \
-	"${AKU_CMD_LIMK_PATH}"
+sudo cp -r \
+	"${AKU_CMD_DIR_PATH}"/* \
+	"${USR_LOCAL_BIN}"/
