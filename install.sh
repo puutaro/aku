@@ -20,6 +20,6 @@ sudo chown ${USER_NAME}:${USER_NAME} -R "${AKU_HIDE_DIR_PATH}"
 readonly AKU_CMD_DIR_PATH="${AKU_INSTALL_DIR_PATH}/cmd"
 readonly USR_LOCAL_BIN="/usr/local/bin"
 
-sudo cp -r \
+sudo cp -arf \
 	"${AKU_CMD_DIR_PATH}"/* \
 	"${USR_LOCAL_BIN}"/
