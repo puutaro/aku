@@ -1,0 +1,46 @@
+set -eu
+
+
+LANG=C
+AKU_SUB_CMD="${1:-}"
+readonly EXEC_FILE_DIR=$(cd $(dirname $0) ; pwd)
+readonly HELP_DIR_PATH="${EXEC_FILE_DIR}/help"
+readonly TRIM_DIR_PATH="${EXEC_FILE_DIR}/trim"
+readonly CUT_DIR_PATH="${EXEC_FILE_DIR}/cut"
+readonly TRIM_SUB_CMD=$(basename "${TRIM_DIR_PATH}")
+readonly CUT_SUB_CMD=$(basename "${CUT_DIR_PATH}")
+
+. "${HELP_DIR_PATH}/help.sh"
+. "${TRIM_DIR_PATH}/trim.sh"
+. "${CUT_DIR_PATH}/cut.sh"
+
+
+HELP=""
+case "${AKU_SUB_CMD}" in
+	${TRIM_SUB_CMD})
+		CONTENTS=""
+		DELETE_PREFIXS=""
+		DELETE_SUFFIX=""
+		DELETE_CONTAIN=""
+		DELETE_REGEX=""
+		ON_AND=""
+		PREFIX_SEPARATOR="TRIM_CCCD_SEPARATOR"
+		read_args_for_trim "${@}"
+		display_trim_for_help
+		exec_trim
+		;;
+	${CUT_SUB_CMD})
+		CONTENTS=""
+		DELIMITTER=""
+		OUTPUT_DELIMITER=""
+		FIELD_NUM_LIST_CON=""
+		FIELD_NUM_SEPARATOR="FIELD_CCCD_SEPARATOR"
+		read_args_for_cut "${@}"
+		display_cut_for_help
+		exec_cut
+		;;
+	*)
+		display_help_for_aku
+		;;
+esac
+		
