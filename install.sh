@@ -1,6 +1,6 @@
 #!/bin/bash
 
-readonly FILES_LIB_PATH="$(dirname "${0}")"
+readonly FILES_LIB_PATH="$(pwd)"
 readonly USER_NAME=$(\
 	echo "${FILES_LIB_PATH}" \
 	| awk '{
