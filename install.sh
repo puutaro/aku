@@ -9,10 +9,13 @@ readonly USER_NAME=$(\
 	}'\
 )
 readonly HOME_PATH="/home/${USER_NAME}"
-readonly AKU_INSTALL_DIR_PATH="${HOME_PATH}/.aku/aku"
+readonly AKU_HIDE_DIR_PATH="${HOME_PATH}/.aku"
+readonly AKU_INSTALL_DIR_PATH="${AKU_HIDE_DIR_PATH}/aku"
 rm -rf "${AKU_INSTALL_DIR_PATH}"
 mkdir -p "${AKU_INSTALL_DIR_PATH}"
 git clone "https://github.com/puutaro/aku.git"  "${AKU_INSTALL_DIR_PATH}"
+sudo chmod 777 -R "${AKU_HIDE_DIR_PATH}"
+sudo chown ${USER_NAME}:${USER_NAME} -R "${AKU_HIDE_DIR_PATH}"
 
 readonly AKU_CMD_DIR_PATH="${AKU_INSTALL_DIR_PATH}/cmd"
 readonly USR_LOCAL_BIN="/usr/local/bin"
