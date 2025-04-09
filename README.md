@@ -10,6 +10,7 @@ Table of Sub cmd
 * [SUB_CMD](#sub_cmd)
     * [Trim](#trim)
     * [Cut](#cut)
+    * [C2s](#c2s)
    
 
 ## Install
@@ -184,4 +185,36 @@ bb cc
 
 ```
 
+### C2s
 
+Cammel case to snake case 
+
+#### ARG
+
+Arg or stdin
+
+#### Option
+
+--reverse|-r
+	snake case to camel case
+--space|-s
+	replace underbar to space
+
+#### Ex1
+
+```sh.sh
+c2s "aaBB"
+
+->
+aa_bb
+
+```
+
+#### Ex2
+
+```sh.sh
+c2s "aa_bb"
+->
+aaBb
+
+```
