@@ -185,15 +185,15 @@ bb cc
 
 ```
 
-## C2s
+### C2s
 
 Cammel case to snake case 
 
-### ARG
+#### ARG
 
 Arg or stdin
 
-### Option
+#### Option
 
 --reverse|-r
 	snake case to camel case
