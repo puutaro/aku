@@ -7,7 +7,7 @@ Table of Sub cmd
 <!-- vim-markdown-toc GFM -->
 
 * [Install](#install)
-* [SUB_CMDl](#sub_cmd)
+* [SUB_CMD](#sub_cmd)
     * [Trim](#trim)
     * [Cut](#cut)
    
@@ -127,8 +127,9 @@ cbb
 aa
 ```
 
+## Cut
 
-## cut field by awk spec
+Cut field by awk spec
 
 ### [ARG]
 	Arg or stdin
