@@ -2,6 +2,7 @@
 
 
 read_args_for_trim(){
+	local is_already_first_con=0
 	local STR=""
 	while (( $# > 0 ))
 	do
@@ -29,7 +30,10 @@ read_args_for_trim(){
 			exit 1
 			;;
 		*)	
-			CONTENTS+="${1:-}"
+			if [ ${is_already_first_con} -gt 0 ];then 
+				CONTENTS+="${1:-}"
+			fi
+			is_already_first_con=1 
 			;;
 	esac
 	shift

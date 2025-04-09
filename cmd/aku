@@ -7,12 +7,15 @@ readonly EXEC_FILE_DIR=$(cd $(dirname $0) ; pwd)
 readonly HELP_DIR_PATH="${EXEC_FILE_DIR}/help"
 readonly TRIM_DIR_PATH="${EXEC_FILE_DIR}/trim"
 readonly CUT_DIR_PATH="${EXEC_FILE_DIR}/cut"
+readonly C2S_DIR_PATH="${EXEC_FILE_DIR}/c2s"
 readonly TRIM_SUB_CMD=$(basename "${TRIM_DIR_PATH}")
 readonly CUT_SUB_CMD=$(basename "${CUT_DIR_PATH}")
+readonly C2S_SUB_CMD=$(basename "${C2S_DIR_PATH}")
 
 . "${HELP_DIR_PATH}/help.sh"
 . "${TRIM_DIR_PATH}/trim.sh"
 . "${CUT_DIR_PATH}/cut.sh"
+. "${C2S_DIR_PATH}/c2s.sh"
 
 
 HELP=""
@@ -38,6 +41,15 @@ case "${AKU_SUB_CMD}" in
 		read_args_for_cut "${@}"
 		display_cut_for_help
 		exec_cut
+		;;
+	${C2S_SUB_CMD})
+		HELP=""
+		CONTENTS=""
+		REVERSE=""
+		REPLACE_UNDER_BAR2SPACE=""
+		read_args_for_c2s "${@}"
+		display_cut_for_help	
+		c2s_handler
 		;;
 	*)
 		display_help_for_aku
