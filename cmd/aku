@@ -3,7 +3,8 @@ set -eu
 
 LANG=C
 AKU_SUB_CMD="${1:-}"
-readonly EXEC_FILE_DIR=$(cd $(dirname $0) ; pwd)
+readonly CMD_DIR_PATH="$(cd $(dirname $0) ; pwd)"
+readonly EXEC_FILE_DIR="${CMD_DIR_PATH}/internal"
 readonly HELP_DIR_PATH="${EXEC_FILE_DIR}/help"
 readonly TRIM_DIR_PATH="${EXEC_FILE_DIR}/trim"
 readonly CUT_DIR_PATH="${EXEC_FILE_DIR}/cut"
