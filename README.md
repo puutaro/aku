@@ -1,5 +1,14 @@
 # aku
 
+util by awk for Linux
+
+# install
+
+```
+curl https://raw.githubusercontent.com/puutaro/aku/refs/heads/master/install.sh | sudo bash
+
+```
+
 ### awk util
 
 [SUB_CMD]
