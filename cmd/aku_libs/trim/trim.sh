@@ -12,15 +12,19 @@ read_args_for_trim(){
 			;;
 		--delete-prefix|-p)
 			DELETE_PREFIXS="${DELETE_PREFIXS}${PREFIX_SEPARATOR}${2}"
+			shift
 			;;
 		--delete-suffix|-s)
 			DELETE_SUFFIX="${DELETE_SUFFIX}${PREFIX_SEPARATOR}${2}"
+			shift
 			;;
 		--delete-contain|-c)
 			DELETE_CONTAIN="${DELETE_CONTAIN}${PREFIX_SEPARATOR}${2}"
+			shift
 			;;
 		--delete-regex|-r)
 			DELETE_REGEX="${DELETE_REGEX}${PREFIX_SEPARATOR}${2}"
+			shift
 			;;
 		--and|-a)
 			ON_AND="on"

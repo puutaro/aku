@@ -2,6 +2,7 @@
 
 
 read_args_for_cut(){
+	local is_already_first_con=0
 	local STR=""
 	while (( $# > 0 ))
 	do
@@ -11,19 +12,25 @@ read_args_for_cut(){
 			;;
 		--field-num|-f)
 			FIELD_NUM_LIST_CON="${FIELD_NUM_LIST_CON}${FIELD_NUM_SEPARATOR}${2}"
+			shift
 			;;
 		--delimitter|-d)
 			DELIMITTER="${2}"
+			shift
 			;;
 		--output-delimiter|-o)
 			OUTPUT_DELIMITER="${2}"
+			shift
 			;;
 		-*)
 			echo "no option: ${1}"
 			exit 1
 			;;
 		*)	
-			CONTENTS+="${1:-}"
+			if [ ${is_already_first_con} -gt 0 ];then
+				CONTENTS+="${1:-}"
+			fi
+			is_already_first_con=1
 			;;
 	esac
 	shift
@@ -32,6 +39,8 @@ read_args_for_cut(){
 	END
 	if [ -p /dev/stdin ]; then
 	    CONTENTS="$(cat)"
+	elif [ -f "${CONTENTS}" ];then
+		CONTENTS="$(cat "${CONTENTS}")"
 	fi
 	case "${DELIMITTER}" in
 		"") DELIMITTER=" "
