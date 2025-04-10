@@ -44,10 +44,11 @@ bb
 aa
 bb"
 
+```
+
 #### --delete-contain|-c
 		delete contain line
 
-```
 
 - [Ex]
 
@@ -59,11 +60,11 @@ bb
 
 ->
 aa
+```
 
 #### --delete-suffix|-s
 		delete suffix line
 
-```
 
 - [Ex]
 
@@ -75,10 +76,11 @@ bbdd
 
 ->
 aa
+```
 
 #### --delete-regex|-p
 		delete regex line
-```
+
 
 - [Ex]
 
