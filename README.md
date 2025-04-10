@@ -29,9 +29,10 @@ trim space and tab from line
 #### [ARG]
 #### Arg or stdin
 #### [Option]
-	--delete-prefix|-p
+
+#### --delete-prefix|-p
 		delete prefix line
-#### [Ex]
+- [Ex]
 
 ```sh.sh
 aku trim "aa
@@ -43,12 +44,12 @@ bb
 aa
 bb"
 
-	--delete-contain|-c
+#### --delete-contain|-c
 		delete contain line
 
 ```
 
-#### [Ex]
+- [Ex]
 
 ```sh.sh
 aku trim "aa
@@ -59,12 +60,12 @@ bb
 ->
 aa
 
-	--delete-suffix|-s
+#### --delete-suffix|-s
 		delete suffix line
 
 ```
 
-#### [Ex]
+- [Ex]
 
 ```sh.sh
 aku trim "aa
@@ -75,11 +76,11 @@ bbdd
 ->
 aa
 
-	--delete-regex|-p
+#### --delete-regex|-p
 		delete regex line
 ```
 
-#### [Ex]
+- [Ex]
 
 ```sh.sh
 aku trim "aa
@@ -89,14 +90,14 @@ bb
 
 ->
 aa
-	--and|-a
+```
+
+#### --and|-a
 		and condition
 		* This also apply to between regexs and contains
 
-```
 
-
-#### [Ex1]
+- [Ex1]
 
 ```sh.sh
 aku trim "aa
@@ -108,7 +109,7 @@ cbb
 aa
 ```
 
-####[Ex2] contain "and"
+- [Ex2] contain "and"
 
 ```sh.sh
 aku trim "aa
@@ -118,7 +119,9 @@ cbb
 
 ->
 aa
-####[Ex2] contain and regex "and"
+```
+
+- [Ex2] contain and regex "and"
 aku trim "aa
 cbb
 //ccabsedsbb
@@ -135,9 +138,11 @@ Cut field by awk spec
 ### [ARG]
 	Arg or stdin
 ### [Option]
-	--field-num|-f
+
+#### --field-num|-f
 		targe field
-[Ex1] single field
+
+- [Ex1] single field
 
 ```
 echo "aa    bb   cc    #dd" | aku cut -f "2" | aku cut
@@ -146,7 +151,7 @@ echo "aa    bb   cc    #dd" | aku cut -f "2" | aku cut
 bb
 ```
 
-#### [Ex2] multiple field
+- [Ex2] multiple field
 
 ```sh.sh
 echo "aa    bb   cc    #dd" | aku cut -f "1" -f "3-4"
@@ -154,28 +159,28 @@ echo "aa    bb   cc    #dd" | aku cut -f "1" -f "3-4"
 ->
 aa	cc	#dd
 
-	--delimitter|-d
+### --delimitter|-d
 		delimitter (default is space)
-[Ex1] string delimitter
+- [Ex1] string delimitter
 echo "aaAAAbbAAAccAAA#dd" | aku cut -f "2" -d *AA"
 
 ->
 bb
 ```
 
-#### [Ex2] consec space delimiter
+- [Ex2] consec space delimiter
 
 ```sh.sh
 echo "aa  bb     cc      #dd" | aku cut -f "2" -d " "
 
 ->
 bb
-
-	--output-delimiter|-o
-		output delimiter (deafult is tab)
 ```
 
-#### [Ex]
+#### --output-delimiter|-o
+		output delimiter (deafult is tab)
+
+- [Ex]
 
 ```sh.sh
 echo "aa  bb     cc      #dd" | aku cut -f "2-3" -o " "
@@ -184,7 +189,7 @@ echo "aa  bb     cc      #dd" | aku cut -f "2-3" -o " "
 bb cc
 
 ```
-#### [Ex4] multiple field by end range
+- [Ex4] multiple field by end range
 
 ```sh.sh
 echo "aa    bb   cc    #dd" | aku cut -f "1" -f "2-"
@@ -194,21 +199,21 @@ bb	cc	#dd
 kkkkk
 ```
 
-	--row-num|-r
+#### --row-num|-r
 		target row (default: all)
-#### [Ex1] single row
+- [Ex1] single row
 
 ```sh.sh
 echo ~" | aku cut -r "2" | aku cut
 ```
 
-#### [Ex2] multiple row
+- [Ex2] multiple row
 
 ```sh.sh
 echo "~" | aku cut -r "1" -r "3-4"
 ```
 
-#### [Ex3] multiple row by end range
+- [Ex3] multiple row by end range
 
 ```sh.sh
 echo "~" | aku cut -r "1" -r "-4"
@@ -225,12 +230,13 @@ Arg or stdin
 
 #### Option
 
---reverse|-r
+#### --reverse|-r
 	snake case to camel case
---space|-s
+
+#### --space|-s
 	replace underbar to space
 
-#### Ex1
+- Ex1
 
 ```sh.sh
 c2s "aaBB"
@@ -240,7 +246,7 @@ aa_bb
 
 ```
 
-#### Ex2
+- Ex2
 
 ```sh.sh
 c2s "aa_bb"
