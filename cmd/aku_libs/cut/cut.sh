@@ -76,6 +76,18 @@ display_cut_for_help(){
 				print "->"
 				print "aa\tcc\t#dd"
 				print ""
+				print "#### [Ex3] multiple field by end range"
+				print "echo \x22aa    bb   cc    #dd\x22 | aku cut -f \x221\x22 -f \x22-4\x22"
+				print ""
+				print "->"
+				print "aa\tbb\tcc\t#dd"
+				print ""
+				print "#### [Ex4] multiple field by end range"
+				print "echo \x22aa    bb   cc    #dd\x22 | aku cut -f \x221\x22 -f \x222-\x22"
+				print ""
+				print "->"
+				print "bb\tcc\t#dd"
+				print ""
 				print "\t--delimitter|-d"
 				print "\t\tdelimitter (default is space)"
 				print "[Ex1] string delimitter"
@@ -125,6 +137,15 @@ exec_cut(){
 			if( nums_con ~ /^[0-9]+$/ ){
 		  		return sprintf("%s%s", nums_con, contain_num_separator)
 			}
+			if (nums_con ~ /^-[0-9]+$/) {
+			    split(nums_con, parts, "-")
+			    start = 1 
+			    end = parts[2]
+			    for (i = int(start); i <= int(end); i++) {
+			        output = sprintf("%s%s%s", output, contain_num_separator, i)
+			    }
+			    return output
+			  }
 			if (nums_con ~ /^[0-9]+-[0-9]+$/) {
 			    split(nums_con, parts, "-")
 			    start = parts[1]
@@ -156,6 +177,7 @@ exec_cut(){
 					convert_nums_by_compa(field_num_con))
 			}
 			gsub(/,+/, ",", display_field_num_con)
+			display_field_num_con = display_field_num_con ","
 			last_output = ""
 		}
 	{
