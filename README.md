@@ -7,6 +7,7 @@ Table of Sub cmd
 <!-- vim-markdown-toc GFM -->
 
 * [Install](#install)
+* [Uninstall](#uninstall)
 * [SUB_CMD](#sub_cmd)
     * [Trim](#trim)
     * [Cut](#cut)
@@ -20,6 +21,16 @@ Table of Sub cmd
 curl https://raw.githubusercontent.com/puutaro/aku/refs/heads/master/install.sh | sudo bash
 
 ```
+
+## Uninstall
+
+```sh.sh
+
+sudo rm /usr/local/bin/aku \
+&& sudo rm -rf /usr/local/bin/aku_libs
+
+```
+
 
 ## SUB_CMD
 
