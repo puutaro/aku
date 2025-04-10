@@ -11,6 +11,7 @@ Table of Sub cmd
     * [Trim](#trim)
     * [Cut](#cut)
     * [C2s](#c2s)
+    * [Mch](#mch)
    
 
 ## Install
@@ -133,7 +134,7 @@ cbb
 aa
 ```
 
-## Cut
+### Cut
 
 Cut field by awk spec
 
@@ -259,3 +260,121 @@ c2s "aa_bb"
 aaBb
 
 ```
+
+### Mch
+
+This is Matcher.
+As feature, enable matching to field by regex
+
+
+### [ARG]
+
+ Arg or stdin
+ 
+### [Option]
+
+#### --field-num-to-regex|-f
+
+target field to regex
+
+- [Ex1] single field
+
+```sh.sh
+echo "aa bb cc #dd" | aku mch -f "1:^aa$"
+
+->
+aa bb cc #dd
+```
+
+- [Ex2] multiple field
+
+```sh.sh
+echo "aa bb cc #dd" | aku mch -f "1:^aa$" -f "3-4:.*"
+
+->
+aa bb cc #dd
+```
+
+- [Ex3] multiple field by end range
+  
+```sh.sh
+echo "aa bb cc #dd" | aku mch -f "1:^aa$" -f "-4:.*"
+
+->
+aa bb cc #dd
+```
+
+- [Ex4] multiple field by end range
+
+```sh.sh
+echo "aa bb cc #dd" | aku mch -f "1:^aa$" -f "2-:.*"
+
+->
+aa bb cc #dd
+```
+
+#### --negative-field-num-to-regex|-n
+                negative target field to regex
+		
+- [Ex1] single negative field
+
+```sh.sh
+echo "aa bb cc #dd" | aku mch -n "1:^cc$"
+
+->
+aa bb cc #dd
+```
+
+- [Ex2] multiple negative field
+
+```sh.sh
+echo "aa bb cc #dd" | aku mch -n "1:^cc$" -n "3-4:tt"
+
+->
+aa bb cc #dd
+```
+
+- [Ex3] multiple negative field by end range
+
+```sh.sh
+echo "aa bb cc #dd" | aku mch -n "1:^rr$" -n "-4:tt"
+
+->
+aa bb cc #dd
+```
+
+- [Ex4] multiple negative field by end range
+
+```sh.sh
+echo "aa bb cc #dd" | aku mch -f "1:^rr$" -f "2-:ttx22
+
+->
+aa bb cc #dd
+```
+
+#### --delimitter|-d
+
+ delimitter (default is space)
+
+- [Ex1] string delimitter
+
+```sh.sh
+echo "aaAAAbbAAAccAAA#dd" | aku cut -f "2:bb" -d *AA"
+
+->
+aaAAAbbAAAccAAA#dd
+```
+
+#### --and|-a
+
+enable and match
+
+- [Ex]
+
+```sh.sh
+echo "aa bb cc #dd" | aku mch -n "1:^bb$" -f "1:^aa$" -a
+
+->
+aa bb cc #dd
+```
+
