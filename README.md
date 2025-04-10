@@ -191,6 +191,7 @@ echo "aa  bb     cc      #dd" | aku cut -f "2-3" -o " "
 bb cc
 
 ```
+
 - [Ex4] multiple field by end range
 
 ```sh.sh
@@ -233,10 +234,12 @@ Arg or stdin
 #### Option
 
 #### --reverse|-r
-	snake case to camel case
+
+snake case to camel case
 
 #### --space|-s
-	replace underbar to space
+
+replace underbar to space
 
 - Ex1
 
