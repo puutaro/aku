@@ -11,15 +11,17 @@ readonly HELP_DIR_PATH="${EXEC_FILE_DIR}/help"
 readonly TRIM_DIR_PATH="${EXEC_FILE_DIR}/trim"
 readonly CUT_DIR_PATH="${EXEC_FILE_DIR}/cut"
 readonly C2S_DIR_PATH="${EXEC_FILE_DIR}/c2s"
+readonly MCH_DIR_PATH="${EXEC_FILE_DIR}/mch"
 readonly TRIM_SUB_CMD=$(basename "${TRIM_DIR_PATH}")
 readonly CUT_SUB_CMD=$(basename "${CUT_DIR_PATH}")
 readonly C2S_SUB_CMD=$(basename "${C2S_DIR_PATH}")
+readonly MCH_SUB_CMD=$(basename "${MCH_DIR_PATH}")
 
 . "${HELP_DIR_PATH}/help.sh"
 . "${TRIM_DIR_PATH}/trim.sh"
 . "${CUT_DIR_PATH}/cut.sh"
 . "${C2S_DIR_PATH}/c2s.sh"
-
+. "${MCH_DIR_PATH}/mch.sh"
 
 HELP=""
 case "${AKU_SUB_CMD}" in
@@ -54,6 +56,19 @@ case "${AKU_SUB_CMD}" in
 		read_args_for_c2s "${@}"
 		display_help_for_c2s
 		c2s_handler
+		;;
+	${MCH_SUB_CMD})
+		HELP=""
+		CONTENTS=""
+		DELIMITTER=""
+		ON_AND=""
+		FIELD_NUM_TO_REGEX_LIST_CON=""
+		FIELD_NUM_TO_NEGATIVE_REGEX_LIST_CON=""
+		NUM_LIST_CON_SEPARATOR="FIELD_CCCD_SEPARATOR"
+		NUM_REGEX_SEPARATOR=":"
+		read_args_for_mch "${@}"
+		display_help_for_mch
+		exec_mch
 		;;
 	*)
 		display_help_for_aku

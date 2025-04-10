@@ -69,7 +69,7 @@ display_help_for_cut(){
 				print "\t--field-num|-f"
 				print "\t\ttarget field"
 				print "#### [Ex1] single field (default: all)"
-				print "echo \x22aa    bb   cc    #dd\x22 | aku cut -f \x222\x22 | aku cut"
+				print "echo \x22aa    bb   cc    #dd\x22 | aku cut -f \x222\x22"
 				print ""
 				print "->"
 				print "bb"
@@ -132,6 +132,10 @@ display_help_for_cut(){
 }
 exec_cut(){
 	local contain_num_separator=","
+	local max_nf_num=$(\
+		echo "${CONTENTS}" \
+		| awk  -F "${DELIMITTER}" '{print NF; exit}'\
+	)
 	echo "${CONTENTS}"\
 	| awk \
 		-F "${DELIMITTER}" \
@@ -142,6 +146,7 @@ exec_cut(){
 	 	-v DELIMITTER="${DELIMITTER}"\
 	 	-v OUTPUT_DELIMITER="${OUTPUT_DELIMITER}"\
 	 	-v CONTAIN_NUM_SEPARATOR="${contain_num_separator}"\
+	 	-v max_nf_num="${max_nf_num}"\
 		'function convert_nums_by_compa(nums_con, max_num){
 			output = ""
 			if (\
@@ -185,7 +190,6 @@ exec_cut(){
 		  	exit
 		}
 		BEGIN{
-			max_nf_num = 1000
 			field_num_list_len = split(FIELD_NUM_LIST_CON, field_num_list, NUM_LIST_CON_SEPARATOR)
 			DISPLAY_FIELD_NUM_CON = ""
 			for(l=1; l <= field_num_list_len; l++){
