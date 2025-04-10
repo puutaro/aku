@@ -67,8 +67,6 @@ display_help_for_c2s(){
 }
 
 cammelToSnake(){
-	echo "${CONTENTS}"
-	echo --
 	echo "${CONTENTS}" \
 	| awk \
 		-v REPLACE_UNDER_BAR2SPACE="${REPLACE_UNDER_BAR2SPACE}"\
