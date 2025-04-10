@@ -52,7 +52,7 @@ read_args_for_trim(){
 }
 
 
-display_trim_for_help(){
+display_help_for_trim(){
 	case "${HELP}" in
 		"");;
 		*)

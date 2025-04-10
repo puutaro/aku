@@ -56,7 +56,7 @@ read_args_for_cut(){
 	esac
 }
 
-display_cut_for_help(){
+display_help_for_cut(){
 	case "${HELP}" in
 		"");;
 		*)

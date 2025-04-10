@@ -32,7 +32,7 @@ case "${AKU_SUB_CMD}" in
 		ON_AND=""
 		PREFIX_SEPARATOR="TRIM_CCCD_SEPARATOR"
 		read_args_for_trim "${@}"
-		display_trim_for_help
+		display_help_for_trim
 		exec_trim
 		;;
 	${CUT_SUB_CMD})
@@ -43,7 +43,7 @@ case "${AKU_SUB_CMD}" in
 		ROW_NUM_LIST_CON=""
 		NUM_LIST_CON_SEPARATOR="FIELD_CCCD_SEPARATOR"
 		read_args_for_cut "${@}"
-		display_cut_for_help
+		display_help_for_cut
 		exec_cut
 		;;
 	${C2S_SUB_CMD})
@@ -52,7 +52,7 @@ case "${AKU_SUB_CMD}" in
 		REVERSE=""
 		REPLACE_UNDER_BAR2SPACE=""
 		read_args_for_c2s "${@}"
-		display_cut_for_help	
+		display_help_for_c2s
 		c2s_handler
 		;;
 	*)

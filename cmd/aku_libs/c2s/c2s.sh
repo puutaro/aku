@@ -38,7 +38,7 @@ read_args_for_c2s(){
 	fi
 }
 
-display_cut_for_help(){
+display_help_for_c2s(){
 	case "${HELP}" in
 		"");;
 		*)
