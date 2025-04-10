@@ -125,6 +125,8 @@ aa
 ```
 
 - [Ex2] contain and regex "and"
+
+```sh.sh
 aku trim "aa
 cbb
 //ccabsedsbb
