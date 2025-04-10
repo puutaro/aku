@@ -40,7 +40,8 @@ case "${AKU_SUB_CMD}" in
 		DELIMITTER=""
 		OUTPUT_DELIMITER=""
 		FIELD_NUM_LIST_CON=""
-		FIELD_NUM_SEPARATOR="FIELD_CCCD_SEPARATOR"
+		ROW_NUM_LIST_CON=""
+		NUM_LIST_CON_SEPARATOR="FIELD_CCCD_SEPARATOR"
 		read_args_for_cut "${@}"
 		display_cut_for_help
 		exec_cut
