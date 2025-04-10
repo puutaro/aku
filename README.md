@@ -184,6 +184,36 @@ echo "aa  bb     cc      #dd" | aku cut -f "2-3" -o " "
 bb cc
 
 ```
+#### [Ex4] multiple field by end range
+
+```sh.sh
+echo "aa    bb   cc    #dd" | aku cut -f "1" -f "2-"
+
+->
+bb	cc	#dd
+kkkkk
+```
+
+	--row-num|-r
+		target row (default: all)
+#### [Ex1] single row
+
+```sh.sh
+echo ~" | aku cut -r "2" | aku cut
+```
+
+#### [Ex2] multiple row
+
+```sh.sh
+echo "~" | aku cut -r "1" -r "3-4"
+```
+
+#### [Ex3] multiple row by end range
+
+```sh.sh
+echo "~" | aku cut -r "1" -r "-4"
+```
+
 
 ### C2s
 
