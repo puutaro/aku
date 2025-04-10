@@ -33,6 +33,8 @@ read_args_for_c2s(){
 	END
 	if [ -p /dev/stdin ]; then
 	    CONTENTS="$(cat)"
+	elif [ -f "${CONTENTS}" ];then
+		CONTENTS="$(cat "${CONTENTS}")"
 	fi
 }
 
