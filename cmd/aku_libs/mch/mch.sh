@@ -62,7 +62,8 @@ display_help_for_mch(){
 		"");;
 		*)
 			awk 'BEGIN {
-				print "## cut field by awk spec"
+				print "## This is Matcher"
+				print "As feature, enable matching to field by regex"
 				print ""
 				print "### [ARG]"
 				print "\tArg or stdin"
@@ -128,7 +129,7 @@ display_help_for_mch(){
 				print "aaAAAbbAAAccAAA#dd"
 				print ""
 				print "\t--and|-a"
-				print "\t\tand match"
+				print "\t\tenable and match"
 				print "#### [Ex]"
 				print "echo \x22aa bb cc #dd\x22 | aku mch -n \x221:^bb$\x22 -f \x221:^aa$\x22 -a"
 				print ""
