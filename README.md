@@ -6,7 +6,7 @@ Table of Sub cmd
 -----------------
 <!-- vim-markdown-toc GFM -->
 
-* [Install](#install)
+* [Install or update](#install-or-update)
 * [Uninstall](#uninstall)
 * [SUB_CMD](#sub_cmd)
     * [awk](#awk)
@@ -17,7 +17,7 @@ Table of Sub cmd
     * [Rep](#rep)
    
 
-## Install
+## Install or update
 
 ```
 curl https://raw.githubusercontent.com/puutaro/aku/refs/heads/master/install.sh | sudo bash
