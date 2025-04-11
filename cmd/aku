@@ -14,11 +14,13 @@ readonly CUT_DIR_PATH="${EXEC_FILE_DIR}/cut"
 readonly C2S_DIR_PATH="${EXEC_FILE_DIR}/c2s"
 readonly MCH_DIR_PATH="${EXEC_FILE_DIR}/mch"
 readonly AWK_DIR_PATH="${EXEC_FILE_DIR}/awk"
+readonly REP_DIR_PATH="${EXEC_FILE_DIR}/rep"
 readonly TRIM_SUB_CMD=$(basename "${TRIM_DIR_PATH}")
 readonly CUT_SUB_CMD=$(basename "${CUT_DIR_PATH}")
 readonly C2S_SUB_CMD=$(basename "${C2S_DIR_PATH}")
 readonly MCH_SUB_CMD=$(basename "${MCH_DIR_PATH}")
 readonly AWK_SUB_CMD=$(basename "${AWK_DIR_PATH}")
+readonly REP_SUB_CMD=$(basename "${REP_DIR_PATH}")
 
 . "${HELP_DIR_PATH}/help.sh"
 . "${TRIM_DIR_PATH}/trim.sh"
@@ -26,6 +28,8 @@ readonly AWK_SUB_CMD=$(basename "${AWK_DIR_PATH}")
 . "${C2S_DIR_PATH}/c2s.sh"
 . "${MCH_DIR_PATH}/mch.sh"
 . "${AWK_DIR_PATH}/awk.sh"
+. "${REP_DIR_PATH}/rep.sh"
+
 
 readonly AWK_HOME_PATH="${HOME}/.${AKU_CMD_NAME}"
 test -d "${AWK_HOME_PATH}" \
@@ -91,6 +95,19 @@ case "${AKU_SUB_CMD}" in
 		read_args_for_awk "${@}"
 		display_help_for_awk
 		exec_awk
+		;;
+	${REP_SUB_CMD})
+		CONTENTS=""
+		FIELD_NUM_TO_REMOVE_REGEX_CON=""
+		FIELD_NUM_TO_STR_CON=""
+		FIELD_NUM_TO_STR_LIST_CON=""
+		DELIMITTER=""
+		OUTPUT_DELIMITER=""
+		TURN=""
+		NUM_REGEX_SEPARATOR=":"
+		read_args_for_rep "${@}"
+		display_help_for_rep
+		exec_rep
 		;;
 	*)
 		display_help_for_aku
