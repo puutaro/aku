@@ -9,6 +9,7 @@ Table of Sub cmd
 * [Install](#install)
 * [Uninstall](#uninstall)
 * [SUB_CMD](#sub_cmd)
+    * [awk](#awk)
     * [Trim](#trim)
     * [Cut](#cut)
     * [C2s](#c2s)
@@ -33,6 +34,24 @@ sudo rm /usr/local/bin/aku \
 
 
 ## SUB_CMD
+
+### Awk
+
+Set awk path
+
+#### [ARG]
+
+- `${awk path}`
+
+register awk path
+
+- `-`
+
+remove register awk path
+
+- `(blank)`
+
+show register awk path
 
 ### Trim
 
