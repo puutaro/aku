@@ -119,7 +119,7 @@ display_help_for_trim(){
 }
 exec_trim(){
 	echo "${CONTENTS}"\
-	 | awk \
+	 | ${AWK_PATH} \
 	 	-v DELETE_PREFIXS="${DELETE_PREFIXS#${PREFIX_SEPARATOR}}" \
 	 	-v DELETE_SUFFIX="${DELETE_SUFFIX#${PREFIX_SEPARATOR}}" \
 	 	-v DELETE_CONTAIN="${DELETE_CONTAIN#${PREFIX_SEPARATOR}}" \

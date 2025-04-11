@@ -137,7 +137,7 @@ exec_cut(){
 		| awk  -F "${DELIMITTER}" '{print NF; exit}'\
 	)
 	echo "${CONTENTS}"\
-	| awk \
+	| ${AWK_PATH} \
 		-F "${DELIMITTER}" \
 		-v src_con="${CONTENTS}" \
 	 	-v FIELD_NUM_LIST_CON="${FIELD_NUM_LIST_CON#${NUM_LIST_CON_SEPARATOR}}" \

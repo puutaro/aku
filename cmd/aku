@@ -5,6 +5,7 @@ set -eu
 
 LANG=C
 AKU_SUB_CMD="${1:-}"
+readonly AKU_CMD_NAME="$(basename $0)"
 readonly AKU_LIBS_DIR_PATH="$(cd $(dirname $0) ; pwd)"
 readonly EXEC_FILE_DIR="${AKU_LIBS_DIR_PATH}/aku_libs"
 readonly HELP_DIR_PATH="${EXEC_FILE_DIR}/help"
@@ -12,17 +13,34 @@ readonly TRIM_DIR_PATH="${EXEC_FILE_DIR}/trim"
 readonly CUT_DIR_PATH="${EXEC_FILE_DIR}/cut"
 readonly C2S_DIR_PATH="${EXEC_FILE_DIR}/c2s"
 readonly MCH_DIR_PATH="${EXEC_FILE_DIR}/mch"
+readonly AWK_DIR_PATH="${EXEC_FILE_DIR}/awk"
 readonly TRIM_SUB_CMD=$(basename "${TRIM_DIR_PATH}")
 readonly CUT_SUB_CMD=$(basename "${CUT_DIR_PATH}")
 readonly C2S_SUB_CMD=$(basename "${C2S_DIR_PATH}")
 readonly MCH_SUB_CMD=$(basename "${MCH_DIR_PATH}")
+readonly AWK_SUB_CMD=$(basename "${AWK_DIR_PATH}")
 
 . "${HELP_DIR_PATH}/help.sh"
 . "${TRIM_DIR_PATH}/trim.sh"
 . "${CUT_DIR_PATH}/cut.sh"
 . "${C2S_DIR_PATH}/c2s.sh"
 . "${MCH_DIR_PATH}/mch.sh"
+. "${AWK_DIR_PATH}/awk.sh"
 
+readonly AWK_HOME_PATH="${HOME}/.${AKU_CMD_NAME}"
+test -d "${AWK_HOME_PATH}" \
+|| mkdir -p "${AWK_HOME_PATH}"
+readonly AWK_CMD_TXT_PATH="${AWK_HOME_PATH}/cmd.txt"
+readonly default_awk="awk"
+AWK_PATH="${default_awk}"
+if [  -f "${AWK_CMD_TXT_PATH}" ];then
+	AWK_PATH=$(\
+		awk '(NR==1){ print }' \
+			"${AWK_CMD_TXT_PATH}"\
+	)
+	test -f "${AWK_PATH}" \
+		|| AWK_PATH="${default_awk}"
+fi
 HELP=""
 case "${AKU_SUB_CMD}" in
 	${TRIM_SUB_CMD})
@@ -49,7 +67,6 @@ case "${AKU_SUB_CMD}" in
 		exec_cut
 		;;
 	${C2S_SUB_CMD})
-		HELP=""
 		CONTENTS=""
 		REVERSE=""
 		REPLACE_UNDER_BAR2SPACE=""
@@ -58,7 +75,6 @@ case "${AKU_SUB_CMD}" in
 		c2s_handler
 		;;
 	${MCH_SUB_CMD})
-		HELP=""
 		CONTENTS=""
 		DELIMITTER=""
 		ON_AND=""
@@ -69,6 +85,12 @@ case "${AKU_SUB_CMD}" in
 		read_args_for_mch "${@}"
 		display_help_for_mch
 		exec_mch
+		;;
+	${AWK_SUB_CMD})
+		CONTENTS=""
+		read_args_for_awk "${@}"
+		display_help_for_awk
+		exec_awk
 		;;
 	*)
 		display_help_for_aku

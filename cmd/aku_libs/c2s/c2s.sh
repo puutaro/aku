@@ -68,7 +68,7 @@ display_help_for_c2s(){
 
 cammelToSnake(){
 	echo "${CONTENTS}" \
-	| awk \
+	| "${AWK_PATH}" \
 		-v REPLACE_UNDER_BAR2SPACE="${REPLACE_UNDER_BAR2SPACE}"\
  	'{
 		middle_result = "";
