@@ -215,29 +215,6 @@ echo "aa  bb     cc      #dd" | aku cut -f "2" -d " "
 bb
 ```
 
-#### --output-delimiter|-o
-		output delimiter (deafult is tab)
-
-- [Ex]
-
-```sh.sh
-echo "aa  bb     cc      #dd" | aku cut -f "2-3" -o " "
-
-->
-bb cc
-
-```
-
-- [Ex4] multiple field by end range
-
-```sh.sh
-echo "aa    bb   cc    #dd" | aku cut -f "1" -f "2-"
-
-->
-bb	cc	#dd
-kkkkk
-```
-
 #### --row-num|-r
 		target row (default: all)
 - [Ex1] single row
