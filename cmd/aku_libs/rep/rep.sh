@@ -285,7 +285,6 @@ exec_rep(){
 			last_output = ""
 		}
 	{
-		last_output = ""
 		line = ""
 		for(l=1;l<=NF;l++){
 			match_field_num = sprintf("%s%s%s", CONTAIN_NUM_SEPARATOR, l, CONTAIN_NUM_SEPARATOR)
@@ -304,7 +303,7 @@ exec_rep(){
 					line = $l
 					continue
 				}
-				line = sprintf("%s%s%s", line, OUTPUT_DELIMITER $l)
+				line = sprintf("%s%s%s", line, OUTPUT_DELIMITER, $l)
 				continue
 			}
 			cur_regex = FIELD_NUM_TO_REMOVE_REGEX_MAP[l]
