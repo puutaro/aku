@@ -206,16 +206,16 @@ exec_hld(){
 				)  > "/dev/stderr"
 				exit 1
 			}
-			for (l =1; l<=START_HOLDER_LIST_LEN; l++){
-				cur_start_holder_re = START_HOLDER_LIST[l]
-				for (k =l + 1; k<=START_HOLDER_LIST_LEN; k++){
-					next_start_holder_re = START_HOLDER_LIST[k]
-					if(cur_start_holder_re != next_start_holder_re) continue
-					printf( "forbidden multiple same start holder name; %s\n", \
-						cur_start_holder_re) > "/dev/stderr"
-						exit 1
-				}
-			}
+			# for (l =1; l<=START_HOLDER_LIST_LEN; l++){
+			# 	cur_start_holder_re = START_HOLDER_LIST[l]
+			# 	for (k =l + 1; k<=START_HOLDER_LIST_LEN; k++){
+			# 		next_start_holder_re = START_HOLDER_LIST[k]
+			# 		if(cur_start_holder_re != next_start_holder_re) continue
+			# 		printf( "forbidden multiple same start holder name; %s\n", \
+			# 			cur_start_holder_re) > "/dev/stderr"
+			# 			exit 1
+			# 	}
+			# }
 			# for (l =1; l<=START_HOLDER_LIST_LEN; l++){
 			# 	cur_end_holder_re = END_HOLDER_LIST[l]
 			# 	for (k =l + 1; k<=START_HOLDER_LIST_LEN; k++){
