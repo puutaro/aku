@@ -22,10 +22,6 @@ read_args_for_cut(){
 			DELIMITTER="${2}"
 			shift
 			;;
-		--output-delimiter|-o)
-			OUTPUT_DELIMITER="${2}"
-			shift
-			;;
 		-*)
 			echo "no option: ${1}"
 			exit 1
@@ -48,10 +44,6 @@ read_args_for_cut(){
 	fi
 	case "${DELIMITTER}" in
 		"") DELIMITTER=" "
-			;;
-	esac
-	case "${OUTPUT_DELIMITER}" in
-		"") OUTPUT_DELIMITER="\t"
 			;;
 	esac
 }
@@ -117,14 +109,6 @@ display_help_for_cut(){
 				print "->"
 				print "bb"
 				print ""
-				print "\t--output-delimiter|-o"
-				print "\t\toutput delimiter (deafult is tab)"
-				print "#### [Ex]"
-				print "echo \x22aa  bb     cc      #dd\x22 | aku cut -f \x222-3\x22 -o \x22 \x22"
-				print ""
-				print "->"
-				print "bb cc"
-				print ""
 			}' | less
 			exit 0
 			;;
@@ -144,7 +128,6 @@ exec_cut(){
 	 	-v ROW_NUM_LIST_CON="${ROW_NUM_LIST_CON#${NUM_LIST_CON_SEPARATOR}}" \
 	 	-v NUM_LIST_CON_SEPARATOR="${NUM_LIST_CON_SEPARATOR}" \
 	 	-v DELIMITTER="${DELIMITTER}"\
-	 	-v OUTPUT_DELIMITER="${OUTPUT_DELIMITER}"\
 	 	-v CONTAIN_NUM_SEPARATOR="${contain_num_separator}"\
 	 	-v max_nf_num="${max_nf_num}"\
 		'function convert_nums_by_compa(nums_con, max_num){
@@ -253,17 +236,8 @@ exec_cut(){
 				line = sprintf("%s%s", line, $l)
 				continue
 			}
-			line = sprintf("%s%s%s",line, $l, OUTPUT_DELIMITER)
+			line = sprintf("%s%s%s",line, $l, DELIMITTER)
 		}
-		if(!last_output){
-			last_output = line
-			next
-		}
-		last_output = sprintf("%s\n%s", last_output, line)
-	}
-	END {
-		regex_last_delmiter = sprintf("%s$", OUTPUT_DELIMITER)
-		gsub(regex_last_delmiter, "", last_output)
-		print last_output
+		print line
 	}'
 }
