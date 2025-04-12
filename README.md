@@ -33,6 +33,8 @@ sudo rm /usr/local/bin/aku \
 
 ```
 
+- gnu awk require, set gnu awk path by bellow [awk sub cmd](#awk)
+
 
 ## SUB_CMD
 
