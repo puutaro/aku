@@ -206,8 +206,8 @@ exec_rep(){
 				}
 				return output
 			}
-		  	printf( "contain no number in --field-num|-f arg: %s\n", nums_con)
-		  	exit
+		  	printf( "contain no number in --field-num|-f arg: %s\n", nums_con) > "/dev/stderr"
+		  	exit 1
 		}
 		BEGIN{
 			DISPLAY_FIELD_NUM_CON = ""
@@ -220,8 +220,8 @@ exec_rep(){
 				FIELD_NUM_TO_REMOVE_REGEX_CON \
 				&& colonPos == 0\
 			) {
-				print "field num or regex not found: "FIELD_NUM_TO_REMOVE_REGEX_CON
-				exit 
+				print "field num or regex not found: "FIELD_NUM_TO_REMOVE_REGEX_CON > "/dev/stderr"
+				exit 1
 			}
 			field_num_con = substr(FIELD_NUM_TO_REMOVE_REGEX_CON, 1, colonPos - 1)
 			regex_con = substr(FIELD_NUM_TO_REMOVE_REGEX_CON, colonPos + 1) # コロンの次の文字から最後までを抽出
@@ -255,8 +255,8 @@ exec_rep(){
 				FIELD_NUM_TO_STR_CON \
 				&& colonPos == 0\
 			) {
-				print "field num or str not found: "FIELD_NUM_TO_STR_CON
-				exit 
+				print "field num or str not found: "FIELD_NUM_TO_STR_CON > "/dev/stderr"
+				exit 1
 			}
 			field_num_con = substr(FIELD_NUM_TO_STR_CON, 1, colonPos - 1)
 			str_list_con = substr(FIELD_NUM_TO_STR_CON, colonPos + 1) # コロンの次の文字から最後までを抽出

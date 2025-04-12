@@ -198,8 +198,8 @@ exec_mch(){
 				}
 				return output
 			}
-		  	printf( "contain no number in --field-num|-f arg: %s\n", nums_con)
-		  	exit
+		  	printf( "contain no number in --field-num|-f arg: %s\n", nums_con) > "/dev/stderr"
+		  	exit 1 
 		}
 		BEGIN{
 			field_num_to_regex_list_len = split(FIELD_NUM_TO_REGEX_LIST_CON, field_num_to_regex_list, NUM_LIST_CON_SEPARATOR)
@@ -214,8 +214,8 @@ exec_mch(){
 				regex_list_con ="" 
 				colonPos = index(field_num_to_regex_con, NUM_REGEX_SEPARATOR) # 最初のコロンの位置を取得
 				if(colonPos == 0) {
-					print "field num or regex not found: "field_num_to_regex_con
-					exit 
+					print "field num or regex not found: "field_num_to_regex_con > "/dev/stderr"
+					exit 1
 				}
 				field_num_con = substr(field_num_to_regex_con, 1, colonPos - 1)
 				regex_list_con = substr(field_num_to_regex_con, colonPos + 1) # コロンの次の文字から最後までを抽出
@@ -258,8 +258,8 @@ exec_mch(){
 				regex_list_con ="" 
 				colonPos = index(field_num_to_regex_con, NUM_REGEX_SEPARATOR) # 最初のコロンの位置を取得
 				if(colonPos == 0) {
-					print "negative field num or regex not found: "field_num_to_regex_con
-					exit 
+					print "negative field num or regex not found: "field_num_to_regex_con > "/dev/stderr"
+					exit 1
 				}
 				field_num_con = substr(field_num_to_regex_con, 1, colonPos - 1)
 				regex_list_con = substr(field_num_to_regex_con, colonPos + 1) # コロンの次の文字から最後までを抽出

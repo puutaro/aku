@@ -169,8 +169,8 @@ exec_cut(){
 				}
 				return output
 			}
-		  	printf( "contain no number in --field-num|-f arg: %s\n", nums_con)
-		  	exit
+		  	printf( "contain no number in --field-num|-f arg: %s\n", nums_con)  > "/dev/stderr"
+		  	exit 1
 		}
 		BEGIN{
 			field_num_list_len = split(FIELD_NUM_LIST_CON, field_num_list, NUM_LIST_CON_SEPARATOR)
@@ -194,7 +194,7 @@ exec_cut(){
 					"%s%s%s",
 					DISPLAY_ROW_NUM_CON,\
 					CONTAIN_NUM_SEPARATOR,
-					convert_nums_by_compa(row_num_con, max_lines))
+					convert_nums_by_compa(row_num_con, max_lines)) > "/dev/stderr"
 			}
 			gsub(/,+/, ",", DISPLAY_ROW_NUM_CON)
 
