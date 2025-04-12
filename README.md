@@ -15,6 +15,7 @@ Table of Sub cmd
     * [C2s](#c2s)
     * [Mch](#mch)
     * [Rep](#rep)
+    * [Hld](#hld)
    
 
 ## Install or update
@@ -512,3 +513,220 @@ echo "aa bb cc #dd" | aku rep -f "1:B" -t "1"
 Ba bb cc #dd
 
 ```
+
+## Hld
+
+Extract row between start holder and end holder
+
+### [ARG]
+Arg or stdin
+
+### [Option]
+
+#### --start-holder|-s
+
+start holder
+
+#### --end-holder|-e
+
+end holder
+
+- [Ex1] one pair
+
+```sh.sh
+echo "aa
+bb
+cc
+dd
+ee
+ff" | aku hld -s "^aa$" -e "^dd$"
+
+->
+aa
+bb
+cc
+dd
+```
+
+- [Ex2] mutiple holder
+
+```sh.sh
+echo "aa
+bb
+cc
+dd
+ee
+ff" | aku hld -s "^aa$" -e "^dd$"  -s "^ee$" -e "^ff$"
+
+->
+aa
+bb
+cc
+dd
+ee
+ff
+```
+
+- [Ex3] duplication holder
+
+```sh.sh
+echo "aa
+bb
+cc
+dd
+ee
+fff" | aku hld -s "^aa$" -e "^dd$"  -s "^bb$" -e "^ee$"
+
+->
+"aa
+bb
+cc
+dd
+ee
+```
+
+#### --negative|-n
+
+negative match
+
+
+- [Ex1] one pair
+
+```sh.sh
+  
+echo "aa
+bb
+cc
+dd
+ee
+ff" | aku hld -s "^aa$" -e/x22/^cc$x22 -n
+
+->
+dd
+ee
+ff
+```
+
+- [Ex2] mutiple holder
+
+```sh.sh
+echo "aa
+bb
+cc
+dd
+ee
+ff" | aku hld -s "^aa$" -e "^cc$"  -s "^dd$" -e "^ee$" -n
+
+->
+ff
+```
+
+- [Ex3] duplication holder
+
+```sh.sh
+echo "aa
+bb
+cc
+dd
+ee
+fff" | aku hld -s "^aa$" -e "^dd$"  "^bb$" -e "^ee$" -n
+
+->
+ff
+```
+
+#### --holder-layout|-l
+
+output specify format
+value: 
+- start: only start hodler
+- end: only end holder no bound str
+- left: output line with start holder prefix by tab separated
+- blank: normal
+  
+##### this option cannot specify sametime with negative option
+
+
+- [Ex] start
+
+```sh.sh
+echo "aa
+bb
+cc
+dd
+ee
+ff" | aku hld -s "^aa$" -e/x22/^cc$x22 -l start
+
+->
+aa
+bb
+```
+
+- [Ex] end
+
+```sh.sh
+echo "aa
+bb
+cc
+dd
+ee
+ff" | aku hld -s "^aa$" -e/x22/^cc$x22 -l end
+
+->
+bb
+cc
+```
+
+- [Ex] out
+
+  ```sh.sh
+echo "aa
+bb
+cc
+dd
+ee
+ff" | aku hld -s "^aa$" -e/x22/^cc$x22 -l out
+
+->
+bb
+```sh.sh
+
+- [Ex] left
+
+```sh.sh
+echo "aa
+bb
+cc
+dd
+ee
+ff" | aku hld -s "^aa$" -e/x22/^cc$x22 -l left
+
+->
+aa	bb
+aa	cc
+```
+
+#### --boudary-str|-b
+
+put string after end holder 
+
+##### this option enable in blank and end layout: becuase of require end holder
+
+- [Ex]
+
+```sh.sh
+echo "aa
+bb
+cc
+dd
+ee
+ff" | aku hld -s "^aa$" -e/x22/^cc$x22 -b "
+"
+
+->
+aa
+bb
+cc
+```
+
+
