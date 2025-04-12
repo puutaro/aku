@@ -15,12 +15,14 @@ readonly C2S_DIR_PATH="${EXEC_FILE_DIR}/c2s"
 readonly MCH_DIR_PATH="${EXEC_FILE_DIR}/mch"
 readonly AWK_DIR_PATH="${EXEC_FILE_DIR}/awk"
 readonly REP_DIR_PATH="${EXEC_FILE_DIR}/rep"
+readonly HLD_DIR_PATH="${EXEC_FILE_DIR}/hld"
 readonly TRIM_SUB_CMD=$(basename "${TRIM_DIR_PATH}")
 readonly CUT_SUB_CMD=$(basename "${CUT_DIR_PATH}")
 readonly C2S_SUB_CMD=$(basename "${C2S_DIR_PATH}")
 readonly MCH_SUB_CMD=$(basename "${MCH_DIR_PATH}")
 readonly AWK_SUB_CMD=$(basename "${AWK_DIR_PATH}")
 readonly REP_SUB_CMD=$(basename "${REP_DIR_PATH}")
+readonly HLD_SUB_CMD=$(basename "${HLD_DIR_PATH}")
 
 . "${HELP_DIR_PATH}/help.sh"
 . "${TRIM_DIR_PATH}/trim.sh"
@@ -29,6 +31,7 @@ readonly REP_SUB_CMD=$(basename "${REP_DIR_PATH}")
 . "${MCH_DIR_PATH}/mch.sh"
 . "${AWK_DIR_PATH}/awk.sh"
 . "${REP_DIR_PATH}/rep.sh"
+. "${HLD_DIR_PATH}/hld.sh"
 
 
 readonly AWK_HOME_PATH="${HOME}/.${AKU_CMD_NAME}"
@@ -107,6 +110,18 @@ case "${AKU_SUB_CMD}" in
 		read_args_for_rep "${@}"
 		display_help_for_rep
 		exec_rep
+		;;
+	${HLD_SUB_CMD})
+		CONTENTS=""
+		START_HOLDER_LIST_CON=""
+		END_HOLDER_LIST_CON=""
+		HOLDER_LAYOUT=""
+		HOLDER_LIST_CON_SEPARATOR="HOLDER_CCCD_SEPARATOR"
+		ON_NEGATIVE=""
+		BOUND_STR=""
+		read_args_for_hld "${@}"
+		display_help_for_hld
+		exec_hld
 		;;
 	*)
 		display_help_for_aku

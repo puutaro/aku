@@ -296,7 +296,12 @@ exec_mch(){
 			last_output = ""
 		}
 	{
+		if(NF==0) {
+			print $0
+			next
+		}
 		# print "## 00" $0
+
 		cur_all_match_count = 0
 		for(l=1;l<=NF;l++){
 			match_field_num = sprintf("%s%s%s", CONTAIN_NUM_SEPARATOR, l, CONTAIN_NUM_SEPARATOR)
@@ -354,7 +359,6 @@ exec_mch(){
 				# print "## cur_regex "cur_regex
 				# print "## cur str "$l
 				if($l ~ cur_regex){
-					# print "## no negative match"
 					 continue
 				}
 				cur_all_match_count++
