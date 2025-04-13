@@ -53,7 +53,6 @@ read_args_for_trm(){
 	elif [ -f "${CONTENTS}" ];then
 		CONTENTS="$(cat "${CONTENTS}")"
 	fi
-	echo "## arg TRIM_STR_LIST_CON"${TRIM_STR_LIST_CON}
 }
 
 
