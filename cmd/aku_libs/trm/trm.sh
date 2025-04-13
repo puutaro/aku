@@ -159,12 +159,12 @@ exec_trm(){
 		 BEGIN {
 		 	TRIM_STR_LIST_LEN = split(TRIM_STR_LIST_CON, TRIM_STR_LIST, TRIM_STR_SEPARATOR)
 			if(!TRIM_STR_LIST_LEN){
-				print "## TRIM_STR_LIST_LEN"TRIM_STR_LIST_LEN
+				# print "## TRIM_STR_LIST_LEN"TRIM_STR_LIST_LEN
 				TRIM_STR_LIST_LEN = 1
 				TRIM_STR_LIST[1] = ""
 			}
-			print "## TRIM_STR_LIST_LEN"TRIM_STR_LIST_LEN
-			print "## TRIM_STR_LIST[1] "TRIM_STR_LIST[1]
+			# print "## TRIM_STR_LIST_LEN"TRIM_STR_LIST_LEN
+			# print "## TRIM_STR_LIST[1] "TRIM_STR_LIST[1]
 		 	total_and_count = 0
 		 	delete_prefix_list_len = split(DELETE_PREFIXS , delete_prefix_list, PREFIX_SEPARATOR)
 		 	if(delete_prefix_list_len > 0) {
@@ -187,15 +187,15 @@ exec_trm(){
 		 	for(l=1; l <= TRIM_STR_LIST_LEN; l++){
 		 		regex_src_str = TRIM_STR_LIST[l]
 		 		if(!regex_src_str){
-		 			print "## not"
+		 			# print "## not"
 		 			regex_src_str = "\t 　"
 		 		}
-		 		print "## regex_src_str"regex_src_str"AA"
+		 		# print "## regex_src_str"regex_src_str"AA"
 		 		trim_regex_con = sprintf("[%s]+", regex_src_str)
 		 		prefix_trim_regex_con = sprintf("^%s", trim_regex_con)
 		 		suffix_trim_regex_con = sprintf("%s$", trim_regex_con)
-		 		print "## prefix_trim_regex_con "prefix_trim_regex_con
-		 		print "## suffix_trim_regex_con "suffix_trim_regex_con
+		 		# print "## prefix_trim_regex_con "prefix_trim_regex_con
+		 		# print "## suffix_trim_regex_con "suffix_trim_regex_con
 		 		gsub(prefix_trim_regex_con, "", $0)
 		 		gsub(suffix_trim_regex_con, "", $0)
 		 	}
