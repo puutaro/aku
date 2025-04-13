@@ -70,11 +70,12 @@ display_help_for_rep(){
 			;;
 		*)
 			awk 'BEGIN {
-				print "## Replace field"
+				print "## Rep"
+				print "Replace field"
 				print ""
-				print "### [ARG]"
+				print "### ARG"
 				print "Arg or stdin"
-				print "### [Option]"
+				print "### Option"
 				print "#### --field-num-to-delete-regex|-f"
 				print "target field to remove regex"
 				print "- [Ex1] single field"

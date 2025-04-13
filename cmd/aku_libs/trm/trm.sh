@@ -97,7 +97,7 @@ display_help_for_trm(){
 				print "aa\nbb\x22"
 				print ""
 				print "#### --delete-contain|-c"
-				print "\t\tdelete contain line"
+				print "delete contain line"
 				print "- [Ex]"
 				print "aku trim -i \x22aa\nbb\n//cc\n#dd\x22 -c \x22#\x22 -c \x22bb\x22"
 				print ""

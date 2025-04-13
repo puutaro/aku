@@ -689,7 +689,7 @@ ff" | aku hld -s "^aa$" -e/x22/^cc$x22 -l out
 
 ->
 bb
-```sh.sh
+```
 
 - [Ex] left
 
@@ -729,4 +729,146 @@ bb
 cc
 ```
 
+## Trm
 
+trim space and tab from line
+
+### Arg
+
+- [Ex] trim char
+default is space / tab / zenkaku space
+
+- [Ex] default trim char
+
+```sh.sh
+echo " aa 	" | aku trim
+
+->
+aa
+```
+
+-  [Ex] specify char
+
+```sh.sh
+aku trim "cb " -i "cc aa bb cc"
+
+->
+aa
+```
+
+- [Ex] specify char by consec
+
+```sh.sh
+echo "cc aa bb cc" | aku trim "c " " " "b "
+
+->
+aa
+```
+
+### Option
+
+#### --delete-prefix|-p
+
+delete prefix line
+
+
+- [Ex]
+
+```sh.sh
+echo -e "aa
+bb
+//cc
+#dd" | aku trim -p "#" -p "//"
+
+->
+aa
+bb"
+```
+
+#### --delete-contain|-c
+		delete contain line
+- [Ex]
+
+```sh.sh
+aku trim -i "aa
+bb
+//cc
+#dd" -c "#" -c "bb"
+
+->
+aa
+```
+
+#### --delete-suffix|-s
+
+delete suffix line
+
+- [Ex]
+
+```sh.sh
+echo -e "aa
+bbdd
+//cc
+#dd" | aku trim -s "dd" -s "cc"
+
+->
+aa
+```
+
+#### --delete-regex|-p
+
+tdelete regex line
+
+- [Ex]
+
+```sh.sh
+aku trim "aa
+bb
+//cc
+#dd" -r ".*cc.*" -r ".*bb.*"
+
+->
+aa
+```
+
+#### --and|-a
+
+and condition
+
+* This also apply to between regexs and contains
+
+- [Ex1]
+
+```sh.sh
+aku trim -i "aa
+cbb
+//ccbb
+#caabb" -p "c" -s "bb" -a
+
+->
+aa
+```
+
+- [Ex2] contain "and"
+
+```sh.sh
+aku trim -i "aa
+cbb
+//ccabsedsbb
+#caaabsedsbb" -c "abs" -c "ads" -a
+
+->
+aa
+```
+
+- [Ex2] contain and regex "and"
+
+```sh.sh
+aku trim -i "aa
+cbb
+//ccabsedsbb
+#caaabsedsbb" -r ".*abs.*" -c "ads" -a
+
+->
+aa
+```

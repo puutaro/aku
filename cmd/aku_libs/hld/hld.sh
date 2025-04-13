@@ -62,11 +62,12 @@ display_help_for_hld(){
 			;;
 		*)
 			awk 'BEGIN {
-				print "## Extract row between start holder and end holder"
+				print "## Hld"
+				print "Extract row between start holder and end holder"
 				print ""
-				print "### [ARG]"
+				print "### ARG"
 				print "Arg or stdin"
-				print "### [Option]"
+				print "### Option"
 				print "#### --start-holder|-s"
 				print "start holder"
 				print "#### --end-holder|-e"

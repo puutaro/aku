@@ -31,10 +31,11 @@ display_help_for_awk(){
 		"");;
 		*)
 			awk 'BEGIN {
+				print "Awk"
 				print "## Set awk path"
 				print ""
 				print ""
-				print "### [ARG]"
+				print "### ARG"
 				print "${awk path}"
 				print "register awk path"
 				print ""
