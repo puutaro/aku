@@ -16,6 +16,7 @@ Table of Sub cmd
     * [Mch](#mch)
     * [Rep](#rep)
     * [Hld](#hld)
+    * [Up](#up)
    
 
 ## Install or update
@@ -871,4 +872,76 @@ cbb
 
 ->
 aa
+```
+
+## Up
+
+to lowercase
+
+
+### Arg
+
+- Ex
+
+aku up "aa"
+->
+AA
+
+### Option
+
+
+#### --position|-p
+
+specify position
+
+- Ex
+
+```sh.sh
+aku up "aaaa" -p 1
+->
+Aaaa
+```
+
+- Ex
+
+```sh.sh
+aku up "aaaa" -p 2-4
+->
+aAAA
+```
+
+- Ex
+
+```sh.sh
+aku up "aaaa" -p 1
+->
+Aaaa
+```
+
+- Ex
+
+```sh.sh
+aku up "aaaa" -p 2-4
+->
+aAAA
+```
+
+- Ex
+
+```sh.sh
+
+aku up "aaaa" -p -3
+->
+AAAa
+
+```
+
+#### --lower|-l
+
+- Ex
+
+```sh.sh
+aku up "AAAA" -l -3
+->
+aaaA
 ```
