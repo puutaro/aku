@@ -9,14 +9,14 @@ readonly AKU_CMD_NAME="$(basename $0)"
 readonly AKU_LIBS_DIR_PATH="$(cd $(dirname $0) ; pwd)"
 readonly EXEC_FILE_DIR="${AKU_LIBS_DIR_PATH}/aku_libs"
 readonly HELP_DIR_PATH="${EXEC_FILE_DIR}/help"
-readonly TRIM_DIR_PATH="${EXEC_FILE_DIR}/trim"
+readonly TRM_DIR_PATH="${EXEC_FILE_DIR}/trm"
 readonly CUT_DIR_PATH="${EXEC_FILE_DIR}/cut"
 readonly C2S_DIR_PATH="${EXEC_FILE_DIR}/c2s"
 readonly MCH_DIR_PATH="${EXEC_FILE_DIR}/mch"
 readonly AWK_DIR_PATH="${EXEC_FILE_DIR}/awk"
 readonly REP_DIR_PATH="${EXEC_FILE_DIR}/rep"
 readonly HLD_DIR_PATH="${EXEC_FILE_DIR}/hld"
-readonly TRIM_SUB_CMD=$(basename "${TRIM_DIR_PATH}")
+readonly TRM_SUB_CMD=$(basename "${TRM_DIR_PATH}")
 readonly CUT_SUB_CMD=$(basename "${CUT_DIR_PATH}")
 readonly C2S_SUB_CMD=$(basename "${C2S_DIR_PATH}")
 readonly MCH_SUB_CMD=$(basename "${MCH_DIR_PATH}")
@@ -25,7 +25,7 @@ readonly REP_SUB_CMD=$(basename "${REP_DIR_PATH}")
 readonly HLD_SUB_CMD=$(basename "${HLD_DIR_PATH}")
 
 . "${HELP_DIR_PATH}/help.sh"
-. "${TRIM_DIR_PATH}/trim.sh"
+. "${TRM_DIR_PATH}/trm.sh"
 . "${CUT_DIR_PATH}/cut.sh"
 . "${C2S_DIR_PATH}/c2s.sh"
 . "${MCH_DIR_PATH}/mch.sh"
@@ -50,17 +50,20 @@ if [  -f "${AWK_CMD_TXT_PATH}" ];then
 fi
 HELP=""
 case "${AKU_SUB_CMD}" in
-	${TRIM_SUB_CMD})
+	${TRM_SUB_CMD})
 		CONTENTS=""
 		DELETE_PREFIXS=""
 		DELETE_SUFFIX=""
 		DELETE_CONTAIN=""
 		DELETE_REGEX=""
 		ON_AND=""
+		REGEX_LIST_CON=""
+		TRIM_STR_LIST_CON=""
 		PREFIX_SEPARATOR="TRIM_CCCD_SEPARATOR"
-		read_args_for_trim "${@}"
-		display_help_for_trim
-		exec_trim
+		TRIM_STR_SEPARATOR="TRIM_STR_CCCD_SEPARATOR"
+		read_args_for_trm "${@}"
+		display_help_for_trm
+		exec_trm
 		;;
 	${CUT_SUB_CMD})
 		CONTENTS=""
