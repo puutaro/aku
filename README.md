@@ -18,6 +18,7 @@ Table of Sub cmd
     * [Hld](#hld)
     * [Up](#up)
 		* [If](#if)
+		* [Tr](#tr)
 
 ## Install or update
 
@@ -982,6 +983,105 @@ bb
 ```sh.sh
 echo "aa
 bb" | aku if  "aa" "touch @{0}; echo @{0}"
+```
+
+## Tr
+
+Total replace
+
+### ARG
+
+Arg
+
+#### first arg
+
+regex (default : newline)
+
+#### second arg (default : blank)
+
+replace str
+
+- Ex remove newline
+
+```sh.sh
+echo "aa
+bb" | aku tr
+
+->
+aabb
+```
+
+- Ex replace string
+
+```sh.sh
+echo "aa
+bb" | aku tr "(a)
+b" "\\1NEWLINE"
+
+->
+aNEWLINEb
+```
+
+### Option
+
+#### --input-i
+
+recieve input
+
+- Ex
+
+```sh.sh
+aku tr "aa" -i "aabb"
+->
+bb
+```
+
+#### --turn|-t
+
+- Ex
+
+```sh.sh
+echo "aa
+bb" | aku tr "(a)
+b" "\\1NEWLINE" -t 
+->
+aNEWLINEb
+```
+
+- Ex range specify -end
+
+```sh.sh
+echo "aa
+bb
+cc
+dd" | aku tr -t -2
+->
+aabbcc
+dd
+```
+
+- Ex range specify -start 
+
+```sh.sh
+echo "aa
+bb
+cc
+dd" | aku tr -t 2-
+->
+aa
+bbccdd
+```
+
+- Ex range specify start-end 
+
+```sh.sh
+echo "aa
+bb
+cc
+dd" | aku tr -t 2-4
+->
+aa
+bbccdd
 ```
 
 

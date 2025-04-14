@@ -48,7 +48,7 @@ display_help_for_tr(){
 			awk 'BEGIN {
 				print "## Tr"
 				print ""
-				print "Trace contents"
+				print "Total replace"
 				print ""
 				print "### ARG"
 				print ""
