@@ -51,10 +51,6 @@ read_args_for_mch(){
 			echo "field num to regex and negtive one not found" 
 			exit 1
 	fi
-	case "${DELIMITTER}" in
-		"") DELIMITTER=" "
-			;;
-	esac
 }
 
 display_help_for_mch(){

@@ -32,5 +32,8 @@ display_help_for_aku(){
 		print "## c2s"
 		print "\ttConvert cammel case to snake"
 		print "\tType aku c2s -h for more help "
+		print "## if"
+		print "\tt give if branch in pipe"
+		print "\tType aku if -h for more help "
 	}' | less
 }

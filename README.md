@@ -17,7 +17,7 @@ Table of Sub cmd
     * [Rep](#rep)
     * [Hld](#hld)
     * [Up](#up)
-   
+		* [If](#if)
 
 ## Install or update
 
@@ -946,3 +946,42 @@ aku up "AAAA" -l -3
 ->
 aaaA
 ```
+## If
+
+give if branch in pipe
+
+### ARG
+
+Arg
+
+#### first arg
+
+if condition regex
+
+#### second arg
+
+proc cmd
+
+- default first cmd: echo "${0}"
+
+- @{0}, @{1}, @{2}.. to $0, $1, $2..  in awk
+
+- Ex confition for stdout
+
+```sh.sh
+echo "aa
+bb" | aku if  "aa" "sed 's/^/PREFIX/'"
+
+->
+PREFIXaa
+bb
+```
+
+- Ex confition for proc
+
+```sh.sh
+echo "aa
+bb" | aku if  "aa" "touch @{0}; echo @{0}"
+```
+
+

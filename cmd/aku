@@ -17,6 +17,7 @@ readonly AWK_DIR_PATH="${EXEC_FILE_DIR}/awk"
 readonly REP_DIR_PATH="${EXEC_FILE_DIR}/rep"
 readonly HLD_DIR_PATH="${EXEC_FILE_DIR}/hld"
 readonly UP_DIR_PATH="${EXEC_FILE_DIR}/up"
+readonly IF_DIR_PATH="${EXEC_FILE_DIR}/if"
 readonly TRM_SUB_CMD=$(basename "${TRM_DIR_PATH}")
 readonly CUT_SUB_CMD=$(basename "${CUT_DIR_PATH}")
 readonly C2S_SUB_CMD=$(basename "${C2S_DIR_PATH}")
@@ -25,6 +26,7 @@ readonly AWK_SUB_CMD=$(basename "${AWK_DIR_PATH}")
 readonly REP_SUB_CMD=$(basename "${REP_DIR_PATH}")
 readonly HLD_SUB_CMD=$(basename "${HLD_DIR_PATH}")
 readonly UP_SUB_CMD=$(basename "${UP_DIR_PATH}")
+readonly IF_SUB_CMD=$(basename "${IF_DIR_PATH}")
 
 . "${HELP_DIR_PATH}/help.sh"
 . "${TRM_DIR_PATH}/trm.sh"
@@ -35,6 +37,7 @@ readonly UP_SUB_CMD=$(basename "${UP_DIR_PATH}")
 . "${REP_DIR_PATH}/rep.sh"
 . "${HLD_DIR_PATH}/hld.sh"
 . "${UP_DIR_PATH}/up.sh"
+. "${IF_DIR_PATH}/if.sh"
 
 
 readonly AWK_HOME_PATH="${HOME}/.${AKU_CMD_NAME}"
@@ -51,6 +54,8 @@ if [  -f "${AWK_CMD_TXT_PATH}" ];then
 	test -f "${AWK_PATH}" \
 		|| AWK_PATH="${default_awk}"
 fi
+readonly DEFAULT_DELIMITTER=" "
+
 HELP=""
 case "${AKU_SUB_CMD}" in
 	${TRM_SUB_CMD})
@@ -70,7 +75,7 @@ case "${AKU_SUB_CMD}" in
 		;;
 	${CUT_SUB_CMD})
 		CONTENTS=""
-		DELIMITTER=""
+		DELIMITTER="${DEFAULT_DELIMITTER}"
 		FIELD_NUM_LIST_CON=""
 		ROW_NUM_LIST_CON=""
 		NUM_LIST_CON_SEPARATOR="FIELD_CCCD_SEPARATOR"
@@ -88,7 +93,7 @@ case "${AKU_SUB_CMD}" in
 		;;
 	${MCH_SUB_CMD})
 		CONTENTS=""
-		DELIMITTER=""
+		DELIMITTER="${DEFAULT_DELIMITTER}"
 		ON_AND=""
 		FIELD_NUM_TO_REGEX_LIST_CON=""
 		FIELD_NUM_TO_NEGATIVE_REGEX_LIST_CON=""
@@ -109,7 +114,7 @@ case "${AKU_SUB_CMD}" in
 		FIELD_NUM_TO_REMOVE_REGEX_CON=""
 		FIELD_NUM_TO_STR_CON=""
 		FIELD_NUM_TO_STR_LIST_CON=""
-		DELIMITTER=""
+		DELIMITTER="${DEFAULT_DELIMITTER}"
 		OUTPUT_DELIMITER=""
 		TURN=""
 		NUM_REGEX_SEPARATOR=":"
@@ -136,6 +141,16 @@ case "${AKU_SUB_CMD}" in
 		read_args_for_up "${@}"
 		display_help_for_up
 		exec_up
+		;;
+	${IF_SUB_CMD})
+		CONTENTS=""
+		ARG_SEPARATOR=""
+		REGEX_CON=""
+		CMD_CON=""
+		DELIMITTER="${DEFAULT_DELIMITTER}"
+		read_args_for_if "${@}"
+		display_help_for_if
+		exec_if
 		;;
 	*)
 		display_help_for_aku

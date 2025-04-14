@@ -56,10 +56,6 @@ read_args_for_rep(){
 	elif [ -f "${CONTENTS}" ];then
 		CONTENTS="$(cat "${CONTENTS}")"
 	fi
-	case "${DELIMITTER}" in
-		"") DELIMITTER=" "
-			;;
-	esac
 	case "${OUTPUT_DELIMITER}" in
 		"") OUTPUT_DELIMITER="${DELIMITTER}"
 			;;
