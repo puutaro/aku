@@ -9,7 +9,7 @@ Table of Sub cmd
 * [Install or update](#install-or-update)
 * [Uninstall](#uninstall)
 * [SUB_CMD](#sub_cmd)
-    * [awk](#awk)
+    * [Awk](#awk)
     * [Trim](#trim)
     * [Cut](#cut)
     * [C2s](#c2s)
