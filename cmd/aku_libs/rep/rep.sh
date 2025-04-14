@@ -2,7 +2,7 @@
 
 
 read_args_for_rep(){
-	local is_already_first_con=0
+	local count_arg_input=0
 	local STR=""
 	while (( $# > 0 ))
 	do
@@ -30,15 +30,21 @@ read_args_for_rep(){
 			TURN="${2}"
 			shift
 			;;
+		--input|-i)
+			CONTENTS="${2}"
+			shift
+			;;
 		-*)
 			echo "no option: ${1}"
 			exit 1
 			;;
 		*)	
-			if [ ${is_already_first_con} -gt 0 ];then
-				CONTENTS+="${1:-}"
+			if [ ${count_arg_input} -eq 1  ];then
+				FIELD_NUM_TO_REMOVE_REGEX_CON="${1:-}"
+			elif [ ${count_arg_input} -ge 2 ]; then
+				FIELD_NUM_TO_STR_CON="${FIELD_NUM_TO_STR_CON} ${1:-}"
 			fi
-			is_already_first_con=1
+			count_arg_input=$((count_arg_input + 1))
 			;;
 	esac
 	shift
@@ -71,76 +77,104 @@ display_help_for_rep(){
 		*)
 			awk 'BEGIN {
 				print "## Rep"
+				print ""
 				print "Replace field"
 				print ""
 				print "### ARG"
+				print ""
 				print "Arg or stdin"
-				print "### Option"
-				print "#### --field-num-to-delete-regex|-f"
+				print ""
+				print "#### first arg"
+				print ""
 				print "target field to remove regex"
-				print "- [Ex1] single field"
-				print "echo \x22aa1 bb cc #dd\x22 | aku rep -f \x221:^aa\x22"
+				print ""
+				print "- format -> fieild num:regex"
+				print ""
+				print "- Ex1 single field"
+				print ""
+				print "echo \x22aa1 bb cc #dd\x22 | aku rep \x221:^aa\x22"
 				print ""
 				print "->"
 				print "1 bb cc #dd"
 				print ""
-				print "- [Ex3] by end range"
-				print "echo \x22aa bb cc #dd\x22 | aku rep -f \x22-4:^[a-z]\x22"
+				print "- Ex3 by end range"
+				print ""
+				print "echo \x22aa bb cc #dd\x22 | aku rep \x22-4:^[a-z]\x22"
 				print ""
 				print "->"
 				print "a b c #dd"
 				print ""
-				print "- [Ex4] by end range"
-				print "echo \x22aa bb cc #dd\x22 | aku rep -f \x222-:^[a-z]\x22"
+				print "- Ex4 by end range"
+				print ""
+				print "echo \x22aa bb cc #dd\x22 | aku rep \x222-:^[a-z]\x22"
 				print ""
 				print "->"
 				print "aa b c #dd"
 				print ""
-				print "#### --field-num-to-str|-s"
-				print "replace target field to str with remove regex"
-				print "- [Ex1] single field"
-				print "echo \x22aa bb cc #dd\x22 | aku rep -f \x221:^[a-z]\x22 -s \x221:CC\x22"
+				print "#### second arg"
+				print ""
+				print "- format -> fieild num:regex"
+				print ""
+				print "replace first arg field to str with remove regex"
+				print ""
+				print "- Ex1 single field"
+				print ""
+				print "echo \x22aa bb cc #dd\x22 | aku rep \x221:^[a-z]\x22 \x221:CC\x22"
 				print ""
 				print "->"
 				print "CCa bb cc #dd"
 				print ""
-				print "- [Ex2] by range"
-				print "echo \x22aa bb cc #dd\x22 | aku rep -f \x222-:^[a-z]\x22 -s \x223-4:CC\x22"
+				print "- Ex2 by range"
+				print ""
+				print "echo \x22aa bb cc #dd\x22 | aku rep \x222-:^[a-z]\x22 \x223-4:CC\x22"
 				print ""
 				print "->"
 				print "aa b CCc #dd"
 				print ""
-				print "- [Ex3] by end range"
-				print "echo \x22aa bb cc #dd\x22 | aku rep -f \x222:^[a-z]\x22 -s \x22-4:CC\x22"
+				print "- Ex3 by end range"
+				print ""
+				print "echo \x22aa bb cc #dd\x22 | aku rep \x222:^[a-z]\x22 \x22-4:CC\x22"
 				print ""
 				print "->"
 				print "aa UUb cc #dd"
 				print ""
-				print "- [Ex4] by end range"
-				print "echo \x22aa bb cc #dd\x22 | aku rep -f \x223:[a-z]$\x22 -s \x222-:TTx22"
+				print "- Ex4 by end range"
+				print ""
+				print "echo \x22aa bb cc #dd\x22 | aku rep \x223:[a-z]$\x22 \x222-:TTx22"
 				print ""
 				print "->"
 				print "aa bb cTT #dd"
 				print ""
+				print "### Option"
+				print ""
 				print "#### --delimitter|-d"
+				print ""
 				print "delimitter (default is space)"
-				print "- [Ex1] string delimitter"
+				print ""
+				print "- Ex string delimitter"
+				print ""
 				print "echo \x22aaAAAbbAAAccAAA#dd\x22 | aku rep -f \x222:bb\x22 -d \x2AAA\x22"
 				print ""
 				print "->"
 				print "aaAAAbbAAAccAAA#dd"
 				print ""
 				print "#### --output-delimiter|-o"
+				print ""
 				print "output delimiter (deafult is delimiter)"
-				print "- [Ex]"
+				print ""
+				print "- Ex"
+				print ""
 				print "echo \x22aa  bb     cc      #dd\x22 | aku rep -o \x22\t\x22"
 				print ""
 				print "->"
 				print "bb cc"
 				print ""
 				print "#### --turn|-t"
+				print ""
 				print "gnu awk gensub third parameter"
-				print "- [Ex]"
+				print ""
+				print "- Ex"
+				print ""
 				print "echo \x22aa bb cc #dd\x22 | aku rep -f \x221:B\x22 -t \x221\x22"
 				print ""
 				print "->"
@@ -153,6 +187,9 @@ display_help_for_rep(){
 }
 
 exec_rep(){
+	# echo "FIELD_NUM_TO_REMOVE_REGEX_CON: ${FIELD_NUM_TO_REMOVE_REGEX_CON}"
+	# echo "FIELD_NUM_TO_STR_CON: ${FIELD_NUM_TO_STR_CON# }END"
+	# exit 0
 	local contain_num_separator=","
 	local max_nf_num=$(\
 		echo "${CONTENTS}" \
@@ -162,7 +199,7 @@ exec_rep(){
 	| ${AWK_PATH} \
 		-F "${DELIMITTER}" \
 	 	-v FIELD_NUM_TO_REMOVE_REGEX_CON="${FIELD_NUM_TO_REMOVE_REGEX_CON}" \
-	 	-v FIELD_NUM_TO_STR_CON="${FIELD_NUM_TO_STR_CON}" \
+	 	-v FIELD_NUM_TO_STR_CON="${FIELD_NUM_TO_STR_CON# }" \
 	 	-v OUTPUT_DELIMITER="${OUTPUT_DELIMITER}"\
 	 	-v TURN="${TURN}"\
 	 	-v CONTAIN_NUM_SEPARATOR="${contain_num_separator}"\

@@ -391,97 +391,98 @@ echo "aa bb cc #dd" | aku mch -n "1:^bb$" -f "1:^aa$" -a
 ->
 aa bb cc #dd
 ```
-
 ## Rep
 
 Replace field
 
-### [ARG]
+### ARG
 
 Arg or stdin
 
-### [Option]
-
-#### --field-num-to-delete-regex|-f
+#### first arg
 
 target field to remove regex
 
-- [Ex1] single field
+- format -> fieild num:regex
+
+- Ex1 single field
 
 ```sh.sh
-echo "aa1 bb cc #dd" | aku rep -f "1:^aa"
+echo "aa1 bb cc #dd" | aku rep "1:^aa"
 
 ->
 1 bb cc #dd
 ```
 
-- [Ex3] by end range
+- Ex3 by end range
 
 ```sh.sh
-echo "aa bb cc #dd" | aku rep -f "-4:^[a-z]"
+echo "aa bb cc #dd" | aku rep "-4:^[a-z]"
 
 ->
 a b c #dd
 ```
 
-- [Ex4] by end range
+- Ex4 by end range
 
 ```sh.sh
-echo "aa bb cc #dd" | aku rep -f "2-:^[a-z]"
+echo "aa bb cc #dd" | aku rep "2-:^[a-z]"
 
 ->
 aa b c #dd
-
 ```
 
-#### --field-num-to-str|-s
+#### second arg
 
-replace target field to str with remove regex
+- format -> fieild num:regex
 
-- [Ex1] single field
+replace first arg field to str with remove regex
+
+- Ex1 single field
 
 ```sh.sh
-echo "aa bb cc #dd" | aku rep -f "1:^[a-z]" -s "1:CC"
+echo "aa bb cc #dd" | aku rep "1:^[a-z]" "1:CC"
 
 ->
 CCa bb cc #dd
 ```
 
-- [Ex2] by range
+- Ex2 by range
 
 ```sh.sh
-echo "aa bb cc #dd" | aku rep -f "2-:^[a-z]" -s "3-4:CC"
+echo "aa bb cc #dd" | aku rep "2-:^[a-z]" "3-4:CC"
 
 ->
 aa b CCc #dd
 ```
 
-- [Ex3] by end range
+- Ex3 by end range
 
 ```sh.sh
-echo "aa bb cc #dd" | aku rep -f "2:^[a-z]" -s "-4:CC"
+echo "aa bb cc #dd" | aku rep "2:^[a-z]" "-4:CC"
 
 ->
 aa UUb cc #dd
 ```
 
-- [Ex4] by end range
+- Ex4 by end range
 
 ```sh.sh
-echo "aa bb cc #dd" | aku rep -f "3:[a-z]$" -s "2-:TTx22
+echo "aa bb cc #dd" | aku rep "3:[a-z]$" "2-:TTx22
 
 ->
 aa bb cTT #dd
 ```
 
+### Option
+
 #### --delimitter|-d
 
 delimitter (default is space)
 
-- [Ex1] string delimitter
+- Ex string delimitter
 
 ```sh.sh
-
 echo "aaAAAbbAAAccAAA#dd" | aku rep -f "2:bb" -d *AA"
 
 ->
@@ -492,7 +493,7 @@ aaAAAbbAAAccAAA#dd
 
 output delimiter (deafult is delimiter)
 
-- [Ex]
+- Ex
 
 ```sh.sh
 echo "aa  bb     cc      #dd" | aku rep -o "	"
@@ -505,7 +506,7 @@ bb cc
 
 gnu awk gensub third parameter
 
-- [Ex]
+- Ex
 
 ```sh.sh
 echo "aa bb cc #dd" | aku rep -f "1:B" -t "1"
