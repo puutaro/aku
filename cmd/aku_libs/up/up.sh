@@ -179,8 +179,12 @@ function downcase(str, pos) {
 		next
 	}
 	num_list_con = convert_nums_by_compa(POSITION, length($0))
-	gsub(/^[,]+/, "", num_list_con)
-	gsub(/[,]+$/, "", num_list_con)
+	CONTAIN_NUM_SEPARATOR_PREFIX_REGEX = "^"CONTAIN_NUM_SEPARATOR
+	CONTAIN_NUM_SEPARATOR_SUFFIX_REGEX = CONTAIN_NUM_SEPARATOR"$"
+	CONTAIN_NUM_SEPARATOR_CONSEC_REGEX = sprintf("[%s]+", CONTAIN_NUM_SEPARATOR)
+	gsub(CONTAIN_NUM_SEPARATOR_PREFIX_REGEX, "", num_list_con)
+	gsub(CONTAIN_NUM_SEPARATOR_SUFFIX_REGEX, "", num_list_con)
+	gsub(CONTAIN_NUM_SEPARATOR_CONSEC_REGEX, CONTAIN_NUM_SEPARATOR, num_list_con)
 	num_list_len = split(num_list_con, num_list, CONTAIN_NUM_SEPARATOR)
 	result_str = $0
 	for(l=1; l<= num_list_len; l++){

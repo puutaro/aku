@@ -18,6 +18,7 @@ readonly REP_DIR_PATH="${EXEC_FILE_DIR}/rep"
 readonly HLD_DIR_PATH="${EXEC_FILE_DIR}/hld"
 readonly UP_DIR_PATH="${EXEC_FILE_DIR}/up"
 readonly IF_DIR_PATH="${EXEC_FILE_DIR}/if"
+readonly TR_DIR_PATH="${EXEC_FILE_DIR}/tr"
 readonly TRM_SUB_CMD=$(basename "${TRM_DIR_PATH}")
 readonly CUT_SUB_CMD=$(basename "${CUT_DIR_PATH}")
 readonly C2S_SUB_CMD=$(basename "${C2S_DIR_PATH}")
@@ -27,6 +28,7 @@ readonly REP_SUB_CMD=$(basename "${REP_DIR_PATH}")
 readonly HLD_SUB_CMD=$(basename "${HLD_DIR_PATH}")
 readonly UP_SUB_CMD=$(basename "${UP_DIR_PATH}")
 readonly IF_SUB_CMD=$(basename "${IF_DIR_PATH}")
+readonly TR_SUB_CMD=$(basename "${TR_DIR_PATH}")
 
 . "${HELP_DIR_PATH}/help.sh"
 . "${TRM_DIR_PATH}/trm.sh"
@@ -38,6 +40,7 @@ readonly IF_SUB_CMD=$(basename "${IF_DIR_PATH}")
 . "${HLD_DIR_PATH}/hld.sh"
 . "${UP_DIR_PATH}/up.sh"
 . "${IF_DIR_PATH}/if.sh"
+. "${TR_DIR_PATH}/tr.sh"
 
 
 readonly AWK_HOME_PATH="${HOME}/.${AKU_CMD_NAME}"
@@ -151,6 +154,15 @@ case "${AKU_SUB_CMD}" in
 		read_args_for_if "${@}"
 		display_help_for_if
 		exec_if
+		;;
+	${TR_SUB_CMD})
+		CONTENTS=""
+		REGEX_CON="\n"
+		REPLACE_STR=""
+		TURN="g"
+		read_args_for_tr "${@}"
+		display_help_for_tr
+		exec_tr
 		;;
 	*)
 		display_help_for_aku
