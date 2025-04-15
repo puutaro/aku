@@ -1003,7 +1003,7 @@ replace str
 
 - Ex remove newline
 
-```sh.sh
+```.sh.sh
 echo "aa
 bb" | aku tr
 
@@ -1013,7 +1013,7 @@ aabb
 
 - Ex replace string
 
-```sh.sh
+```.sh.sh
 echo "aa
 bb" | aku tr "(a)
 b" "\\1NEWLINE"
@@ -1027,10 +1027,11 @@ aNEWLINEb
 #### --input-i
 
 recieve input
+```
 
 - Ex
 
-```sh.sh
+```.sh.sh
 aku tr "aa" -i "aabb"
 ->
 bb
@@ -1040,7 +1041,7 @@ bb
 
 - Ex
 
-```sh.sh
+```.sh.sh
 echo "aa
 bb" | aku tr "(a)
 b" "\\1NEWLINE" -t 
@@ -1050,7 +1051,7 @@ aNEWLINEb
 
 - Ex range specify -end
 
-```sh.sh
+```.sh.sh
 echo "aa
 bb
 cc
@@ -1062,7 +1063,7 @@ dd
 
 - Ex range specify -start 
 
-```sh.sh
+```.sh.sh
 echo "aa
 bb
 cc
@@ -1074,7 +1075,7 @@ bbccdd
 
 - Ex range specify start-end 
 
-```sh.sh
+```.sh.sh
 echo "aa
 bb
 cc
@@ -1084,4 +1085,17 @@ aa
 bbccdd
 ```
 
+- Ex multiple 
+
+```.sh.sh
+echo "aa
+bb
+cc
+dd
+ee
+ff" | aku tr -t 1-2 -t 4-5
+->
+aabbcc
+ddeeff
+```
 
