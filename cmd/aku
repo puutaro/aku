@@ -159,7 +159,8 @@ case "${AKU_SUB_CMD}" in
 		CONTENTS=""
 		REGEX_CON="\n"
 		REPLACE_STR=""
-		TURN="g"
+		NUM_LIST_CON_SEPARATOR="NUM_CCCD_SEPARATOR"
+		TURN_LIST_CON="g"
 		read_args_for_tr "${@}"
 		display_help_for_tr
 		exec_tr
