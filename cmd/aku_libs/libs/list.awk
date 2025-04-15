@@ -97,9 +97,3 @@ function remove_dup_el(list_con,  separator) {
 	delete seen # seen配列を削除。
 	return new_list_con
 }		
-function sum(x, y) {
-  result = x + y;  
-  # 合計を計算
-  return result;    
-  # 合計を返す
-}
