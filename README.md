@@ -20,6 +20,7 @@ Table of Sub cmd
 		* [If](#if)
 		* [Tr](#tr)
 		* [Uni](#uni)
+		* [Fld](#fld)
 
 ## Install or update
 
@@ -1142,4 +1143,88 @@ aku uni "aa" "bb" -b "\n---"
 aa
 ---bb
 ```
+
+
+## Fld
+
+Fold each field
+
+### ARG
+
+Arg or stdin
+
+### Option
+
+#### --insert-header-cycle|-i
+
+insert header cycle (default: 5)
+
+- Ex
+
+```sh.sh
+echo ~ | aku fld -i 3
+```
+
+#### --fold-col-cycle|-c
+
+fold col cycle (default: 5)
+
+- Ex
+
+```sh.sh
+aku fld -i 3 -c 3 | {file path}
+```
+
+#### --header-row-num|-l
+
+specify header low num (default: 5)
+
+- Ex
+
+```sh.sh
+echo ~ | aku fld -i 3 -c 3
+```
+
+#### --insert-header-cycle|-i
+
+insert header cycle (default: 5)
+
+- Ex
+
+```sh.sh
+echo ~ | aku fld -i 3
+```
+
+#### --delimiter|-d
+
+field delimiter
+
+- Ex
+
+```sh.sh
+echo ~ | aku fld -i 3 -d '\t'
+```
+
+#### --prefix|-p
+
+header prefix string
+
+- enable with header
+
+- Ex
+
+```sh.sh
+aku fld -p "###" {file path}
+```
+
+#### --suffix|-s
+
+header suffix string
+
+- Ex
+
+```sh.sh
+aku fld -s "###" {file path}
+```
+
 

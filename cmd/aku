@@ -22,6 +22,7 @@ readonly UP_DIR_PATH="${EXEC_FILE_DIR}/up"
 readonly IF_DIR_PATH="${EXEC_FILE_DIR}/if"
 readonly TR_DIR_PATH="${EXEC_FILE_DIR}/tr"
 readonly UNI_DIR_PATH="${EXEC_FILE_DIR}/uni"
+readonly FLD_DIR_PATH="${EXEC_FILE_DIR}/fld"
 readonly TRM_SUB_CMD=$(basename "${TRM_DIR_PATH}")
 readonly CUT_SUB_CMD=$(basename "${CUT_DIR_PATH}")
 readonly C2S_SUB_CMD=$(basename "${C2S_DIR_PATH}")
@@ -33,6 +34,7 @@ readonly UP_SUB_CMD=$(basename "${UP_DIR_PATH}")
 readonly IF_SUB_CMD=$(basename "${IF_DIR_PATH}")
 readonly TR_SUB_CMD=$(basename "${TR_DIR_PATH}")
 readonly UNI_SUB_CMD=$(basename "${UNI_DIR_PATH}")
+readonly FLD_SUB_CMD=$(basename "${FLD_DIR_PATH}")
 
 . "${HELP_DIR_PATH}/help.sh"
 . "${TRM_DIR_PATH}/trm.sh"
@@ -46,6 +48,7 @@ readonly UNI_SUB_CMD=$(basename "${UNI_DIR_PATH}")
 . "${IF_DIR_PATH}/if.sh"
 . "${TR_DIR_PATH}/tr.sh"
 . "${UNI_DIR_PATH}/uni.sh"
+. "${FLD_DIR_PATH}/fld.sh"
 
 
 readonly AWK_HOME_PATH="${HOME}/.${AKU_CMD_NAME}"
@@ -177,6 +180,19 @@ case "${AKU_SUB_CMD}" in
 		read_args_for_uni "${@}"
 		display_help_for_uni
 		exec_uni
+		;;
+	${FLD_SUB_CMD})
+		CONTENTS=""
+		HEADER_ROW_NUM="0"
+		FOID_COL_CYCLE=5
+		INSERT_HEADER_CYCLE=5
+		DELIMITTER=" "
+		PREFIX_STR=""
+		SUFFIX_STR=""
+		NO_DISPLAY_ROW_NUM=""
+		read_args_for_fld "${@}"
+		display_help_for_fld
+		exec_fld
 		;;
 	*)
 		display_help_for_aku
