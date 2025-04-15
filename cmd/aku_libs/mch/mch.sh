@@ -147,6 +147,7 @@ exec_mch(){
 	)
 	echo "${CONTENTS}"\
 	| ${AWK_PATH} \
+		-i "${AWK_LIST_FUNCS_PATH}"\
 		-F "${DELIMITTER}" \
 	 	-v FIELD_NUM_TO_REGEX_LIST_CON="${FIELD_NUM_TO_REGEX_LIST_CON#${NUM_LIST_CON_SEPARATOR}}" \
 	 	-v FIELD_NUM_TO_NEGATIVE_REGEX_LIST_CON="${FIELD_NUM_TO_NEGATIVE_REGEX_LIST_CON#${NUM_LIST_CON_SEPARATOR}}" \
@@ -156,49 +157,7 @@ exec_mch(){
 	 	-v NUM_REGEX_SEPARATOR="${NUM_REGEX_SEPARATOR}"\
 	 	-v max_nf_num="${max_nf_num}" \
 	 	-v ON_AND="${ON_AND}"\
-		' function convert_nums_by_compa(nums_con, max_num, separator){
-			output = ""
-			if (\
-				nums_con ~ /^0$/\
-				|| !nums_con\
-			) {
-				for (i = 1; i <= max_num; i++) {
-				    output = sprintf("%s%s%s", output,separator, i)
-				}
-				return output
-			}
-			if( nums_con ~ /^[0-9]+$/ ){
-		  		return sprintf("%s%s", nums_con, separator)
-			}
-			if (nums_con ~ /^-[0-9]+$/) {
-			    split(nums_con, parts, "-")
-			    start = 1 
-			    end = parts[2]
-			    for (i = int(start); i <= int(end); i++) {
-			        output = sprintf("%s%s%s", output, separator, i)
-			    }
-			    return output
-			  }
-			if (nums_con ~ /^[0-9]+-[0-9]+$/) {
-			    split(nums_con, parts, "-")
-			    start = parts[1]
-			    end = parts[2]
-			    for (i = int(start); i <= int(end); i++) {
-			        output = sprintf("%s%s%s", output, separator, i)
-			    }
-			    return output
-			  }
-			if (nums_con ~ /^[0-9]+-$/) {
-				start = substr(nums_con, 1, length(nums_con) - 1)
-				for (i = int(start); i <= max_num; i++) {
-				    output = sprintf("%s%s%s", output,separator, i)
-				}
-				return output
-			}
-		  	printf( "contain no number in --field-num|-f arg: %s\n", nums_con) > "/dev/stderr"
-		  	exit 1 
-		}	
-		BEGIN{
+		' BEGIN{
 			field_num_to_regex_list_len = split(FIELD_NUM_TO_REGEX_LIST_CON, field_num_to_regex_list, NUM_LIST_CON_SEPARATOR)
 			# print "FIELD_NUM_TO_REGEX_LIST_CON "FIELD_NUM_TO_REGEX_LIST_CON
 			# print "field_num_to_regex_list_len "field_num_to_regex_list_len

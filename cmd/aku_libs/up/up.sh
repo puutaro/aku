@@ -113,72 +113,31 @@ exec_up(){
 	local CONTAIN_NUM_SEPARATOR=","
 	echo "${CONTENTS}"\
 	 | ${AWK_PATH} \
+		-i "${AWK_LIST_FUNCS_PATH}"\
 	 	-v POSITION="${POSITION}"\
 	 	-v CONTAIN_NUM_SEPARATOR="${CONTAIN_NUM_SEPARATOR}"\
 	 	-v FUNC_NAME="${FUNC_NAME}"\
-		'function convert_nums_by_compa(nums_con, max_num){
-			output = ""
-			if (\
-				nums_con ~ /^0$/\
-				|| !nums_con\
-			) {
-				for (i = 1; i <= max_num; i++) {
-				    output = sprintf("%s%s%s", output,CONTAIN_NUM_SEPARATOR, i)
-				}
-				return output
-			}
-			if( nums_con ~ /^[0-9]+$/ ){
-		  		return sprintf("%s%s", nums_con, CONTAIN_NUM_SEPARATOR)
-			}
-			if (nums_con ~ /^-[0-9]+$/) {
-			    split(nums_con, parts, "-")
-			    start = 1 
-			    end = parts[2]
-			    for (i = int(start); i <= int(end); i++) {
-			        output = sprintf("%s%s%s", output, CONTAIN_NUM_SEPARATOR, i)
-			    }
-			    return output
-			  }
-			if (nums_con ~ /^[0-9]+-[0-9]+$/) {
-			    split(nums_con, parts, "-")
-			    start = parts[1]
-			    end = parts[2]
-			    for (i = int(start); i <= int(end); i++) {
-			        output = sprintf("%s%s%s", output, CONTAIN_NUM_SEPARATOR, i)
-			    }
-			    return output
-			  }
-			if (nums_con ~ /^[0-9]+-$/) {
-				start = substr(nums_con, 1, length(nums_con) - 1)
-				for (i = int(start); i <= max_num; i++) {
-				    output = sprintf("%s%s%s", output,CONTAIN_NUM_SEPARATOR, i)
-				}
-				return output
-			}
-		  	printf( "contain no number in --field-num|-f arg: %s\n", nums_con) > "/dev/stderr"
-		  	exit 1 
-		}
-function downcase(str, pos) {
-  # pos番目の文字が存在する場合のみ処理を行う
-  if (pos <= length(str)) {
-    # pos番目より前の文字列
-    pre = substr(str, 1, pos - 1)
-    # pos番目の文字を小文字に変換
-    char = '${FUNC_NAME}'(substr(str, pos, 1))
-    # pos番目より後の文字列
-    post = substr(str, pos + 1)
-    # 連結して返す
-    return pre char post
-  } else {
-    return str # pos が文字列長より大きい場合は元の文字列を返す
-  }
-}
-{
+		'function downcase(str, pos) {
+		  # pos番目の文字が存在する場合のみ処理を行う
+		  if (pos <= length(str)) {
+	    # pos番目より前の文字列
+	    pre = substr(str, 1, pos - 1)
+	    # pos番目の文字を小文字に変換
+	    char = '${FUNC_NAME}'(substr(str, pos, 1))
+	    # pos番目より後の文字列
+	    post = substr(str, pos + 1)
+	    # 連結して返す
+	    return pre char post
+	  } else {
+	    return str # pos が文字列長より大きい場合は元の文字列を返す
+	  }
+	}
+	{
 	if(POSITION == ""){
 		print '${FUNC_NAME}'($0)
 		next
 	}
-	num_list_con = convert_nums_by_compa(POSITION, length($0))
+	num_list_con = convert_nums_by_compa(POSITION, length($0), CONTAIN_NUM_SEPARATOR)
 	CONTAIN_NUM_SEPARATOR_PREFIX_REGEX = "^"CONTAIN_NUM_SEPARATOR
 	CONTAIN_NUM_SEPARATOR_SUFFIX_REGEX = CONTAIN_NUM_SEPARATOR"$"
 	CONTAIN_NUM_SEPARATOR_CONSEC_REGEX = sprintf("[%s]+", CONTAIN_NUM_SEPARATOR)

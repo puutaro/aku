@@ -193,6 +193,7 @@ exec_rep(){
 	)
 	echo "${CONTENTS}"\
 	| ${AWK_PATH} \
+		-i "${AWK_LIST_FUNCS_PATH}"\
 		-F "${DELIMITTER}" \
 	 	-v FIELD_NUM_TO_REMOVE_REGEX_CON="${FIELD_NUM_TO_REMOVE_REGEX_CON}" \
 	 	-v FIELD_NUM_TO_STR_CON="${FIELD_NUM_TO_STR_CON# }" \
@@ -201,49 +202,7 @@ exec_rep(){
 	 	-v CONTAIN_NUM_SEPARATOR="${contain_num_separator}"\
 	 	-v NUM_REGEX_SEPARATOR="${NUM_REGEX_SEPARATOR}"\
 	 	-v max_nf_num="${max_nf_num}" \
-		' function convert_nums_by_compa(nums_con, max_num, separator){
-			output = ""
-			if (\
-				nums_con ~ /^0$/\
-				|| !nums_con\
-			) {
-				for (i = 1; i <= max_num; i++) {
-				    output = sprintf("%s%s%s", output,separator, i)
-				}
-				return output
-			}
-			if( nums_con ~ /^[0-9]+$/ ){
-		  		return sprintf("%s%s", nums_con, separator)
-			}
-			if (nums_con ~ /^-[0-9]+$/) {
-			    split(nums_con, parts, "-")
-			    start = 1 
-			    end = parts[2]
-			    for (i = int(start); i <= int(end); i++) {
-			        output = sprintf("%s%s%s", output, separator, i)
-			    }
-			    return output
-			  }
-			if (nums_con ~ /^[0-9]+-[0-9]+$/) {
-			    split(nums_con, parts, "-")
-			    start = parts[1]
-			    end = parts[2]
-			    for (i = int(start); i <= int(end); i++) {
-			        output = sprintf("%s%s%s", output, separator, i)
-			    }
-			    return output
-			  }
-			if (nums_con ~ /^[0-9]+-$/) {
-				start = substr(nums_con, 1, length(nums_con) - 1)
-				for (i = int(start); i <= max_num; i++) {
-				    output = sprintf("%s%s%s", output,separator, i)
-				}
-				return output
-			}
-		  	printf( "contain no number in --field-num|-f arg: %s\n", nums_con) > "/dev/stderr"
-		  	exit 1 
-		}	
-		BEGIN{
+		'BEGIN{
 			DISPLAY_FIELD_NUM_CON = ""
 			FIELD_NUM_TO_REMOVE_REGEX_MAP[0] = ""
 
