@@ -68,55 +68,78 @@ display_help_for_tr(){
 				print ""
 				print "- Ex remove newline"
 				print ""
+				print "```.sh.sh"
 				print "echo \x22aa\nbb\x22 | aku tr"
 				print ""
 				print "->"
 				print "aabb"
+				print "```"
 				print ""
 				print "- Ex replace string"
 				print ""
+				print "```.sh.sh"
 				print "echo \x22aa\nbb\x22 | aku tr \x22(a)\nb\x22 \x22\\\\1NEWLINE\x22"
 				print ""
 				print "->"
 				print "aNEWLINEb"
+				print "```"
 				print ""
 				print "### Option"
 				print ""
 				print "#### --input-i"
 				print ""
 				print "recieve input"
+				print "```"
 				print ""
 				print "- Ex"
 				print ""
+				print "```.sh.sh"
 				print "aku tr \x22aa\x22 -i \x22aabb\x22"
 				print "->"
 				print "bb"
+				print "```"
 				print ""
 				print "#### --turn|-t"
 				print ""
 				print "- Ex"
 				print ""
+				print "```.sh.sh"
 				print "echo \x22aa\nbb\x22 | aku tr \x22(a)\nb\x22 \x22\\\\1NEWLINE\x22 -t "
 				print "->"
 				print "aNEWLINEb"
+				print "```"
 				print ""
 				print "- Ex range specify -end"
 				print ""
+				print "```.sh.sh"
 				print "echo \x22aa\nbb\ncc\ndd\x22 | aku tr -t -2"
 				print "->"
 				print "aabbcc\ndd"
+				print "```"
 				print ""
 				print "- Ex range specify -start "
 				print ""
+				print "```.sh.sh"
 				print "echo \x22aa\nbb\ncc\ndd\x22 | aku tr -t 2-"
 				print "->"
 				print "aa\nbbccdd"
+				print "```"
 				print ""
 				print "- Ex range specify start-end "
 				print ""
+				print "```.sh.sh"
 				print "echo \x22aa\nbb\ncc\ndd\x22 | aku tr -t 2-4"
 				print "->"
 				print "aa\nbbccdd"
+				print "```"
+				print ""
+				print "- Ex multiple "
+				print ""
+				print "```.sh.sh"
+				print "echo \x22aa\nbb\ncc\ndd\nee\nff\x22 | aku tr -t 1-2 -t 4-5"
+				print "->"
+				print "aabbcc\nddeeff"
+				print "```"
 				print ""
 			}' | less
 			exit 0
@@ -177,6 +200,21 @@ exec_tr(){
 		  	printf( "contain no number in --field-num|-f arg: %s\n", nums_con) > "/dev/stderr"
 		  	exit 1 
 		}
+		function make_list_from_muti_list_con(lists_con, max_num, list_separator, el_separator){
+			lists_len = split(lists_con, list, list_separator)
+			new_list_con = ""
+			for(l=1; l <= lists_len; l++){
+				el = list[l]
+				new_list_con = sprintf(\
+					"%s%s%s",
+					new_list_con,\
+					el_separator,
+					convert_nums_by_compa(el, max_num, el_separator))
+			}
+			consec_separator_regex = el_separator"+"
+			gsub(consec_separator_regex, el_separator, new_list_con)
+			return new_list_con
+		}
 		function sort_list_con(list_con, separator) {
 		  # 配列を値で数値として昇順にソート (GNU awk拡張)
 			list_len = split(list_con, list, separator)
@@ -218,22 +256,7 @@ exec_tr(){
 		  }
 		  delete seen # seen配列を削除。
 		  return new_list_con
-		}
-		function make_list_from_muti_list_con(lists_con, max_num, list_separator, el_separator){
-			lists_len = split(lists_con, list, list_separator)
-			new_list_con = ""
-			for(l=1; l <= lists_len; l++){
-				el = list[l]
-				new_list_con = sprintf(\
-					"%s%s%s",
-					new_list_con,\
-					separator,
-					convert_nums_by_compa(el, max_num, el_separator))
-			}
-			consec_separator_regex = separator"+"
-			gsub(consec_separator_regex, consec_separator_regex, new_list_con)
-			return new_list_con
-		}
+		}		
 	BEGIN{
 		# print "## TURN_LIST_CON "TURN_LIST_CON
 		if(TURN_LIST_CON ~ /g/){
