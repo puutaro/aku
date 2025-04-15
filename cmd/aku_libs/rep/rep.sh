@@ -201,26 +201,26 @@ exec_rep(){
 	 	-v CONTAIN_NUM_SEPARATOR="${contain_num_separator}"\
 	 	-v NUM_REGEX_SEPARATOR="${NUM_REGEX_SEPARATOR}"\
 	 	-v max_nf_num="${max_nf_num}" \
-		' function convert_nums_by_compa(nums_con, max_num){
+		' function convert_nums_by_compa(nums_con, max_num, separator){
 			output = ""
 			if (\
 				nums_con ~ /^0$/\
 				|| !nums_con\
 			) {
 				for (i = 1; i <= max_num; i++) {
-				    output = sprintf("%s%s%s", output,CONTAIN_NUM_SEPARATOR, i)
+				    output = sprintf("%s%s%s", output,separator, i)
 				}
 				return output
 			}
 			if( nums_con ~ /^[0-9]+$/ ){
-		  		return sprintf("%s%s", nums_con, CONTAIN_NUM_SEPARATOR)
+		  		return sprintf("%s%s", nums_con, separator)
 			}
 			if (nums_con ~ /^-[0-9]+$/) {
 			    split(nums_con, parts, "-")
 			    start = 1 
 			    end = parts[2]
 			    for (i = int(start); i <= int(end); i++) {
-			        output = sprintf("%s%s%s", output, CONTAIN_NUM_SEPARATOR, i)
+			        output = sprintf("%s%s%s", output, separator, i)
 			    }
 			    return output
 			  }
@@ -229,20 +229,20 @@ exec_rep(){
 			    start = parts[1]
 			    end = parts[2]
 			    for (i = int(start); i <= int(end); i++) {
-			        output = sprintf("%s%s%s", output, CONTAIN_NUM_SEPARATOR, i)
+			        output = sprintf("%s%s%s", output, separator, i)
 			    }
 			    return output
 			  }
 			if (nums_con ~ /^[0-9]+-$/) {
 				start = substr(nums_con, 1, length(nums_con) - 1)
 				for (i = int(start); i <= max_num; i++) {
-				    output = sprintf("%s%s%s", output,CONTAIN_NUM_SEPARATOR, i)
+				    output = sprintf("%s%s%s", output,separator, i)
 				}
 				return output
 			}
 		  	printf( "contain no number in --field-num|-f arg: %s\n", nums_con) > "/dev/stderr"
-		  	exit 1
-		}
+		  	exit 1 
+		}	
 		BEGIN{
 			DISPLAY_FIELD_NUM_CON = ""
 			FIELD_NUM_TO_REMOVE_REGEX_MAP[0] = ""
@@ -259,12 +259,12 @@ exec_rep(){
 			}
 			field_num_con = substr(FIELD_NUM_TO_REMOVE_REGEX_CON, 1, colonPos - 1)
 			regex_con = substr(FIELD_NUM_TO_REMOVE_REGEX_CON, colonPos + 1) # コロンの次の文字から最後までを抽出
-			nums_by_coma = convert_nums_by_compa(field_num_con, max_nf_num)
+			nums_by_coma = convert_nums_by_compa(field_num_con, max_nf_num, CONTAIN_NUM_SEPARATOR)
 			DISPLAY_FIELD_NUM_CON = sprintf(\
 				"%s%s",
 				CONTAIN_NUM_SEPARATOR,
 				nums_by_coma)
-			nums_list_len = split(nums_by_coma, nums_list, contain_num_separator)
+			nums_list_len = split(nums_by_coma, nums_list, CONTAIN_NUM_SEPARATOR)
 			for(j=1;j<=nums_list_len;j++){
 				cur_num = nums_list[j]
 				if(cur_num !~ /^[0-9]+$/)	 continue
@@ -294,12 +294,12 @@ exec_rep(){
 			}
 			field_num_con = substr(FIELD_NUM_TO_STR_CON, 1, colonPos - 1)
 			str_list_con = substr(FIELD_NUM_TO_STR_CON, colonPos + 1) # コロンの次の文字から最後までを抽出
-			nums_by_coma = convert_nums_by_compa(field_num_con, max_nf_num)
+			nums_by_coma = convert_nums_by_compa(field_num_con, max_nf_num, CONTAIN_NUM_SEPARATOR)
 			STR_FIELD_NUM_CON = sprintf(\
 				"%s%s",
 				CONTAIN_NUM_SEPARATOR,
 				nums_by_coma)
-			nums_list_len = split(nums_by_coma, nums_list, contain_num_separator)
+			nums_list_len = split(nums_by_coma, nums_list, CONTAIN_NUM_SEPARATOR)
 			for(j=1;j<=nums_list_len;j++){
 				cur_num = nums_list[j]
 				if(cur_num !~ /^[0-9]+$/)	 continue
