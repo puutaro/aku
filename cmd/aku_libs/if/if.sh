@@ -37,6 +37,16 @@ read_args_for_if(){
 		echo "no stdin" 1>&2
 		exit 1
 	fi
+	if [ -z "${HELP}" ] \
+		&& [ -z "${REGEX_CON}" ];then
+		echo "first arg (match regex) not exist"
+		exit 1
+	fi
+	if [ -z "${HELP}" ] \
+		&& [ -z "${CMD_CON}" ];then
+		echo "second arg (cmd) not exist"
+		exit 1
+	fi
 }
 
 display_help_for_if(){
