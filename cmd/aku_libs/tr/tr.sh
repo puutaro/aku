@@ -162,7 +162,6 @@ exec_tr(){
 		-v TURN_LIST_CON="${TURN_LIST_CON#${NUM_LIST_CON_SEPARATOR}}"\
 	'
 	BEGIN{
-		print "sum "sum(1, 2)
 		# print "## TURN_LIST_CON "TURN_LIST_CON
 		if(TURN_LIST_CON ~ /g/){
 			print gensub(REGEX_CON, REPLACE_STR, TURN_LIST_CON, CONTENTS)
