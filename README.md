@@ -19,6 +19,7 @@ Table of Sub cmd
     * [Up](#up)
 		* [If](#if)
 		* [Tr](#tr)
+		* [Uni](#uni)
 
 ## Install or update
 
@@ -1097,5 +1098,48 @@ ff" | aku tr -t 1-2 -t 4-5
 ->
 aabbcc
 ddeeff
+```
+
+## Uni
+
+Union variables
+
+### ARG
+
+Arg
+
+- Ex two arg
+
+```sh.sh
+aku uni "aa" "bb"
+->
+aa
+bb
+```
+
+- Ex multiple arg
+
+```sh.sh
+aku uni "aa" "bb" "cc"...
+->
+aa
+bb
+cc
+...
+```
+
+### Option
+
+#### --bound-str|-b
+
+union by bound str (default: newline)
+
+- Ex
+
+```sh.sh
+aku uni "aa" "bb" -b "\n---"
+->
+aa
+---bb
 ```
 
