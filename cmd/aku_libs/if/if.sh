@@ -120,7 +120,7 @@ exec_if(){
 			gsub(sprintf("@\\{%d\\}",l), $l, cmd)
 		}
 		cmd | getline output
-		exit_status = (cmd | getline output)
+		# exit_status = (cmd | getline output)
 		# print "cmd "cmd
 		# if(exit_status == 0){
 		# 	print "aku if err: " > "/dev/stderr"
