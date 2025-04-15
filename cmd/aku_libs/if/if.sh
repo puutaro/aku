@@ -119,14 +119,17 @@ exec_if(){
 		for(l=0; l<=max_nf_num;l++){
 			gsub(sprintf("@\\{%d\\}",l), $l, cmd)
 		}
-		cmd | getline output
-		# exit_status = (cmd | getline output)
-		# print "cmd "cmd
-		# if(exit_status == 0){
-		# 	print "aku if err: " > "/dev/stderr"
-		# 	exit 1
-		# }
-		print output
+		last_output=""
+		line_num = 1
+		while ((cmd | getline line) > 0) {
+			if(line_num == 1){
+				last_output = line
+			} else {
+				last_output = sprintf("%s\n%s", last_output, line)
+			}
+			line_num++
+		}
+		print last_output
 		close(cmd)
 	}'
 }
