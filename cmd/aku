@@ -21,6 +21,7 @@ readonly HLD_DIR_PATH="${EXEC_FILE_DIR}/hld"
 readonly UP_DIR_PATH="${EXEC_FILE_DIR}/up"
 readonly IF_DIR_PATH="${EXEC_FILE_DIR}/if"
 readonly TR_DIR_PATH="${EXEC_FILE_DIR}/tr"
+readonly UNI_DIR_PATH="${EXEC_FILE_DIR}/uni"
 readonly TRM_SUB_CMD=$(basename "${TRM_DIR_PATH}")
 readonly CUT_SUB_CMD=$(basename "${CUT_DIR_PATH}")
 readonly C2S_SUB_CMD=$(basename "${C2S_DIR_PATH}")
@@ -31,6 +32,7 @@ readonly HLD_SUB_CMD=$(basename "${HLD_DIR_PATH}")
 readonly UP_SUB_CMD=$(basename "${UP_DIR_PATH}")
 readonly IF_SUB_CMD=$(basename "${IF_DIR_PATH}")
 readonly TR_SUB_CMD=$(basename "${TR_DIR_PATH}")
+readonly UNI_SUB_CMD=$(basename "${UNI_DIR_PATH}")
 
 . "${HELP_DIR_PATH}/help.sh"
 . "${TRM_DIR_PATH}/trm.sh"
@@ -43,6 +45,7 @@ readonly TR_SUB_CMD=$(basename "${TR_DIR_PATH}")
 . "${UP_DIR_PATH}/up.sh"
 . "${IF_DIR_PATH}/if.sh"
 . "${TR_DIR_PATH}/tr.sh"
+. "${UNI_DIR_PATH}/uni.sh"
 
 
 readonly AWK_HOME_PATH="${HOME}/.${AKU_CMD_NAME}"
@@ -166,6 +169,14 @@ case "${AKU_SUB_CMD}" in
 		read_args_for_tr "${@}"
 		display_help_for_tr
 		exec_tr
+		;;
+	${UNI_SUB_CMD})
+		CONTENTS=""
+		BOUND_STR="\n"
+		VAL_LIST_CON_SEPARATOR="G57VES_T5Y753VHi_DGV365RJY7i_SEPARATOR_V86YR"
+		read_args_for_uni "${@}"
+		display_help_for_uni
+		exec_uni
 		;;
 	*)
 		display_help_for_aku
