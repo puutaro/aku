@@ -190,23 +190,20 @@ exec_fld(){
 	echo "${CONTENTS}"\
 		|${AWK_PATH}\
 			-F "${DELIMITTER}" \
+			-i "${AWK_LINE_FUNCS_PATH}"\
 			-v DELIMITTER="${DELIMITTER}"\
 			-v HEADER_ROW_NUM="${HEADER_ROW_NUM}"\
 		 '{
 			if(NR == HEADER_ROW_NUM) next
 			new_line = ""
 			for(l=1; l<=NF; l++){
-				el = $l
-				if(!new_line){
-					new_line = el
-					continue
-				}
-				new_line = sprintf("%s%s%s", new_line, DELIMITTER, el)
+				new_line = make_line_by_delimiter(new_line, $l, DELIMITTER)
 			}
 			print new_line
 		}'\
 	| ${AWK_PATH} \
 		-F "${DELIMITTER}" \
+		-i "${AWK_LINE_FUNCS_PATH}"\
 		-v CONTENTS="${CONTENTS}"\
 		-v MAX_NF_NUM="${max_nf_num}"\
 		-v HEADER_LINE="${header}"\
@@ -291,16 +288,7 @@ exec_fld(){
 			new_line = ""
 			# print "## NF "NF
 			for(l=1; l<=NF; l++){
-				el = $l
-				if(!new_line){
-					new_line = el
-					continue
-				}
-				# print "DELIMITTER"DELIMITTER"AA"
-				new_line = sprintf("%s%s%s", new_line, DELIMITTER, el)
-				delimitter_prefix_regex = "^"DELIMITTER
-				gsub(delimiter_prefix_regex, "", new_line)
-				# print "## 00 "new_line
+				new_line = make_line_by_delimiter(new_line, $l, DELIMITTER)
 			}
 
 			# print "new_line "new_line
