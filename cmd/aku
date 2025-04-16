@@ -187,9 +187,10 @@ case "${AKU_SUB_CMD}" in
 		FOID_COL_CYCLE=5
 		INSERT_HEADER_CYCLE=5
 		DELIMITTER=" "
-		PREFIX_STR=""
-		SUFFIX_STR=""
-		NO_DISPLAY_ROW_NUM=""
+		BOUND_STR=">Index-@{NR}\n"
+		ON_PREFIX=""
+		ON_GREEM=""
+		DEFAULT_PREFIX=">"
 		read_args_for_fld "${@}"
 		display_help_for_fld
 		exec_fld

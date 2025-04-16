@@ -22,16 +22,15 @@ read_args_for_fld(){
 			FOID_COL_CYCLE="${2}"
 			shift
 			;;
-		--prefix|-p)
-			PREFIX_STR="${2}"	
+		--bound-str|-b)
+			BOUND_STR="${2}"
 			shift
 			;;
-		--suffix|-s)
-			SUFFIX_STR="${2}"	
-			shift
+		--on-prefix|-p)
+			ON_PREFIX="on"
 			;;
-		--no-display-row-num|-n)
-			NO_DISPLAY_ROW_NUM="on"
+		--on-green|-g)
+			ON_GREEM="on"
 			;;
 		--delimitter|-d)
 			DELIMITTER="${2}"
@@ -124,26 +123,38 @@ display_help_for_fld(){
 				print "echo ~ | aku fld -i 3 -d \x27\\t\x27"
 				print "```"
 				print ""
-				print "#### --prefix|-p"
+				print "#### --on-prefix|-p"
 				print ""
-				print "header prefix string"
+				print "add \x22>\x22 to header"
 				print ""
 				print "- enable with header"
 				print ""
 				print "- Ex"
 				print ""
 				print "```sh.sh"
-				print "aku fld -p \x22###\x22 {file path}"
+				print "aku fld -p {file path}"
 				print "```"
 				print ""
-				print "#### --suffix|-s"
+				print "#### --bound-str|-b"
 				print ""
-				print "header suffix string"
+				print "replace boud str"
 				print ""
 				print "- Ex"
 				print ""
 				print "```sh.sh"
-				print "aku fld -s \x22###\x22 {file path}"
+				print "aku fld -b \x22###Index-@{NR}\\n\x22 {file path}"
+				print "```"
+				print ""
+				print "- @{NR} is record num in awk"
+				print ""
+				print "#### --on-green|-g"
+				print ""
+				print "set header color to green"
+				print ""
+				print "- Ex"
+				print ""
+				print "```sh.sh"
+				print "aku fld -g {file path}"
 				print "```"
 				print ""
 				print ""
@@ -203,16 +214,30 @@ exec_fld(){
 		-v INSERT_HEADER_CYCLE="${INSERT_HEADER_CYCLE}"\
 		-v FOID_COL_CYCLE="${FOID_COL_CYCLE}" \
 		-v DELIMITTER="${DELIMITTER}" \
-		-v PREFIX_STR="${PREFIX_STR}"\
-		-v SUFFIX_STR="${SUFFIX_STR}"\
-		-v NO_DISPLAY_ROW_NUM="${NO_DISPLAY_ROW_NUM}"\
+		-v BOUND_STR="${BOUND_STR}" \
+		-v ON_GREEM="${ON_GREEM}"\
+		-v ON_PREFIX="${ON_PREFIX}"\
+		-v DEFAULT_PREFIX="${DEFAULT_PREFIX}"\
 		'
-		function make_header(header_line, prefix, suffix, nr){
-			return sprintf("%s%s%s", prefix, header_line, suffix)
+		function make_bound_str(bound_str, nr){
+			return gensub("@{NR}", nr, "g", bound_str)
+		}
+		function make_header(header_line, on_prefix, on_green, defualt_prefix){
+			if(!header_line) return ""
+			out_header_line = ""
+			if(!on_prefix){
+				out_header_line = header_line
+			}else {
+				out_header_line = defualt_prefix""header_line
+			}
+			if(!on_green){
+				return out_header_line
+			}
+			 return sprintf("\033[1;32m%s\033[0m", out_header_line)
 		}
 		function make_line_map(line, line_map, col_cycle, delimiter, rec_num){
 			el_list_len = split(line, line_el_list, delimiter)
-			elimiter_prefix_regex = "^"delimiter
+			delimiter_prefix_regex = "^"delimiter
 			insert_times = 1
 			new_line = ""
 			for(i=1; i<=el_list_len; i++){
@@ -251,8 +276,6 @@ exec_fld(){
 			# print "ONE_LINE_COL_GROUP_NUM "ONE_LINE_COL_GROUP_NUM
 			HEADER_LINE_MAP[0] = "" 
 			if(HEADER_LINE){
-				# prefix_str = gensub("@{NR}", "0", "g", PREFIX_STR)
-				# suffix_str = gensub("@{NR}", "0", "g", SUFFIX_STR)
 				HEADER_LINE_MAP[0] = ""
 				make_line_map(HEADER_LINE, HEADER_LINE_MAP, FOID_COL_CYCLE, DELIMITTER, "h")
 				# for(l = 1; l<=ONE_LINE_COL_GROUP_NUM; l++){
@@ -275,6 +298,8 @@ exec_fld(){
 				}
 				# print "DELIMITTER"DELIMITTER"AA"
 				new_line = sprintf("%s%s%s", new_line, DELIMITTER, el)
+				delimitter_prefix_regex = "^"DELIMITTER
+				gsub(delimiter_prefix_regex, "", new_line)
 				# print "## 00 "new_line
 			}
 
@@ -297,13 +322,17 @@ exec_fld(){
 			# print "HEADER_DISPLAY_TIMES "HEADER_DISPLAY_TIMES
 			display_start_index = 0
 			for(l = 1; l <= HEADER_DISPLAY_TIMES; l++){
-				if(!NO_DISPLAY_ROW_NUM){
-					print "Index: "display_start_index + 1
-				}
+				printf make_bound_str(BOUND_STR, display_start_index + 1)
+				# print "Index: "display_start_index + 1
 				for(k = 1; k <= ONE_LINE_COL_GROUP_NUM; k++){
 					key = sprintf("h-%s", k)
 					# print "### head key "key
-					header_record = make_header(HEADER_LINE_MAP[key], PREFIX_STR, SUFFIX_STR, l)
+					header_record = make_header(\
+						HEADER_LINE_MAP[key], \
+						ON_PREFIX,
+						ON_GREEM,
+						DEFAULT_PREFIX\
+					)
 					if(header_record){
 						print header_record
 					}
