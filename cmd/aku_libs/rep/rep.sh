@@ -26,6 +26,10 @@ read_args_for_rep(){
 			OUTPUT_DELIMITER="${2}"
 			shift
 			;;
+		--row-num|-r)
+			ROW_NUM_LIST_CON="${ROW_NUM_LIST_CON}${NUM_LIST_CON_SEPARATOR}${2}"
+			shift
+			;;
 		--turn|-t)
 			TURN="${2}"
 			shift
@@ -88,24 +92,30 @@ display_help_for_rep(){
 				print ""
 				print "- Ex1 single field"
 				print ""
+				print "```sh.sh"
 				print "echo \x22aa1 bb cc #dd\x22 | aku rep \x221:^aa\x22"
 				print ""
 				print "->"
 				print "1 bb cc #dd"
+				print "```"
 				print ""
 				print "- Ex3 by end range"
 				print ""
+				print "```sh.sh"
 				print "echo \x22aa bb cc #dd\x22 | aku rep \x22-4:^[a-z]\x22"
 				print ""
 				print "->"
 				print "a b c #dd"
+				print "```"
 				print ""
 				print "- Ex4 by end range"
 				print ""
+				print "```sh.sh"
 				print "echo \x22aa bb cc #dd\x22 | aku rep \x222-:^[a-z]\x22"
 				print ""
 				print "->"
 				print "aa b c #dd"
+				print "```"
 				print ""
 				print "#### second arg"
 				print ""
@@ -115,33 +125,63 @@ display_help_for_rep(){
 				print ""
 				print "- Ex1 single field"
 				print ""
+				print "```sh.sh"
 				print "echo \x22aa bb cc #dd\x22 | aku rep \x221:^[a-z]\x22 \x221:CC\x22"
 				print ""
 				print "->"
 				print "CCa bb cc #dd"
+				print "```"
 				print ""
 				print "- Ex2 by range"
 				print ""
+				print "```sh.sh"
 				print "echo \x22aa bb cc #dd\x22 | aku rep \x222-:^[a-z]\x22 \x223-4:CC\x22"
 				print ""
 				print "->"
 				print "aa b CCc #dd"
+				print "```"
 				print ""
 				print "- Ex3 by end range"
 				print ""
+				print "```sh.sh"
 				print "echo \x22aa bb cc #dd\x22 | aku rep \x222:^[a-z]\x22 \x22-4:CC\x22"
 				print ""
 				print "->"
 				print "aa UUb cc #dd"
+				print "```"
 				print ""
 				print "- Ex4 by end range"
 				print ""
+				print "```sh.sh"
 				print "echo \x22aa bb cc #dd\x22 | aku rep \x223:[a-z]$\x22 \x222-:TTx22"
 				print ""
 				print "->"
 				print "aa bb cTT #dd"
+				print "```"
 				print ""
 				print "### Option"
+				print ""
+				print "#### --row-num|-r"
+				print ""
+				print "target row (default: all)"
+				print ""
+				print "- Ex1 single row"
+				print ""
+				print "```sh.sh"
+				print "echo ~\x22 | aku rep -r \x2221\x22"
+				print "```"
+				print ""
+				print "- Ex2 multiple row"
+				print ""
+				print "```sh.sh"
+				print "echo \x22~\x22 | aku rep -r \x221\x22 -r \x223-4\x22"
+				print "```"
+				print ""
+				print "- Ex3 multiple row by end range"
+				print ""
+				print "```sh.sh"
+				print "echo \x22~\x22 | aku rep -r \x221\x22 -r \x22-4\x22"
+				print "```"
 				print ""
 				print "#### --delimitter|-d"
 				print ""
@@ -149,10 +189,12 @@ display_help_for_rep(){
 				print ""
 				print "- Ex string delimitter"
 				print ""
+				print "```sh.sh"
 				print "echo \x22aaAAAbbAAAccAAA#dd\x22 | aku rep -f \x222:bb\x22 -d \x2AAA\x22"
 				print ""
 				print "->"
 				print "aaAAAbbAAAccAAA#dd"
+				print "```"
 				print ""
 				print "#### --output-delimiter|-o"
 				print ""
@@ -160,10 +202,12 @@ display_help_for_rep(){
 				print ""
 				print "- Ex"
 				print ""
+				print "```sh.sh"
 				print "echo \x22aa  bb     cc      #dd\x22 | aku rep -o \x22\t\x22"
 				print ""
 				print "->"
 				print "bb cc"
+				print "```"
 				print ""
 				print "#### --turn|-t"
 				print ""
@@ -171,10 +215,12 @@ display_help_for_rep(){
 				print ""
 				print "- Ex"
 				print ""
+				print "```sh.sh"
 				print "echo \x22aa bb cc #dd\x22 | aku rep -f \x221:B\x22 -t \x221\x22"
 				print ""
 				print "->"
 				print "Ba bb cc #dd"
+				print "```"
 				print ""
 			}' | less
 			exit 0
@@ -194,13 +240,17 @@ exec_rep(){
 	echo "${CONTENTS}"\
 	| ${AWK_PATH} \
 		-i "${AWK_LIST_FUNCS_PATH}"\
+		-i "${AWK_LINE_FUNCS_PATH}"\
 		-F "${DELIMITTER}" \
+		-v SRC_CON="${CONTENTS}"\
 	 	-v FIELD_NUM_TO_REMOVE_REGEX_CON="${FIELD_NUM_TO_REMOVE_REGEX_CON}" \
 	 	-v FIELD_NUM_TO_STR_CON="${FIELD_NUM_TO_STR_CON# }" \
 	 	-v OUTPUT_DELIMITER="${OUTPUT_DELIMITER}"\
 	 	-v TURN="${TURN}"\
 	 	-v CONTAIN_NUM_SEPARATOR="${contain_num_separator}"\
 	 	-v NUM_REGEX_SEPARATOR="${NUM_REGEX_SEPARATOR}"\
+	 	-v NUM_LIST_CON_SEPARATOR="${NUM_LIST_CON_SEPARATOR}" \
+	 	-v ROW_NUM_LIST_CON="${ROW_NUM_LIST_CON#${NUM_LIST_CON_SEPARATOR}}" \
 	 	-v max_nf_num="${max_nf_num}" \
 		'BEGIN{
 			DISPLAY_FIELD_NUM_CON = ""
@@ -274,10 +324,48 @@ exec_rep(){
 					str_list_con\
 				)
 			}
-			max_lines = split(src_con, _line_array, "\n")
+			max_lines = split(SRC_CON, _line_array, "\n")
+			# print "CONTAIN_NUM_SEPARATOR "CONTAIN_NUM_SEPARATOR
+
+			# print "max_lines "max_lines
+			# print "ROW_NUM_LIST_CON "ROW_NUM_LIST_CON
+			DISPLAY_ROW_NUM_CON = make_list_from_muti_list_con(\
+				ROW_NUM_LIST_CON, \
+				max_lines,\
+				NUM_LIST_CON_SEPARATOR,\
+				CONTAIN_NUM_SEPARATOR\
+			)
+			DISPLAY_ROW_NUM_CON = trim_separator(DISPLAY_ROW_NUM_CON, CONTAIN_NUM_SEPARATOR)
+			DISPLAY_ROW_NUM_CON = sort_list_con(DISPLAY_ROW_NUM_CON, CONTAIN_NUM_SEPARATOR)
+			DISPLAY_ROW_NUM_CON = remove_dup_el(DISPLAY_ROW_NUM_CON, CONTAIN_NUM_SEPARATOR)
+			# print "DISPLAY_ROW_NUM_CON "DISPLAY_ROW_NUM_CON
 			last_output = ""
 		}
 	{
+		match_row_num = sprintf("%s%s%s", CONTAIN_NUM_SEPARATOR, NR, CONTAIN_NUM_SEPARATOR)
+		if(\
+			index(\
+				sprintf(\
+					"%s%s%s",\
+					CONTAIN_NUM_SEPARATOR,\
+					DISPLAY_ROW_NUM_CON,\
+					CONTAIN_NUM_SEPARATOR\
+				),\
+				match_row_num\
+			) == 0\
+			&& DISPLAY_ROW_NUM_CON\
+		){
+			# print "NR "NR
+			new_line =""
+			for(l = 1; l<=NF; l++){
+				# print "l; "l" "$l
+				new_line = make_line_by_delimiter(new_line, $l, OUTPUT_DELIMITER)
+			}
+			# print "OUTPUT_DELIMITER "OUTPUT_DELIMITER"AA"
+			# print "new_line "new_line
+			last_output = make_line_by_delimiter(last_output, new_line, "\n")
+			next
+		}
 		line = ""
 		for(l=1;l<=NF;l++){
 			match_field_num = sprintf("%s%s%s", CONTAIN_NUM_SEPARATOR, l, CONTAIN_NUM_SEPARATOR)
@@ -292,27 +380,15 @@ exec_rep(){
 					match_field_num)  == 0\
 				&& DISPLAY_FIELD_NUM_CON\
 			) {
-				if(!line){
-					line = $l
-					continue
-				}
-				line = sprintf("%s%s%s", line, OUTPUT_DELIMITER, $l)
+				line = make_line_by_delimiter(line, $l, OUTPUT_DELIMITER)
 				continue
 			}
 			cur_regex = FIELD_NUM_TO_REMOVE_REGEX_MAP[l]
 			cur_str = FIELD_NUM_TO_STR_MAP[l]
 			$l = gensub(cur_regex, cur_str, TURN, $l)
-			if(!line){
-				line = $l
-			}else{ 
-				line = sprintf("%s%s%s", line, OUTPUT_DELIMITER, $l)
-			}
+			line = make_line_by_delimiter(line, $l, OUTPUT_DELIMITER)
 		}
-		if(!last_output){
-			last_output = line
-			next
-		}
-		last_output = sprintf("%s\n%s", last_output, line)
+		last_output = make_line_by_delimiter(last_output, line, "\n")
 	}
 	END {
 		regex_last_delmiter = sprintf("%s$", OUTPUT_DELIMITER)

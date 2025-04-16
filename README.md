@@ -479,6 +479,28 @@ aa bb cTT #dd
 
 ### Option
 
+#### --row-num|-r
+
+target row (default: all)
+
+- Ex1 single row
+
+```sh.sh
+echo ~" | aku rep -r "21"
+```
+
+- Ex2 multiple row
+
+```sh.sh
+echo "~" | aku rep -r "1" -r "3-4"
+```
+
+- Ex3 multiple row by end range
+
+```sh.sh
+echo "~" | aku rep -r "1" -r "-4"
+```
+
 #### --delimitter|-d
 
 delimitter (default is space)
@@ -516,7 +538,6 @@ echo "aa bb cc #dd" | aku rep -f "1:B" -t "1"
 
 ->
 Ba bb cc #dd
-
 ```
 
 ## Hld
