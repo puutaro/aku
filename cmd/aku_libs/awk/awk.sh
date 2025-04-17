@@ -32,11 +32,13 @@ display_help_for_awk(){
 		*)
 			awk 'BEGIN {
 				print "Awk"
+				print ""
 				print "## Set awk path"
 				print ""
-				print ""
 				print "### ARG"
+				print ""
 				print "${awk path}"
+				print ""
 				print "register awk path"
 				print ""
 				print "-"

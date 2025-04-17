@@ -48,5 +48,9 @@ display_help_for_aku(){
 		print "Union variables"
 		print "Type aku uni -h for more help "
 		print ""
+		print "### Up"
+		print "to uppercase"
+		print "Type aku uni -h for more help "
+		print ""
 	}' | less
 }
