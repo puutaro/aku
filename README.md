@@ -174,44 +174,92 @@ cbb
 aa
 ```
 
-### Cut
-
+## Cut
 Cut field by awk spec
 
-### [ARG]
-	Arg or stdin
-### [Option]
+### ARG
+
+Arg or stdin
+
+### Option
 
 #### --field-num|-f
-		targe field
 
-- [Ex1] single field
+target field
 
-```
-echo "aa    bb   cc    #dd" | aku cut -f "2" | aku cut
+- Ex single field (default: all)
+
+```sh.sh
+echo "aa    bb   cc    #dd" | aku cut -f "2"
 
 ->
 bb
 ```
 
-- [Ex2] multiple field
+- Ex multiple field
 
 ```sh.sh
 echo "aa    bb   cc    #dd" | aku cut -f "1" -f "3-4"
 
 ->
 aa	cc	#dd
+```
 
-### --delimitter|-d
-		delimitter (default is space)
-- [Ex1] string delimitter
+- Ex multiple field by end range
+
+```sh.sh
+echo "aa    bb   cc    #dd" | aku cut -f "1" -f "-4"
+
+->
+aa	bb	cc	#dd
+```
+
+- Ex multiple field by end range
+
+```sh.sh
+echo "aa    bb   cc    #dd" | aku cut -f "1" -f "2-"
+
+->
+bb	cc	#dd
+```
+
+#### --row-num|-r
+
+target row (default: all)
+
+- Ex single row
+
+```sh.sh
+echo ~" | aku cut -r "2" | aku cut
+```
+
+- Ex multiple row
+
+```sh.sh
+echo "~" | aku cut -r "1" -r "3-4"
+```
+
+- Ex multiple row by end range
+
+```sh.sh
+echo "~" | aku cut -r "1" -r "-4"
+```
+
+#### --delimitter|-d
+
+delimitter (default is space)
+
+- Ex string delimitter
+
+```sh.sh
 echo "aaAAAbbAAAccAAA#dd" | aku cut -f "2" -d *AA"
+```
 
 ->
 bb
 ```
 
-- [Ex2] consec space delimiter
+- Ex consec space delimiter
 
 ```sh.sh
 echo "aa  bb     cc      #dd" | aku cut -f "2" -d " "
@@ -220,36 +268,29 @@ echo "aa  bb     cc      #dd" | aku cut -f "2" -d " "
 bb
 ```
 
-#### --row-num|-r
-		target row (default: all)
-- [Ex1] single row
+#### --on-negative|-n
+
+negative cut
+
+- Ex
 
 ```sh.sh
-echo ~" | aku cut -r "2" | aku cut
-```
+echo "aaAAAbbAAAccAAA#dd" | aku cut -n -f "2" -d *AA"
 
-- [Ex2] multiple row
-
-```sh.sh
-echo "~" | aku cut -r "1" -r "3-4"
-```
-
-- [Ex3] multiple row by end range
-
-```sh.sh
-echo "~" | aku cut -r "1" -r "-4"
+->
+aaAAAccAAA#dd
 ```
 
 
-### C2s
+## C2s
 
 Cammel case to snake case 
 
-#### ARG
+### ARG
 
 Arg or stdin
 
-#### Option
+### Option
 
 #### --reverse|-r
 
@@ -278,7 +319,7 @@ aaBb
 
 ```
 
-### Mch
+## Mch
 
 This is Matcher.
 As feature, enable matching to field by regex

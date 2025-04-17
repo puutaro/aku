@@ -91,6 +91,7 @@ case "${AKU_SUB_CMD}" in
 		FIELD_NUM_LIST_CON=""
 		ROW_NUM_LIST_CON=""
 		NUM_LIST_CON_SEPARATOR="FIELD_CCCD_SEPARATOR"
+		ON_NEGATIVE=""
 		read_args_for_cut "${@}"
 		display_help_for_cut
 		exec_cut
