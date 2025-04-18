@@ -21,6 +21,7 @@ Table of Sub cmd
 		* [Tr](#tr)
 		* [Uni](#uni)
 		* [Fld](#fld)
+		* [Sd](#sd)
 
 ## Install or update
 
@@ -1289,4 +1290,126 @@ header suffix string
 aku fld -s "###" {file path}
 ```
 
+## Sd
 
+Replace by line
+
+### ARG
+
+Arg
+
+#### first arg
+
+regex (default : blank)
+
+#### second arg (default : blank)
+
+replace str
+
+- Ex remove str
+
+```.sh.sh
+echo "aa
+bb" | aku sd "aa"
+
+->
+
+bb
+```
+
+- Ex replace string
+
+```.sh.sh
+echo "aa
+bb" | aku sd "(a)" "PREFIX\\1SUFFIX"
+
+->
+PREFIXaSUFFIXPREFIXaSUFFIX
+b
+```
+
+### Option
+
+#### --input-i
+
+recieve input
+```
+
+- Ex
+
+```.sh.sh
+aku sd "aa" -i "aa
+bb"
+->
+
+bb
+```
+
+#### --turn|-t
+
+- Ex
+
+```.sh.sh
+echo "aa
+bb" | aku sd "(a)
+b" "\\1SUFFIX" -t 1
+->
+aaSUFFIX
+bb
+```
+
+- Ex range specify -end
+
+```.sh.sh
+echo "aaA
+bBb
+ccC
+Ddd" | aku sd "[a-z]" -r -2
+->
+A
+B
+ccC
+Ddd
+```
+
+- Ex range specify -start 
+
+```.sh.sh
+echo "aaA
+bwBb
+ccC
+Ddd" | aku sd "[a-z]x22 -r 2-
+->
+aaA
+B
+C
+D
+```
+
+- Ex range specify start-end 
+
+```.sh.sh
+echo "aaA
+bBb
+ccC
+Ddd" | aku sd "[a-z]" -r 2-4
+->
+aaA
+B
+C
+D
+```
+
+- Ex multiple 
+
+```.sh.sh
+echo "aaA
+bBb
+ccC
+Ddd" | aku sd "[a-z]" -r 1 -r 3-4
+->
+A
+bBb
+cC
+D
+```

@@ -24,6 +24,7 @@ readonly IF_DIR_PATH="${EXEC_FILE_DIR}/if"
 readonly TR_DIR_PATH="${EXEC_FILE_DIR}/tr"
 readonly UNI_DIR_PATH="${EXEC_FILE_DIR}/uni"
 readonly FLD_DIR_PATH="${EXEC_FILE_DIR}/fld"
+readonly SD_DIR_PATH="${EXEC_FILE_DIR}/sd"
 readonly TRM_SUB_CMD=$(basename "${TRM_DIR_PATH}")
 readonly CUT_SUB_CMD=$(basename "${CUT_DIR_PATH}")
 readonly C2S_SUB_CMD=$(basename "${C2S_DIR_PATH}")
@@ -36,20 +37,7 @@ readonly IF_SUB_CMD=$(basename "${IF_DIR_PATH}")
 readonly TR_SUB_CMD=$(basename "${TR_DIR_PATH}")
 readonly UNI_SUB_CMD=$(basename "${UNI_DIR_PATH}")
 readonly FLD_SUB_CMD=$(basename "${FLD_DIR_PATH}")
-
-. "${HELP_DIR_PATH}/help.sh"
-. "${TRM_DIR_PATH}/trm.sh"
-. "${CUT_DIR_PATH}/cut.sh"
-. "${C2S_DIR_PATH}/c2s.sh"
-. "${MCH_DIR_PATH}/mch.sh"
-. "${AWK_DIR_PATH}/awk.sh"
-. "${REP_DIR_PATH}/rep.sh"
-. "${HLD_DIR_PATH}/hld.sh"
-. "${UP_DIR_PATH}/up.sh"
-. "${IF_DIR_PATH}/if.sh"
-. "${TR_DIR_PATH}/tr.sh"
-. "${UNI_DIR_PATH}/uni.sh"
-. "${FLD_DIR_PATH}/fld.sh"
+readonly SD_SUB_CMD=$(basename "${SD_DIR_PATH}")
 
 
 readonly AWK_HOME_PATH="${HOME}/.${AKU_CMD_NAME}"
@@ -71,6 +59,7 @@ readonly DEFAULT_DELIMITTER=" "
 HELP=""
 case "${AKU_SUB_CMD}" in
 	${TRM_SUB_CMD})
+		. "${TRM_DIR_PATH}/trm.sh"
 		CONTENTS=""
 		DELETE_PREFIXS=""
 		DELETE_SUFFIX=""
@@ -86,6 +75,7 @@ case "${AKU_SUB_CMD}" in
 		exec_trm
 		;;
 	${CUT_SUB_CMD})
+		. "${CUT_DIR_PATH}/cut.sh"
 		CONTENTS=""
 		DELIMITTER="${DEFAULT_DELIMITTER}"
 		FIELD_NUM_LIST_CON=""
@@ -97,6 +87,7 @@ case "${AKU_SUB_CMD}" in
 		exec_cut
 		;;
 	${C2S_SUB_CMD})
+		. "${C2S_DIR_PATH}/c2s.sh"
 		CONTENTS=""
 		REVERSE=""
 		REPLACE_UNDER_BAR2SPACE=""
@@ -105,6 +96,7 @@ case "${AKU_SUB_CMD}" in
 		c2s_handler
 		;;
 	${MCH_SUB_CMD})
+		. "${MCH_DIR_PATH}/mch.sh"
 		CONTENTS=""
 		DELIMITTER="${DEFAULT_DELIMITTER}"
 		ON_AND=""
@@ -117,12 +109,14 @@ case "${AKU_SUB_CMD}" in
 		exec_mch
 		;;
 	${AWK_SUB_CMD})
+		. "${AWK_DIR_PATH}/awk.sh"
 		CONTENTS=""
 		read_args_for_awk "${@}"
 		display_help_for_awk
 		exec_awk
 		;;
 	${REP_SUB_CMD})
+		. "${REP_DIR_PATH}/rep.sh"
 		CONTENTS=""
 		FIELD_NUM_TO_REMOVE_REGEX_CON=""
 		FIELD_NUM_TO_STR_CON=""
@@ -138,6 +132,7 @@ case "${AKU_SUB_CMD}" in
 		exec_rep
 		;;
 	${HLD_SUB_CMD})
+		. "${HLD_DIR_PATH}/hld.sh"
 		CONTENTS=""
 		START_HOLDER_LIST_CON=""
 		END_HOLDER_LIST_CON=""
@@ -150,6 +145,7 @@ case "${AKU_SUB_CMD}" in
 		exec_hld
 		;;
 	${UP_SUB_CMD})
+		. "${UP_DIR_PATH}/up.sh"
 		CONTENTS=""
 		POSITION=""
 		FUNC_NAME="toupper"
@@ -158,6 +154,7 @@ case "${AKU_SUB_CMD}" in
 		exec_up
 		;;
 	${IF_SUB_CMD})
+		. "${IF_DIR_PATH}/if.sh"
 		CONTENTS=""
 		ARG_SEPARATOR=""
 		REGEX_CON=""
@@ -168,6 +165,7 @@ case "${AKU_SUB_CMD}" in
 		exec_if
 		;;
 	${TR_SUB_CMD})
+		. "${TR_DIR_PATH}/tr.sh"
 		CONTENTS=""
 		REGEX_CON="\n"
 		REPLACE_STR=""
@@ -178,6 +176,7 @@ case "${AKU_SUB_CMD}" in
 		exec_tr
 		;;
 	${UNI_SUB_CMD})
+		. "${UNI_DIR_PATH}/uni.sh"
 		CONTENTS=""
 		BOUND_STR="\n"
 		VAL_LIST_CON_SEPARATOR="G57VES_T5Y753VHi_DGV365RJY7i_SEPARATOR_V86YR"
@@ -186,6 +185,7 @@ case "${AKU_SUB_CMD}" in
 		exec_uni
 		;;
 	${FLD_SUB_CMD})
+		. "${FLD_DIR_PATH}/fld.sh"
 		CONTENTS=""
 		HEADER_ROW_NUM="1"
 		FOID_COL_CYCLE=5
@@ -199,7 +199,20 @@ case "${AKU_SUB_CMD}" in
 		display_help_for_fld
 		exec_fld
 		;;
+	${SD_SUB_CMD})
+		. "${SD_DIR_PATH}/sd.sh"
+		CONTENTS=""
+		TURN="g"
+		ROW_NUM_LIST_CON=""
+		NUM_LIST_CON_SEPARATOR="FIELD_CCCD_SEPARATOR"
+		REGEX_CON=""
+		REPLACE_STR=""
+		read_args_for_sd "${@}"
+		display_help_for_sd
+		exec_sd
+		;;
 	*)
+		. "${HELP_DIR_PATH}/help.sh"
 		display_help_for_aku
 		;;
 esac
