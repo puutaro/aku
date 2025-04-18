@@ -191,7 +191,7 @@ exec_cut(){
 				CONTAIN_NUM_SEPARATOR\
 			)
 			gsub(CONTAIN_NUM_SEPARATOR, "", FIELD_NUM_LIST_CON)
-			print "FIELD_NUM_LIST_CON "FIELD_NUM_LIST_CON
+			# print "FIELD_NUM_LIST_CON "FIELD_NUM_LIST_CON
 			# print "DISPLAY_FIELD_NUM_CON "DISPLAY_FIELD_NUM_CON
 			max_lines = split(src_con, _line_array, "\n")
 			# print "CONTAIN_NUM_SEPARATOR "CONTAIN_NUM_SEPARATOR
@@ -202,7 +202,7 @@ exec_cut(){
 				CONTAIN_NUM_SEPARATOR\
 			)
 			gsub(CONTAIN_NUM_SEPARATOR, "", ROW_NUM_LIST_CON)
-			print "ROW_NUM_LIST_CON "ROW_NUM_LIST_CON
+			# print "ROW_NUM_LIST_CON "ROW_NUM_LIST_CON
 			# print "DISPLAY_ROW_NUM_CON "DISPLAY_ROW_NUM_CON
 
 			last_output = ""
