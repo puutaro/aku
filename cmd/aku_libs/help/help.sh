@@ -52,5 +52,13 @@ display_help_for_aku(){
 		print "to uppercase"
 		print "Type aku uni -h for more help "
 		print ""
+		print "### Sd"
+		print "Replace by line"
+		print "Type aku sd -h for more help "
+		print ""
+		print "### Iro"
+		print "Coloring by hex string"
+		print "Type aku iro -h for more help "
+		print ""
 	}' | less
 }
