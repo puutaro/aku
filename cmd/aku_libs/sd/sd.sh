@@ -29,7 +29,7 @@ read_args_for_sd(){
 		*)	
 			if [ ${count_arg_input} -eq 1  ];then
 				REGEX_CON="${1:-}"
-			elif [ ${count_arg_input} -ge 2 ]; then
+			elif [ ${count_arg_input} -eq 2 ]; then
 				REPLACE_STR="${1:-}"
 			fi
 			count_arg_input=$((count_arg_input + 1))

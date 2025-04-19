@@ -25,20 +25,21 @@ readonly TR_DIR_PATH="${EXEC_FILE_DIR}/tr"
 readonly UNI_DIR_PATH="${EXEC_FILE_DIR}/uni"
 readonly FLD_DIR_PATH="${EXEC_FILE_DIR}/fld"
 readonly SD_DIR_PATH="${EXEC_FILE_DIR}/sd"
-readonly TRM_SUB_CMD=$(basename "${TRM_DIR_PATH}")
-readonly CUT_SUB_CMD=$(basename "${CUT_DIR_PATH}")
-readonly C2S_SUB_CMD=$(basename "${C2S_DIR_PATH}")
-readonly MCH_SUB_CMD=$(basename "${MCH_DIR_PATH}")
-readonly AWK_SUB_CMD=$(basename "${AWK_DIR_PATH}")
-readonly REP_SUB_CMD=$(basename "${REP_DIR_PATH}")
-readonly HLD_SUB_CMD=$(basename "${HLD_DIR_PATH}")
-readonly UP_SUB_CMD=$(basename "${UP_DIR_PATH}")
-readonly IF_SUB_CMD=$(basename "${IF_DIR_PATH}")
-readonly TR_SUB_CMD=$(basename "${TR_DIR_PATH}")
-readonly UNI_SUB_CMD=$(basename "${UNI_DIR_PATH}")
-readonly FLD_SUB_CMD=$(basename "${FLD_DIR_PATH}")
-readonly SD_SUB_CMD=$(basename "${SD_DIR_PATH}")
-
+readonly IRO_DIR_PATH="${EXEC_FILE_DIR}/iro"
+readonly TRM_SUB_CMD="${TRM_DIR_PATH##*/}"
+readonly CUT_SUB_CMD="${CUT_DIR_PATH##*/}"
+readonly C2S_SUB_CMD="${C2S_DIR_PATH##*/}"
+readonly MCH_SUB_CMD="${MCH_DIR_PATH##*/}"
+readonly AWK_SUB_CMD="${AWK_DIR_PATH##*/}"
+readonly REP_SUB_CMD="${REP_DIR_PATH##*/}"
+readonly HLD_SUB_CMD="${HLD_DIR_PATH##*/}"
+readonly UP_SUB_CMD="${UP_DIR_PATH##*/}"
+readonly IF_SUB_CMD="${IF_DIR_PATH##*/}"
+readonly TR_SUB_CMD="${TR_DIR_PATH##*/}"
+readonly UNI_SUB_CMD="${UNI_DIR_PATH##*/}"
+readonly FLD_SUB_CMD="${FLD_DIR_PATH##*/}"
+readonly SD_SUB_CMD="${SD_DIR_PATH##*/}"
+readonly IRO_SUB_CMD="${IRO_DIR_PATH##*/}"
 
 readonly AWK_HOME_PATH="${HOME}/.${AKU_CMD_NAME}"
 test -d "${AWK_HOME_PATH}" \
@@ -210,6 +211,23 @@ case "${AKU_SUB_CMD}" in
 		read_args_for_sd "${@}"
 		display_help_for_sd
 		exec_sd
+		;;
+	${IRO_SUB_CMD})
+		. "${IRO_DIR_PATH}/iro.sh"
+		CONTENTS=""
+		TURN="g"
+		ROW_NUM_LIST_CON=""
+		FIELD_NUM_LIST_CON=""
+		NUM_LIST_CON_SEPARATOR="FIELD_CCCD_SEPARATOR"
+		DELIMITTER="${DEFAULT_DELIMITTER}"
+		PROPERTY="color:green,bold"
+		PROPERTY_SEPARATOR=","
+		REGEX_CON='(.*)'
+		REPLACE_STR=""
+		ON_NEGATIVE=""
+		read_args_for_iro "${@}"
+		display_help_for_iro
+		exec_iro
 		;;
 	*)
 		. "${HELP_DIR_PATH}/help.sh"
