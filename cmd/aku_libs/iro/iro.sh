@@ -416,12 +416,14 @@ exec_iro(){
 			!ON_NEGATIVE \
 			&& is_pass_row_num\
 		){
+			print $0
 			next
 		}else if (\
 			ON_NEGATIVE \
 			&& ROW_NUM_LIST_CON\
 			&& !is_pass_row_num\
 		) {
+			print $0
 			next
 		}
 		if(!FIELD_NUM_LIST_CON){
