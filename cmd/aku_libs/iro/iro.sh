@@ -329,8 +329,8 @@ exec_iro(){
 			if(short_text_color){
 				PROPERTY_MAP[COLOR_KEY] = short_text_color
 			}
-			print "PROPERTY" PROPERTY
-			print "short_text_color "short_text_color
+			# print "PROPERTY" PROPERTY
+			# print "short_text_color "short_text_color
 			property_list_len = split(PROPERTY, property_list, PROPERTY_SEPARATOR)
 			for(l = 1; l <= property_list_len; l++){
 				key_to_con = property_list[l]
