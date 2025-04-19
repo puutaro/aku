@@ -18,13 +18,13 @@ readonly C2S_DIR_PATH="${EXEC_FILE_DIR}/c2s"
 readonly MCH_DIR_PATH="${EXEC_FILE_DIR}/mch"
 readonly AWK_DIR_PATH="${EXEC_FILE_DIR}/awk"
 readonly REP_DIR_PATH="${EXEC_FILE_DIR}/rep"
+readonly TR_DIR_PATH="${EXEC_FILE_DIR}/tr"
+readonly FEP_DIR_PATH="${EXEC_FILE_DIR}/fep"
 readonly HLD_DIR_PATH="${EXEC_FILE_DIR}/hld"
 readonly UP_DIR_PATH="${EXEC_FILE_DIR}/up"
 readonly IF_DIR_PATH="${EXEC_FILE_DIR}/if"
-readonly TR_DIR_PATH="${EXEC_FILE_DIR}/tr"
 readonly UNI_DIR_PATH="${EXEC_FILE_DIR}/uni"
 readonly FLD_DIR_PATH="${EXEC_FILE_DIR}/fld"
-readonly SD_DIR_PATH="${EXEC_FILE_DIR}/sd"
 readonly IRO_DIR_PATH="${EXEC_FILE_DIR}/iro"
 readonly TRM_SUB_CMD="${TRM_DIR_PATH##*/}"
 readonly CUT_SUB_CMD="${CUT_DIR_PATH##*/}"
@@ -32,13 +32,13 @@ readonly C2S_SUB_CMD="${C2S_DIR_PATH##*/}"
 readonly MCH_SUB_CMD="${MCH_DIR_PATH##*/}"
 readonly AWK_SUB_CMD="${AWK_DIR_PATH##*/}"
 readonly REP_SUB_CMD="${REP_DIR_PATH##*/}"
+readonly TR_SUB_CMD="${TR_DIR_PATH##*/}"
+readonly FEP_SUB_CMD="${FEP_DIR_PATH##*/}"
 readonly HLD_SUB_CMD="${HLD_DIR_PATH##*/}"
 readonly UP_SUB_CMD="${UP_DIR_PATH##*/}"
 readonly IF_SUB_CMD="${IF_DIR_PATH##*/}"
-readonly TR_SUB_CMD="${TR_DIR_PATH##*/}"
 readonly UNI_SUB_CMD="${UNI_DIR_PATH##*/}"
 readonly FLD_SUB_CMD="${FLD_DIR_PATH##*/}"
-readonly SD_SUB_CMD="${SD_DIR_PATH##*/}"
 readonly IRO_SUB_CMD="${IRO_DIR_PATH##*/}"
 
 readonly AWK_HOME_PATH="${HOME}/.${AKU_CMD_NAME}"
@@ -76,7 +76,7 @@ case "${AKU_SUB_CMD}" in
 		exec_trm
 		;;
 	${CUT_SUB_CMD})
-		. "${CUT_DIR_PATH}/cut.sh"
+		. "${CUT_DIR_PATH}/${CUT_SUB_CMD}.sh"
 		CONTENTS=""
 		DELIMITTER="${DEFAULT_DELIMITTER}"
 		FIELD_NUM_LIST_CON=""
@@ -88,7 +88,7 @@ case "${AKU_SUB_CMD}" in
 		exec_cut
 		;;
 	${C2S_SUB_CMD})
-		. "${C2S_DIR_PATH}/c2s.sh"
+		. "${C2S_DIR_PATH}/${C2S_SUB_CMD}.sh"
 		CONTENTS=""
 		REVERSE=""
 		REPLACE_UNDER_BAR2SPACE=""
@@ -97,7 +97,7 @@ case "${AKU_SUB_CMD}" in
 		c2s_handler
 		;;
 	${MCH_SUB_CMD})
-		. "${MCH_DIR_PATH}/mch.sh"
+		. "${MCH_DIR_PATH}/${MCH_SUB_CMD}.sh"
 		CONTENTS=""
 		DELIMITTER="${DEFAULT_DELIMITTER}"
 		ON_AND=""
@@ -110,14 +110,37 @@ case "${AKU_SUB_CMD}" in
 		exec_mch
 		;;
 	${AWK_SUB_CMD})
-		. "${AWK_DIR_PATH}/awk.sh"
+		. "${AWK_DIR_PATH}/${AWK_SUB_CMD}.sh"
 		CONTENTS=""
 		read_args_for_awk "${@}"
 		display_help_for_awk
 		exec_awk
 		;;
 	${REP_SUB_CMD})
-		. "${REP_DIR_PATH}/rep.sh"
+		. "${REP_DIR_PATH}/${REP_SUB_CMD}.sh"
+		CONTENTS=""
+		TURN="g"
+		ROW_NUM_LIST_CON=""
+		NUM_LIST_CON_SEPARATOR="FIELD_CCCD_SEPARATOR"
+		REGEX_CON=""
+		REPLACE_STR=""
+		read_args_for_rep "${@}"
+		display_help_for_rep
+		exec_rep
+		;;
+	${TR_SUB_CMD})
+		. "${TR_DIR_PATH}/${TR_SUB_CMD}.sh"
+		CONTENTS=""
+		REGEX_CON="\n"
+		REPLACE_STR=""
+		NUM_LIST_CON_SEPARATOR="NUM_CCCD_SEPARATOR"
+		TURN_LIST_CON="g"
+		read_args_for_tr "${@}"
+		display_help_for_tr
+		exec_tr
+		;;
+	${FEP_SUB_CMD})
+		. "${FEP_DIR_PATH}/${FEP_SUB_CMD}.sh"
 		CONTENTS=""
 		FIELD_NUM_TO_REMOVE_REGEX_CON=""
 		FIELD_NUM_TO_STR_CON=""
@@ -128,12 +151,12 @@ case "${AKU_SUB_CMD}" in
 		NUM_LIST_CON_SEPARATOR="FIELD_CCCD_SEPARATOR"
 		TURN=""
 		NUM_REGEX_SEPARATOR=":"
-		read_args_for_rep "${@}"
-		display_help_for_rep
-		exec_rep
+		read_args_for_fep "${@}"
+		display_help_for_fep
+		exec_fep
 		;;
 	${HLD_SUB_CMD})
-		. "${HLD_DIR_PATH}/hld.sh"
+		. "${HLD_DIR_PATH}/${HLD_SUB_CMD}.sh"
 		CONTENTS=""
 		START_HOLDER_LIST_CON=""
 		END_HOLDER_LIST_CON=""
@@ -146,7 +169,7 @@ case "${AKU_SUB_CMD}" in
 		exec_hld
 		;;
 	${UP_SUB_CMD})
-		. "${UP_DIR_PATH}/up.sh"
+		. "${UP_DIR_PATH}/${UP_SUB_CMD}.sh"
 		CONTENTS=""
 		POSITION=""
 		FUNC_NAME="toupper"
@@ -155,7 +178,7 @@ case "${AKU_SUB_CMD}" in
 		exec_up
 		;;
 	${IF_SUB_CMD})
-		. "${IF_DIR_PATH}/if.sh"
+		. "${IF_DIR_PATH}/${IF_SUB_CMD}.sh"
 		CONTENTS=""
 		ARG_SEPARATOR=""
 		REGEX_CON=""
@@ -165,19 +188,8 @@ case "${AKU_SUB_CMD}" in
 		display_help_for_if
 		exec_if
 		;;
-	${TR_SUB_CMD})
-		. "${TR_DIR_PATH}/tr.sh"
-		CONTENTS=""
-		REGEX_CON="\n"
-		REPLACE_STR=""
-		NUM_LIST_CON_SEPARATOR="NUM_CCCD_SEPARATOR"
-		TURN_LIST_CON="g"
-		read_args_for_tr "${@}"
-		display_help_for_tr
-		exec_tr
-		;;
 	${UNI_SUB_CMD})
-		. "${UNI_DIR_PATH}/uni.sh"
+		. "${UNI_DIR_PATH}/${UNI_SUB_CMD}.sh"
 		CONTENTS=""
 		BOUND_STR="\n"
 		VAL_LIST_CON_SEPARATOR="G57VES_T5Y753VHi_DGV365RJY7i_SEPARATOR_V86YR"
@@ -186,7 +198,7 @@ case "${AKU_SUB_CMD}" in
 		exec_uni
 		;;
 	${FLD_SUB_CMD})
-		. "${FLD_DIR_PATH}/fld.sh"
+		. "${FLD_DIR_PATH}/${FLD_SUB_CMD}.sh"
 		CONTENTS=""
 		HEADER_ROW_NUM="1"
 		FOID_COL_CYCLE=5
@@ -200,20 +212,8 @@ case "${AKU_SUB_CMD}" in
 		display_help_for_fld
 		exec_fld
 		;;
-	${SD_SUB_CMD})
-		. "${SD_DIR_PATH}/sd.sh"
-		CONTENTS=""
-		TURN="g"
-		ROW_NUM_LIST_CON=""
-		NUM_LIST_CON_SEPARATOR="FIELD_CCCD_SEPARATOR"
-		REGEX_CON=""
-		REPLACE_STR=""
-		read_args_for_sd "${@}"
-		display_help_for_sd
-		exec_sd
-		;;
 	${IRO_SUB_CMD})
-		. "${IRO_DIR_PATH}/iro.sh"
+		. "${IRO_DIR_PATH}/${IRO_SUB_CMD}.sh"
 		CONTENTS=""
 		TURN="g"
 		ROW_NUM_LIST_CON=""
