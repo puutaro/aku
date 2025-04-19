@@ -22,6 +22,7 @@ Table of Sub cmd
 		* [Uni](#uni)
 		* [Fld](#fld)
 		* [Sd](#sd)
+		* [Iro][#iro]
 
 ## Install or update
 
@@ -1413,3 +1414,248 @@ bBb
 cC
 D
 ```
+
+## Iro
+
+Coloring by hex string
+
+### ARG
+
+Arg
+
+#### first arg
+
+property (default color:green,bold)
+
+##### key
+
+- color: text color
+
+pre reserved color string: `black`, `white`
+bellow exist `d`- / `l`- type
+`green`, `azure`, `blue`, `red`, `brown`, `yellow`
+
+- back: background color
+
+- under: under line
+
+- bold: bold text
+
+- Ex default color: green
+
+echo "aa
+bb" | aku iro
+
+- Ex blue text & light red background & bold & under line
+
+```sh.sh
+echo "aa
+bb" | aku iro color:blue,back:lred,bold,under
+```
+
+- Ex hex color stirng
+
+```sh.sh
+echo "aa
+bb" | aku iro "color:#2f41ba"
+```
+
+- Ex enable hex num specify
+
+```sh.sh
+echo "aa
+bb" | aku iro color:2f41ba
+```
+
+- Ex blue text & light red background & bold & under line
+
+```sh.sh
+echo "aa
+bb" | aku iro color:blue,back:lred,bold,under
+```
+
+- Ex short syntax
+
+```sh.sh
+echo "aa
+bb" | aku iro dgreen
+```
+
+### Option
+
+#### --field-num|-f
+
+target field
+
+- Ex single field (default: all)
+
+```sh.sh
+echo "aa    bb   cc    #dd" | aku iro "color:green" -f "2"
+```
+
+- Ex multiple field
+
+```sh.sh
+echo "aa    bb   cc    #dd" | aku iro -f "1" -f "3-4"
+```
+
+- Ex multiple field by end range
+
+```sh.sh
+echo "aa    bb   cc    #dd" | aku iro -f "1" -f "-4"
+```
+
+- Ex multiple field by end range
+
+```sh.sh
+echo "aa    bb   cc    #dd" | aku iro -f "1" -f "2-"
+```
+
+#### --row-num|-r
+
+target row (default: all)
+
+- Ex single row
+
+```sh.sh
+echo ~" | aku iro -r "2" | aku
+```
+
+- Ex multiple row
+
+```sh.sh
+echo "~" | aku iro -r "1" -r "3-4"
+```
+
+- Ex multiple row by end range
+
+```sh.sh
+echo "~" | aku iro -r "1" -r "-4"
+```
+
+#### --delimitter|-d
+
+delimitter (default is space)
+
+- Ex string delimitter
+
+```sh.sh
+echo "aaAAAbbAAAccAAA#dd" | aku iro red -f "2" -d *AA"
+```
+```
+
+- Ex consec space delimiter
+
+```sh.sh
+echo "aa  bb     cc      #dd" | aku iro "color:#847334" -f "2" -d " "
+```
+
+#### --on-negative|-n
+
+negative to field num and row num
+
+- Ex
+
+```sh.sh
+echo "aaAAAbbAAAccAAA#dd" | aku iro -n -f "2" -d *AA"
+```
+
+#### second arg (default : blank)
+
+target str saround by ()
+
+- Ex 
+
+```sh.sh
+echo "aa
+bb" | aku iro '(aa)bb'
+
+->
+
+bb
+```
+
+#### --input-i
+
+recieve input
+```
+
+- Ex
+
+```sh.sh
+aku iro "aa" -i "aa
+bb"
+->
+
+bb
+```
+
+#### --turn|-t
+
+- Ex
+
+```.sh.sh
+echo "aa
+bb" | aku iro "(a)
+b" "\\1SUFFIX" -t 1
+->
+aaSUFFIX
+bb
+```
+
+- Ex range specify -end
+
+```.sh.sh
+echo "aaA
+bBb
+ccC
+Ddd" | aku iro "[a-z]" -r -2
+->
+A
+B
+ccC
+Ddd
+```
+
+- Ex range specify -start 
+
+```.sh.sh
+echo "aaA
+bwBb
+ccC
+Ddd" | aku iro "[a-z]x22 -r 2-
+->
+aaA
+B
+C
+D
+```
+
+- Ex range specify start-end 
+
+```.sh.sh
+echo "aaA
+bBb
+ccC
+Ddd" | aku iro "[a-z]" -r 2-4
+->
+aaA
+B
+C
+D
+```
+
+- Ex multiple 
+
+```.sh.sh
+echo "aaA
+bBb
+ccC
+Ddd" | aku iro "[a-z]" -r 1 -r 3-4
+->
+A
+bBb
+cC
+D
+```
+
