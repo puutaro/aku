@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-read_args_for_if(){
+read_args_for_apl(){
 	local count_arg_input=0
 	local STR=""
 	while (( $# > 0 ))
@@ -18,6 +18,10 @@ read_args_for_if(){
 			DELIMITTER="${2}"
 			shift
 			;;
+		-if|-i)
+			REGEX_CON="${2}"
+			shift
+			;;
 		-row-num|-r)
 			ROW_NUM_LIST_CON="${ROW_NUM_LIST_CON}${NUM_LIST_CON_SEPARATOR}${2}"
 			shift
@@ -32,9 +36,6 @@ read_args_for_if(){
 		*)	
 			case ${count_arg_input} in
 				1)
-					REGEX_CON="${1:-}"
-					;;
-				2)
 					CMD_CON="${1:-}"
 					;;
 			esac
@@ -63,15 +64,15 @@ read_args_for_if(){
 	fi
 }
 
-display_help_for_if(){
+display_help_for_apl(){
 	case "${HELP}" in
 		"")
 			;;
 		*)
 			awk 'BEGIN {
-				print "## If"
+				print "## Apl"
 				print ""
-				print "give if branch in pipe"
+				print "Apply cmd to field or row in pipe"
 				print ""
 				print "### ARG"
 				print ""
@@ -79,20 +80,20 @@ display_help_for_if(){
 				print ""
 				print "#### first arg"
 				print ""
-				print "if condition regex"
-				print ""
-				print "#### second arg"
-				print ""
 				print "proc cmd"
 				print ""
 				print "- default first cmd: echo \x22${0}\x22"
 				print ""
 				print "- @{0}, @{1}, @{2}.. to $0, $1, $2..  in awk"
 				print ""
+				print "#### --if|i"
+				print ""
+				print "apl condition regex"
+				print ""
 				print "- Ex confition for stdout"
 				print ""
 				print "```.sh.sh"
-				print "echo \x22aa\nbb\x22 | aku if  \x22aa\x22 \x22sed \x27s/^/PREFIX/\x27\x22"
+				print "echo \x22aa\nbb\x22 | aku apl -i \x22aa\x22 \x22sed \x27s/^/PREFIX/\x27\x22"
 				print ""
 				print "->"
 				print "PREFIXaa\nbb"
@@ -101,7 +102,7 @@ display_help_for_if(){
 				print "- Ex confition for proc"
 				print ""
 				print "```.sh.sh"
-				print "echo \x22aa\nbb\x22 | aku if  \x22aa\x22 \x22touch @{0}; echo @{0}\x22"
+				# print "echo \x22aa\nbb\x22 | aku apl -i \x22aa\x22 \x22touch @{0}; echo @{0}\x22"
 				print "```"
 				print ""
 				print "#### --field-num|-f"
@@ -111,25 +112,25 @@ display_help_for_if(){
 				print "- Ex single field (default: all)"
 				print ""
 				print "```sh.sh"
-				print "echo \x22aa\x22    bb   cc    #dd\x22 | aku if \x22.*\x22 \x22echo @[1}\x22 -f \x222\x22"
+				print "echo \x22aa\x22    bb   cc    #dd\x22 | aku apl \x22echo @[1}\x22 -f \x222\x22"
 				print "```"
 				print ""
 				print "- Ex multiple field"
 				print ""
 				print "```sh.sh"
-				print "echo \x22aa\x22    bb   cc    #dd\x22 | aku if \x22.*\x22 \x22echo @[1}\x22 -f \x221\x22 -f \x223-4\x22"
+				print "echo \x22aa\x22    bb   cc    #dd\x22 | aku apl \x22echo @[1}\x22 -f \x221\x22 -f \x223-4\x22"
 				print "```"
 				print ""
 				print "- Ex multiple field by end range"
 				print ""
 				print "```sh.sh"
-				print "echo \x22aa\x22    bb   cc    #dd\x22 | aku if -f \x22.*\x22 \x22echo @[1}\x22 \x221\x22 -f \x22-4\x22"
+				print "echo \x22aa\x22    bb   cc    #dd\x22 | aku apl \x22echo @[1}\x22 \x221\x22 -f \x22-4\x22"
 				print "```"
 				print ""
 				print "- Ex multiple field by end range"
 				print ""
 				print "```sh.sh"
-				print "echo \x22aa\x22    bb   cc    #dd\x22 | aku if \x22.*\x22 \x22echo @[1}\x22 -f \x221\x22 -f \x222-\x22"
+				print "echo \x22aa\x22    bb   cc    #dd\x22 | aku apl \x22echo @[1}\x22 -f \x221\x22 -f \x222-\x22"
 				print "```"
 				print ""
 				print "#### --row-num|-r"
@@ -139,25 +140,25 @@ display_help_for_if(){
 				print "- Ex single row"
 				print ""
 				print "```sh.sh"
-				print "echo ~\x22 | aku if \x22.*\x22 \x22echo @[1}\x22 -r \x222\x22"
+				print "echo ~\x22 | aku apl \x22echo @[1}\x22 -r \x222\x22"
 				print "```"
 				print ""
 				print "- Ex multiple row"
 				print ""
 				print "```sh.sh"
-				print "echo \x22~\x22 | aku if \x22.*\x22 \x22echo @[1}\x22 -r \x221\x22 -r \x223-4\x22"
+				print "echo \x22~\x22 | aku apl \x22echo @[1}\x22 -r \x221\x22 -r \x223-4\x22"
 				print "```"
 				print ""
 				print "- Ex multiple row by end range"
 				print ""
 				print "```sh.sh"
-				print "echo \x22~\x22 | aku if \x22.*\x22 \x22echo @[1}\x22 -r \x221\x22 -r \x22-4\x22"
+				print "echo \x22~\x22 | aku apl \x22echo @[1}\x22 -r \x221\x22 -r \x22-4\x22"
 				print "```"
 				print ""
 				print "- Ex range specify -end"
 				print ""
 				print "```.sh.sh"
-				print "echo \x22aaA\nbBb\nccC\nDdd\x22 | aku if \x22.*\x22 \x22echo @[1}\x22 \x22[a-z]\x22 -r -2"
+				print "echo \x22aaA\nbBb\nccC\nDdd\x22 | aku apl \x22echo @[1}\x22 \x22[a-z]\x22 -r -2"
 				print "->"
 				print "A\nB\nccC\nDdd"
 				print "```"
@@ -165,7 +166,7 @@ display_help_for_if(){
 				print "- Ex range specify -start "
 				print ""
 				print "```.sh.sh"
-				print "echo \x22aaA\nbwBb\nccC\nDdd\x22 | aku if \x22.*\x22 \x22echo @[1}\x22 \x22[a-z]x22 -r 2-"
+				print "echo \x22aaA\nbwBb\nccC\nDdd\x22 | aku apl \x22echo @[1}\x22 \x22[a-z]x22 -r 2-"
 				print "->"
 				print "aaA\nB\nC\nD"
 				print "```"
@@ -173,7 +174,7 @@ display_help_for_if(){
 				print "- Ex range specify start-end "
 				print ""
 				print "```.sh.sh"
-				print "echo \x22aaA\nbBb\nccC\nDdd\x22 | aku if \x22.*\x22 \x22echo @[1}\x22 \x22[a-z]\x22 -r 2-4"
+				print "echo \x22aaA\nbBb\nccC\nDdd\x22 | aku apl \x22echo @[1}\x22 \x22[a-z]\x22 -r 2-4"
 				print "->"
 				print "aaA\nB\nC\nD"
 				print "```"
@@ -181,7 +182,7 @@ display_help_for_if(){
 				print "- Ex multiple "
 				print ""
 				print "```.sh.sh"
-				print "echo \x22aaA\nbBb\nccC\nDdd\x22 | aku if \x22.*\x22 \x22echo @[1}\x22 \x22[a-z]\x22 -r 1 -r 3-4"
+				print "echo \x22aaA\nbBb\nccC\nDdd\x22 | aku apl \x22echo @[1}\x22 \x22[a-z]\x22 -r 1 -r 3-4"
 				print "->"
 				print "A\nbBb\ncC\nD"
 				print "```"
@@ -193,7 +194,7 @@ display_help_for_if(){
 				print "- Ex"
 				print ""
 				print "```sh.sh"
-				print "echo \x22aaAAAbbAAAccAAA#dd\x22 | aku if \x22.*\x22 \x22echo @[1}\x22 -n -f \x222\x22 -d \x2AAA\x22"
+				print "echo \x22aaAAAbbAAAccAAA#dd\x22 | aku apl \x22echo @[1}\x22 -n -f \x222\x22 -d \x2AAA\x22"
 				print "```"
 				print ""
 			}' | less
@@ -202,8 +203,8 @@ display_help_for_if(){
 	esac
 }
 
-exec_if(){
-	local if_awk_path="${IF_DIR_PATH}/if.awk"
+exec_apl(){
+	local apl_awk_path="${APL_DIR_PATH}/apl.awk"
 	local contain_num_separator=","
 	local max_nf_num=$(\
 		echo "${CONTENTS}" \
@@ -212,7 +213,7 @@ exec_if(){
 	echo "${CONTENTS}"\
 	| ${AWK_PATH} \
 		-i "${AWK_LIST_FUNCS_PATH}"\
-		-i "${if_awk_path}"\
+		-i "${apl_awk_path}"\
 		-F "${DELIMITTER}" \
 		-v src_con="${CONTENTS}"\
 		-v DELIMITTER="${DELIMITTER}"\
@@ -296,7 +297,7 @@ exec_if(){
 		}
 
 		if(FIELD_NUM_LIST_CON == ""){
-			print exec_if(\
+			print exec_apl_by_awk(\
 				target_str,\
 				REGEX_CON,\
 				CMD_CON,\
@@ -336,7 +337,7 @@ exec_if(){
 				line = sprintf("%s%s%s",line, $l, DELIMITTER)
 				continue
 			}
-			el = exec_if(\
+			el = exec_apl_by_awk(\
 				$l,\
 				REGEX_CON,\
 				CMD_CON,\

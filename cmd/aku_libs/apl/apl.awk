@@ -1,5 +1,5 @@
 
-function exec_if(\
+function exec_apl_by_awk(\
 	target_str_arg,\
 	regex_con,\
 	cmd_con,\

@@ -17,7 +17,7 @@ Table of Sub cmd
     * [Rep](#rep)
     * [Hld](#hld)
     * [Up](#up)
-		* [If](#if)
+		* [Apl](#apl)
 		* [Tr](#tr)
 		* [Uni](#uni)
 		* [Fld](#fld)
@@ -1013,9 +1013,9 @@ aku up "AAAA" -l -3
 ->
 aaaA
 ```
-## If
+## Apl
 
-give if branch in pipe
+Apply cmd to field or row in pipe
 
 ### ARG
 
@@ -1023,21 +1023,21 @@ Arg
 
 #### first arg
 
-if condition regex
-
-#### second arg
-
 proc cmd
 
 - default first cmd: echo "${0}"
 
 - @{0}, @{1}, @{2}.. to $0, $1, $2..  in awk
 
+#### --if|i
+
+apl condition regex
+
 - Ex confition for stdout
 
 ```.sh.sh
 echo "aa
-bb" | aku if  "aa" "sed 's/^/PREFIX/'"
+bb" | aku apl -i "aa" "sed 's/^/PREFIX/'"
 
 ->
 PREFIXaa
@@ -1047,8 +1047,6 @@ bb
 - Ex confition for proc
 
 ```.sh.sh
-echo "aa
-bb" | aku if  "aa" "touch @{0}; echo @{0}"
 ```
 
 #### --field-num|-f
@@ -1058,25 +1056,25 @@ target field
 - Ex single field (default: all)
 
 ```sh.sh
-echo "aa"    bb   cc    #dd" | aku if ".*" "echo @[1}" -f "2"
+echo "aa"    bb   cc    #dd" | aku apl "echo @[1}" -f "2"
 ```
 
 - Ex multiple field
 
 ```sh.sh
-echo "aa"    bb   cc    #dd" | aku if ".*" "echo @[1}" -f "1" -f "3-4"
+echo "aa"    bb   cc    #dd" | aku apl "echo @[1}" -f "1" -f "3-4"
 ```
 
 - Ex multiple field by end range
 
 ```sh.sh
-echo "aa"    bb   cc    #dd" | aku if -f ".*" "echo @[1}" "1" -f "-4"
+echo "aa"    bb   cc    #dd" | aku apl "echo @[1}" "1" -f "-4"
 ```
 
 - Ex multiple field by end range
 
 ```sh.sh
-echo "aa"    bb   cc    #dd" | aku if ".*" "echo @[1}" -f "1" -f "2-"
+echo "aa"    bb   cc    #dd" | aku apl "echo @[1}" -f "1" -f "2-"
 ```
 
 #### --row-num|-r
@@ -1086,19 +1084,19 @@ target row (default: all)
 - Ex single row
 
 ```sh.sh
-echo ~" | aku if ".*" "echo @[1}" -r "2"
+echo ~" | aku apl "echo @[1}" -r "2"
 ```
 
 - Ex multiple row
 
 ```sh.sh
-echo "~" | aku if ".*" "echo @[1}" -r "1" -r "3-4"
+echo "~" | aku apl "echo @[1}" -r "1" -r "3-4"
 ```
 
 - Ex multiple row by end range
 
 ```sh.sh
-echo "~" | aku if ".*" "echo @[1}" -r "1" -r "-4"
+echo "~" | aku apl "echo @[1}" -r "1" -r "-4"
 ```
 
 - Ex range specify -end
@@ -1107,7 +1105,7 @@ echo "~" | aku if ".*" "echo @[1}" -r "1" -r "-4"
 echo "aaA
 bBb
 ccC
-Ddd" | aku if ".*" "echo @[1}" "[a-z]" -r -2
+Ddd" | aku apl "echo @[1}" "[a-z]" -r -2
 ->
 A
 B
@@ -1121,7 +1119,7 @@ Ddd
 echo "aaA
 bwBb
 ccC
-Ddd" | aku if ".*" "echo @[1}" "[a-z]x22 -r 2-
+Ddd" | aku apl "echo @[1}" "[a-z]x22 -r 2-
 ->
 aaA
 B
@@ -1135,7 +1133,7 @@ D
 echo "aaA
 bBb
 ccC
-Ddd" | aku if ".*" "echo @[1}" "[a-z]" -r 2-4
+Ddd" | aku apl "echo @[1}" "[a-z]" -r 2-4
 ->
 aaA
 B
@@ -1149,7 +1147,7 @@ D
 echo "aaA
 bBb
 ccC
-Ddd" | aku if ".*" "echo @[1}" "[a-z]" -r 1 -r 3-4
+Ddd" | aku apl "echo @[1}" "[a-z]" -r 1 -r 3-4
 ->
 A
 bBb
@@ -1164,7 +1162,7 @@ negative to field num and row num
 - Ex
 
 ```sh.sh
-echo "aaAAAbbAAAccAAA#dd" | aku if ".*" "echo @[1}" -n -f "2" -d *AA"
+echo "aaAAAbbAAAccAAA#dd" | aku apl "echo @[1}" -n -f "2" -d *AA"
 ```
 
 

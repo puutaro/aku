@@ -22,7 +22,7 @@ readonly TR_DIR_PATH="${EXEC_FILE_DIR}/tr"
 readonly FEP_DIR_PATH="${EXEC_FILE_DIR}/fep"
 readonly HLD_DIR_PATH="${EXEC_FILE_DIR}/hld"
 readonly UP_DIR_PATH="${EXEC_FILE_DIR}/up"
-readonly IF_DIR_PATH="${EXEC_FILE_DIR}/if"
+readonly APL_DIR_PATH="${EXEC_FILE_DIR}/apl"
 readonly UNI_DIR_PATH="${EXEC_FILE_DIR}/uni"
 readonly FLD_DIR_PATH="${EXEC_FILE_DIR}/fld"
 readonly IRO_DIR_PATH="${EXEC_FILE_DIR}/iro"
@@ -36,7 +36,7 @@ readonly TR_SUB_CMD="${TR_DIR_PATH##*/}"
 readonly FEP_SUB_CMD="${FEP_DIR_PATH##*/}"
 readonly HLD_SUB_CMD="${HLD_DIR_PATH##*/}"
 readonly UP_SUB_CMD="${UP_DIR_PATH##*/}"
-readonly IF_SUB_CMD="${IF_DIR_PATH##*/}"
+readonly APL_SUB_CMD="${APL_DIR_PATH##*/}"
 readonly UNI_SUB_CMD="${UNI_DIR_PATH##*/}"
 readonly FLD_SUB_CMD="${FLD_DIR_PATH##*/}"
 readonly IRO_SUB_CMD="${IRO_DIR_PATH##*/}"
@@ -177,19 +177,19 @@ case "${AKU_SUB_CMD}" in
 		display_help_for_up
 		exec_up
 		;;
-	${IF_SUB_CMD})
-		. "${IF_DIR_PATH}/${IF_SUB_CMD}.sh"
+	${APL_SUB_CMD})
+		. "${APL_DIR_PATH}/${APL_SUB_CMD}.sh"
 		CONTENTS=""
-		REGEX_CON=""
+		REGEX_CON='.*'
 		CMD_CON=""
 		DELIMITTER="${DEFAULT_DELIMITTER}"
 		ROW_NUM_LIST_CON=""
 		FIELD_NUM_LIST_CON=""
 		ON_NEGATIVE=""
 		NUM_LIST_CON_SEPARATOR="FIELD_CCCD_SEPARATOR"
-		read_args_for_if "${@}"
-		display_help_for_if
-		exec_if
+		read_args_for_apl "${@}"
+		display_help_for_apl
+		exec_apl
 		;;
 	${UNI_SUB_CMD})
 		. "${UNI_DIR_PATH}/${UNI_SUB_CMD}.sh"
