@@ -27,11 +27,14 @@ read_args_for_rep(){
 			exit 1
 			;;
 		*)	
-			if [ ${count_arg_input} -eq 1  ];then
-				REGEX_CON="${1:-}"
-			elif [ ${count_arg_input} -eq 2 ]; then
-				REPLACE_STR="${1:-}"
-			fi
+			case ${count_arg_input} in
+				1)
+					REGEX_CON="${1:-}"
+					;;
+				2)
+					REPLACE_STR="${1:-}"
+					;;
+			esac
 			count_arg_input=$((count_arg_input + 1))
 			;;
 	esac
