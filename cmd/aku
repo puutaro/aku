@@ -180,10 +180,13 @@ case "${AKU_SUB_CMD}" in
 	${IF_SUB_CMD})
 		. "${IF_DIR_PATH}/${IF_SUB_CMD}.sh"
 		CONTENTS=""
-		ARG_SEPARATOR=""
 		REGEX_CON=""
 		CMD_CON=""
 		DELIMITTER="${DEFAULT_DELIMITTER}"
+		ROW_NUM_LIST_CON=""
+		FIELD_NUM_LIST_CON=""
+		ON_NEGATIVE=""
+		NUM_LIST_CON_SEPARATOR="FIELD_CCCD_SEPARATOR"
 		read_args_for_if "${@}"
 		display_help_for_if
 		exec_if
