@@ -1035,7 +1035,7 @@ proc cmd
 
 - Ex confition for stdout
 
-```sh.sh
+```.sh.sh
 echo "aa
 bb" | aku if  "aa" "sed 's/^/PREFIX/'"
 
@@ -1046,10 +1046,128 @@ bb
 
 - Ex confition for proc
 
-```sh.sh
+```.sh.sh
 echo "aa
 bb" | aku if  "aa" "touch @{0}; echo @{0}"
 ```
+
+#### --field-num|-f
+
+target field
+
+- Ex single field (default: all)
+
+```sh.sh
+echo "aa"    bb   cc    #dd" | aku if ".*" "echo @[1}" -f "2"
+```
+
+- Ex multiple field
+
+```sh.sh
+echo "aa"    bb   cc    #dd" | aku if ".*" "echo @[1}" -f "1" -f "3-4"
+```
+
+- Ex multiple field by end range
+
+```sh.sh
+echo "aa"    bb   cc    #dd" | aku if -f ".*" "echo @[1}" "1" -f "-4"
+```
+
+- Ex multiple field by end range
+
+```sh.sh
+echo "aa"    bb   cc    #dd" | aku if ".*" "echo @[1}" -f "1" -f "2-"
+```
+
+#### --row-num|-r
+
+target row (default: all)
+
+- Ex single row
+
+```sh.sh
+echo ~" | aku if ".*" "echo @[1}" -r "2"
+```
+
+- Ex multiple row
+
+```sh.sh
+echo "~" | aku if ".*" "echo @[1}" -r "1" -r "3-4"
+```
+
+- Ex multiple row by end range
+
+```sh.sh
+echo "~" | aku if ".*" "echo @[1}" -r "1" -r "-4"
+```
+
+- Ex range specify -end
+
+```.sh.sh
+echo "aaA
+bBb
+ccC
+Ddd" | aku if ".*" "echo @[1}" "[a-z]" -r -2
+->
+A
+B
+ccC
+Ddd
+```
+
+- Ex range specify -start 
+
+```.sh.sh
+echo "aaA
+bwBb
+ccC
+Ddd" | aku if ".*" "echo @[1}" "[a-z]x22 -r 2-
+->
+aaA
+B
+C
+D
+```
+
+- Ex range specify start-end 
+
+```.sh.sh
+echo "aaA
+bBb
+ccC
+Ddd" | aku if ".*" "echo @[1}" "[a-z]" -r 2-4
+->
+aaA
+B
+C
+D
+```
+
+- Ex multiple 
+
+```.sh.sh
+echo "aaA
+bBb
+ccC
+Ddd" | aku if ".*" "echo @[1}" "[a-z]" -r 1 -r 3-4
+->
+A
+bBb
+cC
+D
+```
+
+#### --on-negative|-n
+
+negative to field num and row num
+
+- Ex
+
+```sh.sh
+echo "aaAAAbbAAAccAAA#dd" | aku if ".*" "echo @[1}" -n -f "2" -d *AA"
+```
+
+
 
 ## Tr
 
@@ -1432,7 +1550,7 @@ property (default color:green,bold)
 - color: text color
 
 pre reserved color string: `black`, `white`
-bellow exist `d`- / `l`- type
+bellow exist d- / l- type
 `green`, `azure`, `blue`, `red`, `brown`, `yellow`
 
 - back: background color
@@ -1533,6 +1651,62 @@ echo "~" | aku iro -r "1" -r "3-4"
 echo "~" | aku iro -r "1" -r "-4"
 ```
 
+- Ex range specify -end
+
+```.sh.sh
+echo "aaA
+bBb
+ccC
+Ddd" | aku iro "[a-z]" -r -2
+->
+A
+B
+ccC
+Ddd
+```
+
+- Ex range specify -start 
+
+```.sh.sh
+echo "aaA
+bwBb
+ccC
+Ddd" | aku iro "[a-z]x22 -r 2-
+->
+aaA
+B
+C
+D
+```
+
+- Ex range specify start-end 
+
+```.sh.sh
+echo "aaA
+bBb
+ccC
+Ddd" | aku iro "[a-z]" -r 2-4
+->
+aaA
+B
+C
+D
+```
+
+- Ex multiple 
+
+```.sh.sh
+echo "aaA
+bBb
+ccC
+Ddd" | aku iro "[a-z]" -r 1 -r 3-4
+->
+A
+bBb
+cC
+D
+```
+
 #### --delimitter|-d
 
 delimitter (default is space)
@@ -1601,61 +1775,5 @@ b" "\\1SUFFIX" -t 1
 ->
 aaSUFFIX
 bb
-```
-
-- Ex range specify -end
-
-```.sh.sh
-echo "aaA
-bBb
-ccC
-Ddd" | aku iro "[a-z]" -r -2
-->
-A
-B
-ccC
-Ddd
-```
-
-- Ex range specify -start 
-
-```.sh.sh
-echo "aaA
-bwBb
-ccC
-Ddd" | aku iro "[a-z]x22 -r 2-
-->
-aaA
-B
-C
-D
-```
-
-- Ex range specify start-end 
-
-```.sh.sh
-echo "aaA
-bBb
-ccC
-Ddd" | aku iro "[a-z]" -r 2-4
-->
-aaA
-B
-C
-D
-```
-
-- Ex multiple 
-
-```.sh.sh
-echo "aaA
-bBb
-ccC
-Ddd" | aku iro "[a-z]" -r 1 -r 3-4
-->
-A
-bBb
-cC
-D
 ```
 
