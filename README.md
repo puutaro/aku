@@ -1597,6 +1597,21 @@ echo "aa
 bb" | aku iro dgreen
 ```
 
+#### second arg (default : blank)
+
+target str saround by ()
+
+- Ex 
+
+```sh.sh
+echo "aa
+bb" | aku iro '(aa)bb'
+
+->
+
+bb
+```
+
 ### Option
 
 #### --field-num|-f
@@ -1730,21 +1745,6 @@ negative to field num and row num
 
 ```sh.sh
 echo "aaAAAbbAAAccAAA#dd" | aku iro -n -f "2" -d *AA"
-```
-
-#### second arg (default : blank)
-
-target str saround by ()
-
-- Ex 
-
-```sh.sh
-echo "aa
-bb" | aku iro '(aa)bb'
-
-->
-
-bb
 ```
 
 #### --input-i
