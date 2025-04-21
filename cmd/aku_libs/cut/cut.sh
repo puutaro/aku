@@ -166,6 +166,11 @@ display_help_for_cut(){
 }
 exec_cut(){
 	local contain_num_separator=","
+	local max_lines=$(\
+		echo "${CONTENTS}"\
+			| awk '{nr_count++}
+			END {print nr_count}'\
+	)
 	local max_nf_num=$(\
 		echo "${CONTENTS}" \
 		| awk  -F "${DELIMITTER}" '{print NF; exit}'\
@@ -174,7 +179,7 @@ exec_cut(){
 	| ${AWK_PATH} \
 		-i "${AWK_LIST_FUNCS_PATH}"\
 		-F "${DELIMITTER}" \
-		-v src_con="${CONTENTS}" \
+		-v max_lines="${max_lines}"\
 		-v ON_NEGATIVE="${ON_NEGATIVE}"\
 	 	-v FIELD_NUM_LIST_CON="${FIELD_NUM_LIST_CON#${NUM_LIST_CON_SEPARATOR}}" \
 	 	-v ROW_NUM_LIST_CON="${ROW_NUM_LIST_CON#${NUM_LIST_CON_SEPARATOR}}" \

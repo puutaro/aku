@@ -163,7 +163,7 @@ display_help_for_fld(){
 			;;
 	esac
 }
-exec_fld(){
+exec_fld(){	
 	local max_nf_num=$(\
 		echo "${CONTENTS}" \
 		| awk  -F "${DELIMITTER}" '{print NF; exit}'\
@@ -204,7 +204,6 @@ exec_fld(){
 	| ${AWK_PATH} \
 		-F "${DELIMITTER}" \
 		-i "${AWK_LINE_FUNCS_PATH}"\
-		-v CONTENTS="${CONTENTS}"\
 		-v MAX_NF_NUM="${max_nf_num}"\
 		-v HEADER_LINE="${header}"\
 		-v HEADER_ROW_NUM="${HEADER_ROW_NUM}" \

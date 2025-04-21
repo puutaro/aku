@@ -232,6 +232,11 @@ exec_fep(){
 	# echo "FIELD_NUM_TO_REMOVE_REGEX_CON: ${FIELD_NUM_TO_REMOVE_REGEX_CON}"
 	# echo "FIELD_NUM_TO_STR_CON: ${FIELD_NUM_TO_STR_CON# }END"
 	# exit 0
+	local max_lines=$(\
+		echo "${CONTENTS}"\
+			| awk '{nr_count++}
+			END {print nr_count}'\
+	)
 	local contain_num_separator=","
 	local max_nf_num=$(\
 		echo "${CONTENTS}" \
@@ -242,7 +247,7 @@ exec_fep(){
 		-i "${AWK_LIST_FUNCS_PATH}"\
 		-i "${AWK_LINE_FUNCS_PATH}"\
 		-F "${DELIMITTER}" \
-		-v SRC_CON="${CONTENTS}"\
+		-v max_lines="${max_lines}"\
 	 	-v FIELD_NUM_TO_REMOVE_REGEX_CON="${FIELD_NUM_TO_REMOVE_REGEX_CON}" \
 	 	-v FIELD_NUM_TO_STR_CON="${FIELD_NUM_TO_STR_CON# }" \
 	 	-v OUTPUT_DELIMITER="${OUTPUT_DELIMITER}"\

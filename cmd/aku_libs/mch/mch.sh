@@ -141,6 +141,11 @@ display_help_for_mch(){
 }
 exec_mch(){
 	local contain_num_separator=","
+	local max_lines=$(\
+		echo "${CONTENTS}"\
+			| awk '{nr_count++}
+			END {print nr_count}'\
+	)
 	local max_nf_num=$(\
 		echo "${CONTENTS}" \
 		| awk  -F "${DELIMITTER}" '{print NF; exit}'\
@@ -149,6 +154,7 @@ exec_mch(){
 	| ${AWK_PATH} \
 		-i "${AWK_LIST_FUNCS_PATH}"\
 		-F "${DELIMITTER}" \
+		-v max_lines="${max_lines}"\
 	 	-v FIELD_NUM_TO_REGEX_LIST_CON="${FIELD_NUM_TO_REGEX_LIST_CON#${NUM_LIST_CON_SEPARATOR}}" \
 	 	-v FIELD_NUM_TO_NEGATIVE_REGEX_LIST_CON="${FIELD_NUM_TO_NEGATIVE_REGEX_LIST_CON#${NUM_LIST_CON_SEPARATOR}}" \
 	 	-v NUM_LIST_CON_SEPARATOR="${NUM_LIST_CON_SEPARATOR}" \
@@ -247,7 +253,6 @@ exec_mch(){
 					)
 				}
 			}
-			max_lines = split(src_con, _line_array, "\n")
 
 			last_output = ""
 		}

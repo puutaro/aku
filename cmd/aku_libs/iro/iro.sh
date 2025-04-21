@@ -276,6 +276,11 @@ display_help_for_iro(){
 exec_iro(){
 	local iro_awk_funcs="${IRO_DIR_PATH}/iro.awk"
 	local contain_num_separator=","
+	local max_lines=$(\
+		echo "${CONTENTS}"\
+			| awk '{nr_count++}
+			END {print nr_count}'\
+	)
 	local max_nf_num=$(\
 		echo "${CONTENTS}" \
 		| awk  -F "${DELIMITTER}" '{print NF; exit}'\
@@ -286,7 +291,7 @@ exec_iro(){
 		-i "${iro_awk_funcs}"\
 		-F "${DELIMITTER}" \
 		-v DELIMITTER="${DELIMITTER}"\
-		-v src_con="${CONTENTS}" \
+		-v max_lines="${max_lines}"\
 	 	-v TURN="${TURN}" \
 	 	-v ROW_NUM_LIST_CON="${ROW_NUM_LIST_CON#${NUM_LIST_CON_SEPARATOR}}" \
 	 	-v FIELD_NUM_LIST_CON="${FIELD_NUM_LIST_CON#${NUM_LIST_CON_SEPARATOR}}" \
@@ -377,7 +382,6 @@ exec_iro(){
 			DISPLAY_FIELD_NUM_CON = sort_list_con(DISPLAY_FIELD_NUM_CON, CONTAIN_NUM_SEPARATOR)
 			DISPLAY_FIELD_NUM_CON = remove_dup_el(DISPLAY_FIELD_NUM_CON, CONTAIN_NUM_SEPARATOR)
 			# print "11 DISPLAY_FIELD_NUM_CON " DISPLAY_FIELD_NUM_CON
-			max_lines = split(src_con, _line_array, "\n")
 			# print "CONTAIN_NUM_SEPARATOR "CONTAIN_NUM_SEPARATOR
 			DISPLAY_ROW_NUM_CON = make_list_from_muti_list_con(\
 				ROW_NUM_LIST_CON, \

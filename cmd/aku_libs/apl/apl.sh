@@ -206,6 +206,11 @@ display_help_for_apl(){
 exec_apl(){
 	local apl_awk_path="${APL_DIR_PATH}/apl.awk"
 	local contain_num_separator=","
+	local max_lines=$(\
+		echo "${CONTENTS}"\
+			| awk '{nr_count++}
+			END {print nr_count}'\
+	)
 	local max_nf_num=$(\
 		echo "${CONTENTS}" \
 		| awk  -F "${DELIMITTER}" '{print NF; exit}'\
@@ -215,7 +220,7 @@ exec_apl(){
 		-i "${AWK_LIST_FUNCS_PATH}"\
 		-i "${apl_awk_path}"\
 		-F "${DELIMITTER}" \
-		-v src_con="${CONTENTS}"\
+		-v max_lines="${max_nf_num}"\
 		-v DELIMITTER="${DELIMITTER}"\
 		-v CONTAIN_NUM_SEPARATOR="${contain_num_separator}"\
 	 	-v ROW_NUM_LIST_CON="${ROW_NUM_LIST_CON#${NUM_LIST_CON_SEPARATOR}}" \

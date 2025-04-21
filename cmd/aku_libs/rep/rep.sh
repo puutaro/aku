@@ -150,10 +150,15 @@ display_help_for_rep(){
 }
 exec_rep(){
 	local contain_num_separator=","
+	local max_lines=$(\
+		echo "${CONTENTS}"\
+			| awk '{nr_count++}
+			END {print nr_count}'\
+	)
 	echo "${CONTENTS}"\
 	| ${AWK_PATH} \
 		-i "${AWK_LIST_FUNCS_PATH}"\
-		-v src_con="${CONTENTS}" \
+		-v max_lines="${max_lines}" \
 	 	-v TURN="${TURN}}" \
 	 	-v ROW_NUM_LIST_CON="${ROW_NUM_LIST_CON#${NUM_LIST_CON_SEPARATOR}}" \
 	 	-v NUM_LIST_CON_SEPARATOR="${NUM_LIST_CON_SEPARATOR}" \
