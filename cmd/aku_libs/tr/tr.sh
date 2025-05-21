@@ -169,7 +169,7 @@ exec_tr(){
 		}
 		turn_list_con = make_list_from_muti_list_con(TURN_LIST_CON, length(CONTENTS), NUM_LIST_CON_SEPARATOR, CONTAIN_NUM_SEPARATOR)
 		# turn_list_con = convert_nums_by_compa(TURN_LIST_CON, length(CONTENTS), CONTAIN_NUM_SEPARATOR)
-		print "turn_list_con " turn_list_con
+		# print "turn_list_con " turn_list_con
 		turn_list_con = trim_separator(turn_list_con, CONTAIN_NUM_SEPARATOR)
 		# print "00 turn_list_con " turn_list_con
 		turn_list_con = sort_list_con(turn_list_con, CONTAIN_NUM_SEPARATOR)
